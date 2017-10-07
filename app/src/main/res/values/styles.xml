@@ -1,0 +1,75 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">@color/darkBlue</item>
+        <item name="android:textColorHighlight">@color/white</item>
+        <item name="android:textColorLink">@color/colorPrimary</item>
+        <item name="android:colorControlActivated">@color/white</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="LinearProgress" parent="android:Widget.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/linear_progress</item>
+        <item name="android:minHeight">6dp</item>
+        <item name="android:max">100</item>
+    </style>
+    <style name="SignupEditTextTheme" parent="TextAppearance.AppCompat">
+        <!-- Used for the bottom line when not selected / focused -->
+        <item name="colorControlNormal">@color/paleRed</item>
+        <item name="android:textColorHint">@color/paleRed</item>
+        <item name="android:colorControlActivated">@color/white</item>
+        <item name="android:colorControlHighlight">@color/white</item>
+        <item name="android:textColorHighlight">@color/white</item>
+        <item name="android:textColorLink">@color/white</item>
+    </style>
+    <style name="LoginEditTextTheme" parent="TextAppearance.AppCompat">
+        <!-- Used for the bottom line when not selected / focused -->
+        <item name="colorControlNormal">@color/paleGreen</item>
+        <item name="android:textColorHint">@color/paleGreen</item>
+        <item name="android:colorControlActivated">@color/white</item>
+        <item name="android:colorControlHighlight">@color/white</item>
+        <item name="android:textColorHighlight">@color/white</item>
+        <item name="android:textColorLink">@color/white</item>
+    </style>
+
+    <style name="StatusEditTextTheme" parent="TextAppearance.AppCompat">
+        <item name="android:colorControlNormal">@color/black</item>
+        <item name="android:textColorHint">@color/black</item>
+        <item name="android:colorControlActivated">@color/black</item>
+        <item name="android:colorControlHighlight">@color/black</item>
+        <item name="android:textColorHighlight">@color/white</item>
+        <item name="android:textColorLink">@color/white</item>
+    </style>
+
+    <style name="AppTheme.Picker" parent="@android:style/Widget.Material.Light.DatePicker" >
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:headerBackground">@color/white</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="colorControlNormal">@color/white</item>
+    </style>
+    <style name="SwitchTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">@color/darkBlue</item>
+        <item name="android:textColorHighlight">@color/white</item>
+        <item name="android:textColorLink">@color/colorPrimary</item>
+        <item name="colorControlActivated">@color/darkBlue</item>
+    </style>
+</resources>
