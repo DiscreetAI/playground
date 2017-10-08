@@ -18,42 +18,59 @@
 		<div id="page-wrapper">
 
 			<!-- Header -->
-				<header id="header">
-					<h1 id="logo"><a href="index.html">Landed</a></h1>
-					<nav id="nav">
-						<ul>
-							<li><a href="index.html">Home</a></li>
-							<li>
-								<a href="#">Layouts</a>
-								<ul>
-									<li><a href="left-sidebar.html">Left Sidebar</a></li>
-									<li><a href="right-sidebar.html">Right Sidebar</a></li>
-									<li><a href="no-sidebar.html">No Sidebar</a></li>
-									<li>
-										<a href="#">Submenu</a>
-										<ul>
-											<li><a href="#">Option 1</a></li>
-											<li><a href="#">Option 2</a></li>
-											<li><a href="#">Option 3</a></li>
-											<li><a href="#">Option 4</a></li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li><a href="elements.html">Elements</a></li>
-							<li><a href="#" class="button special">Sign Up</a></li>
-						</ul>
-					</nav>
-				</header>
+				<div id="page-wrapper">
+
+					<!-- Header -->
+					<header id="header">
+						<input class="input__field input__field--isao" type="text" id="input-38" />
+						<label class="input__label input__label--isao" for="input-38" data-content="First Name">
+						<a href="#" class="button special">Send Query</a></li>
+						
+					</header>
 
 			<!-- Main -->
-				<div id="main" class="wrapper style1">
-					<div class="container">
+				<div id="main" class="wrapper style1 footer">
+					<div class="container footer_contents">
 						<header class="major">
 							<h2>Selected Category: {{ cat }}</h2>
 							<p>Ipsum dolor feugiat aliquam tempus sed magna lorem consequat accumsan</p>
+
+							<form id="myForm2" action="/insert" method="post">
+								<div>
+
+									<input type="submit" id="op1" name="categ" value="Fitness" class="button marg">
+
+
+									<input type="submit" id="op2" name="categ" value="Education" class="button marg">
+
+
+									<input type="submit" id="op3" name="categ" value="Shopping" class="button marg">
+
+
+									<input type="submit" id="op4" name="categ" value="Social Media" class="button marg">
+
+								</div>
+
+								<div>
+									<a onclick="printMonkey()" href="#four" class="button marg">
+							<span>Fitness</span>
+							</a>
+
+									<a href="#four" class="button marg">
+							<span>Education</span>
+							</a>
+
+									<a href="#four" class="button marg">
+							<span>Shopping</span>
+							</a>
+
+									<a href="#four" class="button marg">
+							<span>Social Media</span>
+							</a>
+								</div>
+							</form>
 						</header>
-						<div class="row 150%">
+						<div class="row 150% contents">
 							<div class="4u 12u$(medium)">
 
 								<!-- Sidebar -->
@@ -106,7 +123,7 @@
 				</div>
 
 			<!-- Footer -->
-				<footer id="footer">
+				<footer id="footer ">
 					<ul class="icons">
 						<li><a href="#" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
 						<li><a href="#" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>

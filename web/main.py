@@ -47,7 +47,7 @@ def execute(query):
         )
 
 
-@application.route('/insert')
+@application.route('/insert', methods=['POST'])
 def insert():
     ## FOR DATASHARK
     client_id = '228MWF'

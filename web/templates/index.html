@@ -17,34 +17,7 @@
 	<body class="landing">
 		<div id="page-wrapper">
 
-			<!-- Header -->
-				<header id="header">
-					<h1 id="logo"><a href="index.html">DataShark</a></h1>
-					<nav id="nav">
-						<ul>
-							<li><a href="index.html">Home</a></li>
-							<li>
-								<a href="#">Layouts</a>
-								<ul>
-									<li><a href="left-sidebar.html">Left Sidebar</a></li>
-									<li><a href="right-sidebar.html">Right Sidebar</a></li>
-									<li><a href="no-sidebar.html">No Sidebar</a></li>
-									<li>
-										<a href="#">Submenu</a>
-										<ul>
-											<li><a href="#">Option 1</a></li>
-											<li><a href="#">Option 2</a></li>
-											<li><a href="#">Option 3</a></li>
-											<li><a href="#">Option 4</a></li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li><a href="elements.html">Elements</a></li>
-							<li><a href="#" class="button special">Sign Up</a></li>
-						</ul>
-					</nav>
-				</header>
+			
 
 			<!-- Banner -->
 				<section id="banner">
@@ -151,7 +124,34 @@
 			
 
 		</div>
-
+		<!-- Header -->
+		<footer id="header">
+			<h1 id="logo"><a href="index.html">DataShark</a></h1>
+			<nav id="nav">
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li>
+						<a href="#">Layouts</a>
+						<ul>
+							<li><a href="left-sidebar.html">Left Sidebar</a></li>
+							<li><a href="right-sidebar.html">Right Sidebar</a></li>
+							<li><a href="no-sidebar.html">No Sidebar</a></li>
+							<li>
+								<a href="#">Submenu</a>
+								<ul>
+									<li><a href="#">Option 1</a></li>
+									<li><a href="#">Option 2</a></li>
+									<li><a href="#">Option 3</a></li>
+									<li><a href="#">Option 4</a></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li><a href="elements.html">Elements</a></li>
+					<li><a href="#" class="button special">Sign Up</a></li>
+				</ul>
+			</nav>
+		</footer>
 		<!-- Scripts -->
 			<script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
 			<script src="{{ url_for('static', filename='assets/js/jquery.scrolly.min.js') }}"></script>
@@ -162,6 +162,7 @@
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
 
+			
 	</body>
 
 	<script>
@@ -169,17 +170,8 @@
 		console.log("You are a monkey");
 	}
 
-	$(document).ready(function () {
-			var top = $('#sidebar').offset().top - parseFloat($('#sidebar').css('marginTop').replace(/auto/, 0));
-			$(window).scroll(function (event) {
-				var y = $(this).scrollTop();
-				//if y > top, it means that if we scroll down any more, parts of our element will be outside the viewport
-				//so we move the element down so that it remains in view.
-				if (y >= top) {
-					var difference = y - top;
-					$('#sidebar').css("top", difference);
-				}
-			});
+	$('#ParentContainer').scroll(function () {
+			$('#sidebar').css('top', $(this).scrollTop());
 		});
 	</script>
 </html>
