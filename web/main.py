@@ -32,6 +32,16 @@ def results():
     col_names = get_columns(categ)
     return render_template('left-sidebar.html', cat = categ)
 
+@application.route('/execute')
+def execute(query):
+    df = pandas(query, db.session)
+    csv = df.to_csv()
+    return Response(
+        csv,
+        mimetype="text/csv",
+        headers={"Content-disposition": "attachment; filename=data.csv"}
+        )
+
 def get_columns(categ):
     cmd = 'select col, description from metadata where table_name==:val'
     result = db.session.execute(text(cmd), val=categ)
