@@ -39,7 +39,7 @@ def results():
 
 @application.route('/execute')
 def execute(query):
-    df = pandas(query, db.session)
+    df = pd.read_sql_query(query, db.engine)
     csv = df.to_csv()
     return Response(
         csv,
@@ -92,7 +92,7 @@ def insert():
 
 
 def get_columns(categ):
-    cmd = 'select col, description from metadata where table_name==:val'
+    cmd = 'select col, description from metadata where table_name=:val'
     result = db.session.execute(cmd, {'val': categ})
     db.session.commit()
     return result.fetchall()
