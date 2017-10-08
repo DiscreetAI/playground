@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, Response
 from flask_sqlalchemy import SQLAlchemy
 import pandas as pd
 import requests
@@ -34,14 +34,24 @@ def main():
 @application.route('/results', methods=['POST'])
 def results():
     categ = request.form['categ']
-    table_name = "fitbit_daily_activities_summary"
+    table_name = "fitbit_daily_activity_summary"
     col_names = get_columns(table_name)
-    return render_template('left-sidebar.html', cols = col_names)
+    temp = str(col_names)
+    print(temp)
+    temp = temp.replace("'", '"')
+    print(temp)
+    import ast
+    col_names = ast.literal_eval(temp)
+    print(col_names)
+    return render_template('left-sidebar.html', cols=json.dumps(col_names))
 
-@application.route('/execute')
-def execute(query):
-    df = pd.read_sql_query(query, db.engine)
-    csv = df.to_csv()
+
+@application.route('/execute', methods=['POST'])
+def execute():
+    print("execute called")
+    #df = pd.read_sql_query(query, db.engine)
+    df = pd.read_sql_query("select * from fitbit_daily_activity_summary", db.engine)
+    csv = df.to_csv(index=False)
     return Response(
         csv,
         mimetype="text/csv",

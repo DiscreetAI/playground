@@ -24,7 +24,10 @@
 					<header id="header">
 						<input class="input__field input__field--isao" type="text" id="input-38" />
 						<label class="input__label input__label--isao" for="input-38" data-content="First Name">
-						<a href="#" class="button special">Send Query</a></li>
+							<form action="/execute" method = "post">
+								<input type="submit" class="button special">Send Query
+							</form>
+						
 						
 					</header>
 
@@ -32,12 +35,11 @@
 				<div id="main" class="wrapper style1 footer">
 					<div class="container footer_contents">
 						<header class="major">
-							<h2>Selected Category: {{ cat }}</h2>
-							<p>Ipsum dolor feugiat aliquam tempus sed magna lorem consequat accumsan</p>
-							 {% for key, value in cols.iteritems() %}
-								<h2> {{ key }} </h2>
-								<p> {{ value }} </p>
-							{% endfor %}
+							<h2>Fitbit Data: </h2>
+							<p>Select the columns that you want, and we will build the query. Or, build the query yourself!</p>
+							<div id = "stuff">
+
+							</div>
 							<form id="myForm2" action="/insert" method="post">
 								<div>
 
@@ -151,6 +153,16 @@
 			<script src="{{ url_for('static', filename='assets/js/util.js') }}"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
-
+			<script>
+				var col = JSON.parse('{{cols|safe}}');
+				console.log(col[0]);
+				var place = document.getElementById('stuff');
+				for (var i = 0; i < col.length; i++) {
+					var col_name = col[i][0];
+					var col_desc = col[i][1];
+					place.innerHTML += "<input type='checkbox' id='switch" + i + "'/><label for='switch" + i + "'>" + col_name + "</label>" 
+					place.innerHTML += "<p class = 'desco'>" + col_desc + "</p>"
+				}
+			</script>
 	</body>
 </html>
