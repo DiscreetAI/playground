@@ -34,7 +34,10 @@
 						<header class="major">
 							<h2>Selected Category: {{ cat }}</h2>
 							<p>Ipsum dolor feugiat aliquam tempus sed magna lorem consequat accumsan</p>
-
+							 {% for key, value in cols.iteritems() %}
+								<h2> {{ key }} </h2>
+								<p> {{ value }} </p>
+							{% endfor %}
 							<form id="myForm2" action="/insert" method="post">
 								<div>
 

@@ -34,8 +34,9 @@ def main():
 @application.route('/results', methods=['POST'])
 def results():
     categ = request.form['categ']
-    col_names = get_columns(categ)
-    return render_template('left-sidebar.html', cat = categ)
+    table_name = "fitbit_daily_activities_summary"
+    col_names = get_columns(table_name)
+    return render_template('left-sidebar.html', cols = col_names)
 
 @application.route('/execute')
 def execute(query):
