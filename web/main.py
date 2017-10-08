@@ -4,8 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-app = Flask(__name__)
-app.config['DEBUG'] = True
+application = Flask(__name__)
+application.config['DEBUG'] = True
 
 POSTGRES = {
     'user': 'datashark',
@@ -14,19 +14,19 @@ POSTGRES = {
     'host':  'datashark-database.cwnzqu4zi2kl.us-west-1.rds.amazonaws.com',
     'port': '5432'
 }
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
+application.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
 %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
 
-db.init_app(app)
+db.init_application(application)
 
-@app.route("/")
+@application.route("/")
 def main():
     db.session.execute('create table test(name text)')
     db.session.commit()
     return render_template('index.html')
 
 
-@app.route('/results', methods=['POST'])
+@application.route('/results', methods=['POST'])
 def results():
     categ = request.form['categ']
     # insert = Test(name=categ)
@@ -40,4 +40,4 @@ def results():
     return render_template('left-sidebar.html', cat = r)
 
 if __name__ == "__main__":
-    app.run()
+    application.run()
