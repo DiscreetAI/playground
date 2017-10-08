@@ -180,4 +180,5 @@
     <string name="error_loading_data">Error loading data. Check your internet connection and try
         again later.
     </string>
+    <string name="title_activity_home">HomeActivity</string>
 </resources>
