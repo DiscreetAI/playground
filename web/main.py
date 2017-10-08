@@ -22,7 +22,8 @@ POSTGRES = {
 application.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
 %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
 
-db.init_application(application)
+db.init_app(application)
+
 
 
 @application.route("/")
@@ -75,9 +76,9 @@ def insert():
 
         for value in fitbit_daily_activity_summary_values:
             if value in parsed['summary']:
-                dict[value].append(parsed['summary'][value])
+                dict[value.lower()].append(parsed['summary'][value])
             else:
-                dict[value].append(None)
+                dict[value.lower()].append(None)
         if 'distances' in parsed['summary']:
             distances = parsed['summary']['distances']
             if len(distances) > 0:
@@ -86,13 +87,13 @@ def insert():
 
     fitbit_daily_activity_summary_df = pd.DataFrame(dict)
 
-    fitbit_daily_activity_summary_df.to_sql('fitbit_daily_activity_summary', db.engine(), if_exists='append')
+    fitbit_daily_activity_summary_df.to_sql('fitbit_daily_activity_summary', db.engine, if_exists='append', index=False)
 
 
 
 def get_columns(categ):
     cmd = 'select col, description from metadata where table_name==:val'
-    result = db.session.execute(text(cmd), val=categ)
+    result = db.session.execute(cmd, {'val': categ})
     db.session.commit()
     return result.fetchall()
 
