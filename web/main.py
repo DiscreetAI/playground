@@ -34,8 +34,9 @@ def main():
 @application.route('/results', methods=['POST'])
 def results():
     categ = request.form['categ']
-    col_names = get_columns(categ)
-    return render_template('left-sidebar.html', cat = col_names)
+    table_name = "fitbit_daily_activities_summary"
+    col_names = get_columns(table_name)
+    return render_template('left-sidebar.html', cols = col_names)
 
 @application.route('/execute')
 def execute(query):
@@ -92,8 +93,8 @@ def insert():
 
 
 def get_columns(categ):
-    cmd = 'select col, description from metadata where table_name==:val'
-    result = db.session.execute(cmd, {'val': categ})
+    cmd = "select col, description from metadata where table_name==" + str(categ)
+    result = db.session.execute(cmd)
     db.session.commit()
     return result.fetchall()
 
