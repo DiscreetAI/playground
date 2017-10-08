@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/layoutOption"
+    android:clickable="true"
+    android:addStatesFromChildren="true"
+    android:descendantFocusability="beforeDescendants"
+    android:background="@drawable/button_blue_background"
+    android:paddingStart="15dp"
+    android:paddingEnd="15dp">
+    <RadioButton
+        android:id="@+id/choice"
+        android:button="@drawable/ic_button_blue"
+        android:clickable="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="8dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:background="@android:color/transparent"
+        android:textColor="@color/white"
+        android:textSize="20sp"/>
+</LinearLayout>

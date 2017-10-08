@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ongo</string>
+    <string name="app_name">DataShark</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet semper leo.</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in_short">Log in</string>

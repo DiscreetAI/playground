@@ -8,13 +8,17 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.fitbit.sampleandroidoauth2.CLIENT_ID"
+            android:value="228MWM"/>
+        <meta-data
+            android:name="com.fitbit.sampleandroidoauth2.REDIRECT_URL"
+            android:value="https://finished"/>
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.tab.TabbedActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
             <intent-filter>

@@ -1,4 +1,4 @@
-package data.shark;
+package data.shark.activities.login;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -30,11 +30,18 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Arrays;
 
+import data.shark.util.Authentication;
+import data.shark.util.FontUtilities;
+import data.shark.util.OngoSettings;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import data.shark.R;
+import data.shark.activities.signup.SignupNamesActivity;
+import data.shark.activities.tab.TabbedActivity;
+import data.shark.services.ServiceBodies.AuthFacebookCredentials;
+import data.shark.services.ServiceBodies.AuthResponse;
 
 public class LandingActivity extends AppCompatActivity implements View.OnClickListener {
     AccessToken accessToken;
@@ -65,9 +72,6 @@ public class LandingActivity extends AppCompatActivity implements View.OnClickLi
         boolean autoLogin = getIntent().getBooleanExtra("autoLogin", false);
 
         // Check for first time launch for credentials
-        if (!autoLogin) {
-            SecureSettings.checkForFirstTimeRun();
-        }
         //UI Components
         tagLine = (TextView) findViewById(R.id.tag_line);
         fbLoginButton = (LoginButton) findViewById(R.id.fb_login_button);
@@ -107,38 +111,6 @@ public class LandingActivity extends AppCompatActivity implements View.OnClickLi
                                             // Handle login event for Authentication class
                                             Authentication.getInstance().handleLogin(value);
                                             //track
-
-                                            // fetch my mTracks
-                                            TrackService service = DataSource.getTrackService();
-                                            // TODO store the API_VERSION somewhere better
-                                            service.downloadTrack(Authentication.getInstance().getCurrentUser().mainTrack, 4) // api: 4, limit: 10, page: 1
-                                                    .subscribeOn(Schedulers.newThread())
-                                                    .observeOn(AndroidSchedulers.mainThread())
-                                                    .subscribe(new Observer<OGTrack>() {
-                                                        @Override
-                                                        public void onSubscribe(Disposable d) {
-                                                        }
-
-                                                        @Override
-                                                        public void onNext(OGTrack track) {
-                                                            TrackEnrollmentManager.addOrReplaceTrack(track);
-                                                            Intent intent = new Intent(LandingActivity.this, TabbedActivity.class);
-                                                            startActivity(intent);
-//                                                            showProgress(false);
-                                                            LandingActivity.this.finish();
-                                                        }
-
-                                                        @Override
-                                                        public void onError(Throwable e) {
-                                                            Log.e("Authentication", "Error fetching MyTracks!");
-                                                            e.printStackTrace();
-                                                        }
-
-                                                        @Override
-                                                        public void onComplete() {
-                                                        }
-                                                    });
-
                                         }
 
                                         @Override
@@ -187,34 +159,6 @@ public class LandingActivity extends AppCompatActivity implements View.OnClickLi
                             @Override
                             public void onNext(AuthResponse value) {
                                 Authentication.getInstance().handleLogin(value);
-                                TrackService service = DataSource.getTrackService();
-                                service.downloadTrack(Authentication.getInstance().getCurrentUser().mainTrack, 4) // api: 4, limit: 10, page: 1
-                                        .subscribeOn(Schedulers.newThread())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(new Observer<OGTrack>() {
-                                            @Override
-                                            public void onSubscribe(Disposable d) {
-                                            }
-
-                                            @Override
-                                            public void onNext(OGTrack track) {
-                                                TrackEnrollmentManager.addOrReplaceTrack(track);
-                                                Intent intent = new Intent(LandingActivity.this, TabbedActivity.class);
-                                                startActivity(intent);
-//                                                showProgress(false);
-                                                LandingActivity.this.finish();
-                                            }
-
-                                            @Override
-                                            public void onError(Throwable e) {
-                                                Log.e("Authentication", e.toString());
-                                                e.printStackTrace();
-                                            }
-
-                                            @Override
-                                            public void onComplete() {
-                                            }
-                                        });
                             }
 
                             @Override
@@ -257,10 +201,6 @@ public class LandingActivity extends AppCompatActivity implements View.OnClickLi
     protected void onResume() {
         super.onResume();
         OngoSettings.initialize(this);
-        SyncManager.performStartupTasks();
-        if (!(getIntent().getBooleanExtra("autologin", false))) {
-            performAuthentication();
-        }
     }
 
     @Override
@@ -322,94 +262,6 @@ public class LandingActivity extends AppCompatActivity implements View.OnClickLi
         });
     }
 
-    private void performAuthentication() {
-        // Check if credentials are stored
-        if (!SecureSettings.isAuthCredentials()) {
-            return;
-        }
-        if (!(getIntent().getBooleanExtra("autologin", false))) {
-            return;
-        }
-
-        ProgressDialog dialog = ProgressDialog.show(LandingActivity.this, "", "Logging in...", true);
-
-        // Log in if we have stored credentials
-        Authentication.getInstance().loginWithStoredCredentials()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<AuthResponse>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(AuthResponse value) {
-                        // Handle login event for Authentication class
-                        Authentication.getInstance().handleLogin(value);
-
-                        //track
-                        TrackService service = DataSource.getTrackService();
-                        // TODO store the API_VERSION somewhere better
-                        service.downloadTrack(Authentication.getInstance().getCurrentUser().mainTrack, 4) // api: 4, limit: 10, page: 1
-                                .subscribeOn(Schedulers.newThread())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Observer<OGTrack>() {
-                                    @Override
-                                    public void onSubscribe(Disposable d) {
-                                    }
-
-                                    @Override
-                                    public void onNext(OGTrack track) {
-                                        TrackEnrollmentManager.addOrReplaceTrack(track);
-                                        Intent intent = new Intent(LandingActivity.this, TabbedActivity.class);
-                                        startActivity(intent);
-                                        LandingActivity.this.finish();
-                                    }
-
-                                    @Override
-                                    public void onError(Throwable e) {
-                                        Log.e("Authentication", e.toString());
-                                        e.printStackTrace();
-                                    }
-
-                                    @Override
-                                    public void onComplete() {
-                                    }
-                                });
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        //TODO show main landing page
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
-
-    private void startSync() {
-        EventBus.getDefault().register(this);
-        SyncManager.sync();
-    }
-
-    @Subscribe
-    public void syncStopped(SyncManager.SyncFailedEvent event) {
-        onSyncStopped();
-    }
-
-    @Subscribe
-    public void syncStopped(SyncManager.SyncAbortedEvent event) {
-        onSyncStopped();
-    }
-
-    @Subscribe
-    public void syncStopped(SyncManager.SyncCompletedEvent event) {
-        onSyncStopped();
-    }
 
     private void onSyncStopped() {
         EventBus.getDefault().unregister(this);

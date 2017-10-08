@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activities.profile.EditProfileActivity"
+    android:id="@+id/layout">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:background="@color/white">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/profile_photo"
+                android:textColor="@color/gray"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/profPicHeader" />
+            
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_pic"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:src="@drawable/avatar_placeholder"
+                app:civ_border_width="0dp"
+                app:civ_border_color="@color/white"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/profPicHeader"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/email"
+                android:textColor="@color/gray"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@+id/profile_pic"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/emailHeader" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@+id/emailHeader"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/emailEntry" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/first_name"
+                android:textColor="@color/gray"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/emailEntry"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/firstNameHeader" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="336dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_background"
+                android:paddingBottom="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/firstNameHeader"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/firstNameEntryLayout">
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:maxLines="1"
+                    android:id="@+id/firstNameEntry"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:background="@android:color/transparent"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/last_name"
+                android:textColor="@color/gray"
+                android:layout_marginTop="9dp"
+                app:layout_constraintTop_toBottomOf="@+id/firstNameEntryLayout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/lastNameHeader" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="336dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_background"
+                android:paddingBottom="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/lastNameHeader"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/lastNameEntryLayout">
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:maxLines="1"
+                    android:id="@+id/lastNameEntry"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:background="@android:color/transparent"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/location"
+                android:textColor="@color/gray"
+                android:layout_marginTop="9dp"
+                app:layout_constraintTop_toBottomOf="@+id/lastNameEntryLayout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/locationHeader" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="336dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_background"
+                android:paddingBottom="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/locationHeader"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/locationEntryLayout">
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:id="@+id/locationEntry"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:background="@android:color/transparent"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gender"
+                android:textColor="@color/gray"
+                android:layout_marginTop="9dp"
+                app:layout_constraintTop_toBottomOf="@+id/locationEntryLayout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/genderHeader" />
+
+            <TextView
+                android:layout_width="336dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_background"
+                android:paddingBottom="10dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@+id/genderHeader"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="12dp"
+                android:id="@+id/genderEntry"
+                android:clickable="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/birth_date"
+                android:textColor="@color/gray"
+                android:layout_marginTop="9dp"
+                app:layout_constraintTop_toBottomOf="@+id/genderEntry"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/birthdayHeader" />
+
+            <TextView
+                android:layout_width="336dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_background"
+                android:paddingBottom="10dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@+id/birthdayHeader"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="12dp"
+                android:id="@+id/birthdayEntry"
+                android:clickable="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/weight"
+                android:textColor="@color/gray"
+                android:layout_marginTop="9dp"
+                app:layout_constraintTop_toBottomOf="@+id/birthdayEntry"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/weightHeader" />
+
+            <TextView
+                android:layout_width="336dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_background"
+                android:paddingBottom="10dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@+id/weightHeader"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="12dp"
+                android:id="@+id/weightEntry"
+                android:clickable="true"/>
+            
+            <android.support.v4.widget.Space
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                app:layout_constraintTop_toBottomOf="@+id/weightEntry"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:fitsSystemWindows="true"
+        app:elevation="0dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:layout_scrollFlags="enterAlways"
+            app:layout_collapseMode="pin">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="15dp"
+                android:elevation="20dp">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_height="match_parent"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_arrow_back"
+                    android:id="@+id/back_arrow"
+                    android:background="?android:attr/selectableItemBackground"/>
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/edit_profile"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center_vertical"
+                    android:padding="10dp"
+                    android:text="@string/save"
+                    android:textAllCaps="false"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:textColor="@color/gray"
+                    android:gravity="center_vertical"
+                    android:id="@+id/save_button"/>
+
+            </FrameLayout>
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+</android.support.design.widget.CoordinatorLayout>

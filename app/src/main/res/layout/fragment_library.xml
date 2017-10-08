@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:background="@color/white">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/green"
+                android:paddingStart="12dp"
+                android:paddingEnd="0dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:orientation="vertical"
+                android:id="@+id/discoverCard"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/discover_header"
+                    android:textColor="@color/turquoise"
+                    android:textSize="20sp"
+                    android:id="@+id/discoverHeader"
+                    android:layout_marginBottom="8dp"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/discoverRV">
+
+                </android.support.v7.widget.RecyclerView>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/mainHeader"
+                android:text="@string/main_program"
+                android:textColor="@color/gray"
+                android:textSize="13sp"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="12dp"
+                app:layout_constraintTop_toBottomOf="@id/discoverCard"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <include android:id="@+id/mainProgram"
+                layout="@layout/item_library"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/mainHeader"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/otherHeader"
+                android:text="@string/other_program"
+                android:textColor="@color/gray"
+                android:textSize="13sp"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="12dp"
+                app:layout_constraintTop_toBottomOf="@id/mainProgram"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/programsRV"
+                app:layout_constraintTop_toBottomOf="@id/otherHeader"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+            </android.support.v7.widget.RecyclerView>
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:fitsSystemWindows="true"
+        app:elevation="0dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:layout_scrollFlags="enterAlways"
+            app:layout_collapseMode="pin">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="15dp"
+                android:elevation="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:text="@string/library"
+                    android:id="@+id/title"
+                    android:textColor="@color/green"
+                    android:textSize="20sp" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end|center_vertical"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_tab_library_selected"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:gravity="center_vertical"
+                    android:id="@+id/discover_button" />
+
+            </FrameLayout>
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+</android.support.design.widget.CoordinatorLayout>
