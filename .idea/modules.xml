@@ -4,6 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DataShark.iml" filepath="$PROJECT_DIR$/DataShark.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fitbitapi/fitbitapi.iml" filepath="$PROJECT_DIR$/fitbitapi/fitbitapi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fitbitauth/fitbitauth.iml" filepath="$PROJECT_DIR$/fitbitauth/fitbitauth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fitbitcommon/fitbitcommon.iml" filepath="$PROJECT_DIR$/fitbitcommon/fitbitcommon.iml" />
     </modules>
   </component>
 </project>

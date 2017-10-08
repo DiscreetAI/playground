@@ -20,6 +20,8 @@
     <color name="turquoise">#85E9E9</color>
     <color name="lightBlue">#8098CD</color>
     <color name="teal">#457884</color>
+    <color name="primary_teal">@color/teal</color>
+    <color name="primary_dark_teal">#449999</color>
     <color name="darkBlue">#2f366c</color>
     <color name="lightPurple">#CAA3D3</color>
     <color name="purple">#7B3C7A</color>
