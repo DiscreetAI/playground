@@ -159,7 +159,7 @@
     <string name="again">Do it again!</string>
     <string name="unfollowtext">Unfollow</string>
     <string name="followtext">Follow</string>
-    <string name="title_activity_main">Sample Fitbit Client!</string>
+    <string name="title_activity_main">Datashark</string>
     <string name="login_with_fitbit">Login with Fitbit</string>
     <string name="scopes_granted_format">Scopes Granted: %s</string>
     <string name="user_info">User</string>

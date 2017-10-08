@@ -26,6 +26,7 @@ public class RootActivity extends AppCompatActivity implements AuthenticationHan
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_root);
 //        binding = DataBindingUtil.setContentView(this, R.layout.activity_root);
     }
 
@@ -49,6 +50,7 @@ public class RootActivity extends AppCompatActivity implements AuthenticationHan
     }
 
     public void onLoggedIn() {
+
         Intent intent = new Intent(this, TabbedActivity.class);
         startActivity(intent);
 //        binding.setLoading(false);
