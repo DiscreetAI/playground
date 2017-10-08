@@ -34,7 +34,7 @@ def main():
 def results():
     categ = request.form['categ']
     col_names = get_columns(categ)
-    return render_template('left-sidebar.html', cat = categ)
+    return render_template('left-sidebar.html', cat = col_names)
 
 @application.route('/execute')
 def execute(query):
