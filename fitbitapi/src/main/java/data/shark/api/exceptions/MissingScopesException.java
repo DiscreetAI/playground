@@ -1,6 +1,6 @@
 package data.shark.api.exceptions;
 
-import data.shark.authentication.Scope;
+import com.fitbit.authentication.Scope;
 
 import java.util.Collection;
 

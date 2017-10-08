@@ -1,4 +1,4 @@
-package data.sveinungkb;
+package com.sveinungkb;
 
 /*
 Copyright (C) 2012 Sveinung Kval Bakken, sveinung.bakken@gmail.com

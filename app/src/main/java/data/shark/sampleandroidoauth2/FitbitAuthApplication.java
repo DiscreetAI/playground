@@ -1,10 +1,10 @@
 package data.shark.sampleandroidoauth2;
 
-import data.shark.authentication.AuthenticationConfiguration;
-import data.shark.authentication.AuthenticationConfigurationBuilder;
-import data.shark.authentication.AuthenticationManager;
-import data.shark.authentication.ClientCredentials;
-import data.shark.authentication.Scope;
+import com.fitbit.authentication.AuthenticationConfiguration;
+import com.fitbit.authentication.AuthenticationConfigurationBuilder;
+import com.fitbit.authentication.AuthenticationManager;
+import com.fitbit.authentication.ClientCredentials;
+import com.fitbit.authentication.Scope;
 
 import android.app.Activity;
 import android.app.Application;
@@ -14,7 +14,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
-import static data.shark.authentication.Scope.activity;
+import static com.fitbit.authentication.Scope.activity;
 
 /**
  * Created by jboggess on 9/28/16.
@@ -83,6 +83,14 @@ public class FitbitAuthApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        AuthenticationManager.configure(this, generateAuthenticationConfiguration(this, RootActivity.class));
+        ClientCredentials clientCredentials = new ClientCredentials("228MWM", "699ed916a01faff2cb3139f437b897f1", "https://finished");
+
+        AuthenticationConfiguration config = new AuthenticationConfigurationBuilder()
+                .setClientCredentials(clientCredentials)
+                .setEncryptionKey("25fBNoJXm3hHREB/3EWK4UeznmZQold0XPS8wBbfENE=")
+                .addRequiredScopes(Scope.profile, Scope.settings)
+                .build();
+
+        AuthenticationManager.configure(this, config)    ;
     }
 }

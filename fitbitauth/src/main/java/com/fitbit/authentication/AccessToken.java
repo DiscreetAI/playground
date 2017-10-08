@@ -1,4 +1,4 @@
-package data.shark.authentication;
+package com.fitbit.authentication;
 
 import android.os.Parcel;
 import android.os.Parcelable;

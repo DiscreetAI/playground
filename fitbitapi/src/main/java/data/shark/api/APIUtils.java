@@ -2,9 +2,9 @@ package data.shark.api;
 
 import data.shark.api.exceptions.MissingScopesException;
 import data.shark.api.exceptions.TokenExpiredException;
-import data.shark.authentication.AccessToken;
-import data.shark.authentication.AuthenticationManager;
-import data.shark.authentication.Scope;
+import com.fitbit.authentication.AccessToken;
+import com.fitbit.authentication.AuthenticationManager;
+import com.fitbit.authentication.Scope;
 
 import android.app.Activity;
 

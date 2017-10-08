@@ -1,8 +1,8 @@
 package data.shark.api.loaders;
 
 import data.shark.api.APIUtils;
-import data.shark.authentication.AuthenticationManager;
-import data.shark.authentication.Scope;
+import com.fitbit.authentication.AuthenticationManager;
+import com.fitbit.authentication.Scope;
 import data.shark.fitbitcommon.network.BasicHttpRequest;
 import data.shark.fitbitcommon.network.BasicHttpResponse;
 

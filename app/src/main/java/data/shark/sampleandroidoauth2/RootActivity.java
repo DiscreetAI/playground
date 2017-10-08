@@ -14,10 +14,10 @@ import java.util.Set;
 //import data.shark.sampleandroidoauth2.databinding.ActivityRootBinding;
 import data.shark.R;
 import data.shark.activities.tab.TabbedActivity;
-import data.shark.authentication.AuthenticationHandler;
-import data.shark.authentication.AuthenticationManager;
-import data.shark.authentication.AuthenticationResult;
-import data.shark.authentication.Scope;
+import com.fitbit.authentication.AuthenticationHandler;
+import com.fitbit.authentication.AuthenticationManager;
+import com.fitbit.authentication.AuthenticationResult;
+import com.fitbit.authentication.Scope;
 
 public class RootActivity extends AppCompatActivity implements AuthenticationHandler {
 

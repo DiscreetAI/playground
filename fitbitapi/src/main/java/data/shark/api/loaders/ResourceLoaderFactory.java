@@ -1,6 +1,6 @@
 package data.shark.api.loaders;
 
-import data.shark.authentication.Scope;
+import com.fitbit.authentication.Scope;
 
 import android.app.Activity;
 import android.os.Handler;

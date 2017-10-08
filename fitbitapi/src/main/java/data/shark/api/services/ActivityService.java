@@ -5,7 +5,7 @@ import data.shark.api.exceptions.TokenExpiredException;
 import data.shark.api.loaders.ResourceLoaderFactory;
 import data.shark.api.loaders.ResourceLoaderResult;
 import data.shark.api.models.DailyActivitySummary;
-import data.shark.authentication.Scope;
+import com.fitbit.authentication.Scope;
 
 import android.app.Activity;
 import android.content.Loader;

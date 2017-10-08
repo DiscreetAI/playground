@@ -1,4 +1,4 @@
-package data.shark.authentication;
+package com.fitbit.authentication;
 
 import android.annotation.TargetApi;
 import android.os.Build;

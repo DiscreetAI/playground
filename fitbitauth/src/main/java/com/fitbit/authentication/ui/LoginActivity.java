@@ -1,12 +1,12 @@
-package data.shark.authentication.ui;
+package com.fitbit.authentication.ui;
 
-import data.shark.authentication.AuthenticationHandler;
-import data.shark.authentication.AuthenticationResult;
-import data.shark.authentication.AuthorizationController;
-import data.shark.authentication.ClientCredentials;
-import data.shark.authentication.Scope;
-import data.shark.fitbitauth.R;
-import data.shark.fitbitauth.databinding.ActivityLoginBinding;
+import com.fitbit.authentication.AuthenticationHandler;
+import com.fitbit.authentication.AuthenticationResult;
+import com.fitbit.authentication.AuthorizationController;
+import com.fitbit.authentication.ClientCredentials;
+import com.fitbit.authentication.Scope;
+import com.fitbit.fitbitauth.R;
+import com.fitbit.fitbitauth.databinding.ActivityAuthorizefitbitBinding;
 
 import android.app.Activity;
 import android.content.Context;
@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity implements AuthenticationHa
     private static final String CLIENT_CREDENTIALS_KEY = "CLIENT_CREDENTIALS_KEY";
     private static final String EXPIRES_IN_KEY = "EXPIRES_IN_KEY";
     private static final String SCOPES_KEY = "SCOPES_KEY";
-    private ActivityLoginBinding binding;
+    private ActivityAuthorizefitbitBinding binding;
 
     public static Intent createIntent(Context context, @NonNull ClientCredentials clientCredentials, @Nullable Long expiresIn, Set<Scope> scopes) {
         return createIntent(context, null, clientCredentials, expiresIn, scopes);
@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity implements AuthenticationHa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_authorizefitbit);
 
         ClientCredentials clientCredentials = getIntent().getParcelableExtra(CLIENT_CREDENTIALS_KEY);
         Long expiresIn = getIntent().getLongExtra(EXPIRES_IN_KEY, 604800);
@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity implements AuthenticationHa
         }
 
         AuthorizationController authorizationController = new AuthorizationController(
-                binding.loginWebview,
+                binding.webview,
                 clientCredentials,
                 this);
 
@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity implements AuthenticationHa
 
     @Override
     public void onAuthFinished(AuthenticationResult result) {
-        binding.loginWebview.setVisibility(View.GONE);
+        binding.webview.setVisibility(View.GONE);
 
         Intent resultIntent = new Intent();
         resultIntent.putExtra(AUTHENTICATION_RESULT_KEY, result);

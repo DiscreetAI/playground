@@ -1,4 +1,4 @@
-package data.shark.authentication;
+package com.fitbit.authentication;
 
 import data.shark.fitbitcommon.network.BasicHttpRequestBuilder;
 
