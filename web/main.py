@@ -31,6 +31,10 @@ def main():
     return render_template('index.html')
 
 
+@application.route("/home", methods=['POST'])
+def home():
+    return redirect('/')
+
 @application.route('/results', methods=['POST'])
 def results():
     categ = request.form['categ']
@@ -43,14 +47,16 @@ def results():
     import ast
     col_names = ast.literal_eval(temp)
     print(col_names)
-    return render_template('left-sidebar.html', cols=json.dumps(col_names))
+    return render_template('left-sidebar.html', table = table_name, cols=json.dumps(col_names))
 
 
 @application.route('/execute', methods=['POST'])
 def execute():
     print("execute called")
-    #df = pd.read_sql_query(query, db.engine)
-    df = pd.read_sql_query("select * from fitbit_daily_activity_summary", db.engine)
+    query = request.form['query']
+    print(query)
+    df = pd.read_sql_query(query, db.engine)
+    #df = pd.read_sql_query("select * from fitbit_daily_activity_summary", db.engine)
     csv = df.to_csv(index=False)
     return Response(
         csv,

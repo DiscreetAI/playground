@@ -31,6 +31,11 @@ input[type=checkbox]{
 	visibility: hidden;
 }
 
+#input38 {
+	font-family: Courier New, Courier, monospace;
+	font-size: 25px;
+}
+
 label {
 	cursor: pointer;
 	text-indent: -9999px;
@@ -73,7 +78,8 @@ label:active:after {
 .clearfix:after { clear: both; }
 
 .colo {
-	font-size: 20px;
+	font-size: 30px;
+	font-style: 1px bold;
 }
 
 .desco {

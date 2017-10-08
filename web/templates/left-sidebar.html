@@ -17,131 +17,36 @@
 	<body>
 		<div id="page-wrapper">
 
-			<!-- Header -->
-				<div id="page-wrapper">
 
 					<!-- Header -->
 					<header id="header">
-						<input class="input__field input__field--isao" type="text" id="input-38" />
+						<input class="input__field input__field--isao"  disabled type="text" id="input-38" />
 						<label class="input__label input__label--isao" for="input-38" data-content="First Name">
-							<form action="/execute" method = "post">
-								<input type="submit" class="button special">Send Query
-							</form>
-						
-						
+							<div>
+								
+								<form action="/execute" method="post">
+									<div style="font-size:18px" id="switcheroo" onclick="flip()" class="button special">Write your own query!</div>
+									<button style="font-size:18px" id="sendQ" type="submit" name="query" class="button special"  value="">Send Query and Download</button>
+								</form>
+								
+							</div>
 					</header>
 
 			<!-- Main -->
-				<div id="main" class="wrapper style1 footer">
-					<div class="container footer_contents">
-						<header class="major">
+				<div id="main" class="wrapper style1 align-left">
+					<div>
 							<h2>Fitbit Data: </h2>
-							<p>Select the columns that you want, and we will build the query. Or, build the query yourself!</p>
+							<h4>Select the columns that you want, and we will build the query. Or, build the query yourself!</h4> <br> 
 							<div id = "stuff">
 
-							</div>
-							<form id="myForm2" action="/insert" method="post">
-								<div>
-
-									<input type="submit" id="op1" name="categ" value="Fitness" class="button marg">
-
-
-									<input type="submit" id="op2" name="categ" value="Education" class="button marg">
-
-
-									<input type="submit" id="op3" name="categ" value="Shopping" class="button marg">
-
-
-									<input type="submit" id="op4" name="categ" value="Social Media" class="button marg">
-
-								</div>
-
-								<div>
-									<a onclick="printMonkey()" href="#four" class="button marg">
-							<span>Fitness</span>
-							</a>
-
-									<a href="#four" class="button marg">
-							<span>Education</span>
-							</a>
-
-									<a href="#four" class="button marg">
-							<span>Shopping</span>
-							</a>
-
-									<a href="#four" class="button marg">
-							<span>Social Media</span>
-							</a>
-								</div>
-							</form>
-						</header>
-						<div class="row 150% contents">
-							<div class="4u 12u$(medium)">
-
-								<!-- Sidebar -->
-									<section id="sidebar">
-										<section>
-											<h3>Magna Feugiat</h3>
-											<p>Sed tristique purus vitae volutpat commodo suscipit amet sed nibh. Proin a ullamcorper sed blandit. Sed tristique purus vitae volutpat commodo suscipit ullamcorper commodo suscipit amet sed nibh. Proin a ullamcorper sed blandit..</p>
-											<footer>
-												<ul class="actions">
-													<li><a href="#" class="button">Learn More</a></li>
-												</ul>
-											</footer>
-										</section>
-										<hr />
-										<section>
-											<a href="#" class="image fit"><img src="images/pic06.jpg" alt="" /></a>
-											<h3>Amet Lorem Tempus</h3>
-											<p>Sed tristique purus vitae volutpat commodo suscipit amet sed nibh. Proin a ullamcorper sed blandit. Sed tristique purus vitae volutpat commodo suscipit ullamcorper sed blandit lorem ipsum dolore.</p>
-											<footer>
-												<ul class="actions">
-													<li><a href="#" class="button">Learn More</a></li>
-												</ul>
-											</footer>
-										</section>
-									</section>
-
-							</div>
-							<div class="8u$ 12u$(medium) important(medium)">
-
-								<!-- Content -->
-									<section id="content">
-										<a href="#" class="image fit"><img src="images/pic05.jpg" alt="" /></a>
-										<h3>Dolore Amet Consequat</h3>
-										<p>Aliquam massa urna, imperdiet sit amet mi non, bibendum euismod est. Curabitur mi justo, tincidunt vel eros ullamcorper, porta cursus justo. Cras vel neque eros. Vestibulum diam quam, mollis at magna consectetur non, malesuada quis augue. Morbi tincidunt pretium interdum est. Curabitur mi justo, tincidunt vel eros ullamcorper, porta cursus justo. Cras vel neque eros. Vestibulum diam.</p>
-										<p>Vestibulum diam quam, mollis at consectetur non, malesuada quis augue. Morbi tincidunt pretium interdum. Morbi mattis elementum orci, nec dictum porta cursus justo. Quisque ultricies lorem in ligula condimentum, et egestas turpis sagittis. Cras ac nunc urna. Nullam eget lobortis purus. Phasellus vitae tortor non est placerat tristique.</p>
-										<h3>Sed Magna Ornare</h3>
-										<p>In vestibulum massa quis arcu lobortis tempus. Nam pretium arcu in odio vulputate luctus. Suspendisse euismod lorem eget lacinia fringilla. Sed sed felis justo. Nunc sodales elit in laoreet aliquam. Nam gravida, nisl sit amet iaculis porttitor, risus nisi rutrum metus.</p>
-										<ul>
-											<li>Faucibus orci lobortis ac adipiscing integer.</li>
-											<li>Col accumsan arcu mi aliquet placerat.</li>
-											<li>Lobortis vestibulum ut magna tempor massa nascetur.</li>
-											<li>Blandit massa non blandit tempor interdum.</li>
-											<li>Lacinia mattis arcu nascetur lobortis.</li>
-										</ul>
-									</section>
-
-							</div>
-						</div>
+							</div>	
 					</div>
 				</div>
 
-			<!-- Footer -->
-				<footer id="footer ">
-					<ul class="icons">
-						<li><a href="#" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
-						<li><a href="#" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
-						<li><a href="#" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
-						<li><a href="#" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
-						<li><a href="#" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
-						<li><a href="#" class="icon alt fa-envelope"><span class="label">Email</span></a></li>
-					</ul>
-					<ul class="copyright">
-						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-					</ul>
-				</footer>
-
+			
+				<form action="/home" method="post">
+					<button style="font-size:18px" type="submit" class="button special" value="">Back</button>
+				</form>
 		</div>
 
 		<!-- Scripts -->
@@ -154,15 +59,96 @@
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
 			<script>
+				var pieces = ["select ", "* ", "from ", '{{table}} '];
+				var size = 0;
+				
+				
+				var table = '{{table}}';
+				console.log(pieces[3]);
 				var col = JSON.parse('{{cols|safe}}');
 				console.log(col[0]);
 				var place = document.getElementById('stuff');
 				for (var i = 0; i < col.length; i++) {
 					var col_name = col[i][0];
 					var col_desc = col[i][1];
-					place.innerHTML += "<input type='checkbox' id='switch" + i + "'/><label for='switch" + i + "'>" + col_name + "</label>" 
-					place.innerHTML += "<p class = 'desco'>" + col_desc + "</p>"
+					var ido = "switch" + i;
+					place.innerHTML += "<input type='checkbox' value = '" + col_name + "' class = 'checko' id='" + ido + "'/><label class = 'colo' onclick = 'queryBuilder(" + ido + ")' for='" + ido + "'><b>" + col_name + ": </b></label>" 
+					place.innerHTML += "<span class = 'desco'>" + col_desc + "</span><br>"
 				}
+
+				function update() {
+					var checko = document.getElementById("input-38");
+					if (checko.disabled) {
+						document.getElementById("input-38").value = pieces[0] + pieces[1] + pieces[2] + pieces[3];
+						document.getElementById("sendQ").value = pieces[0] + pieces[1] + pieces[2] + pieces[3];
+					} else {
+						document.getElementById("sendQ").value = checko.value;
+					}
+				}
+				function flip() {
+					console.log("called flip");
+					var checko = document.getElementById("input-38");
+					if (checko.disabled) {
+						document.getElementById("switcheroo").innerHTML = "Back to checkboxes!"
+						checko.disabled = false;
+						var checkboxs = document.getElementsByClassName("checko");
+							for (var j = 0; j < checkboxs.length; j++) {
+								var checkbox = checkboxs[j];
+								checkbox.checked = false;
+								checkbox.disabled = true;
+							}
+					} else {
+						var checkboxs = document.getElementsByClassName("checko");
+						document.getElementById("switcheroo").innerHTML = "Write your own query!"
+						for (var j = 0; j < checkboxs.length; j++) {
+							var checkbox = checkboxs[j];
+							checkbox.disabled = false;
+						}
+						checko.disabled = true;
+						document.getElementById("input-38").value = pieces[0] + pieces[1] + pieces[2] + pieces[3];
+						document.getElementById("sendQ").value = pieces[0] + pieces[1] + pieces[2] + pieces[3];
+					}
+				}
+				function queryBuilder(id) {
+					var checko = document.getElementById("input-38");
+					if (checko.disabled) {
+						console.log(id);
+						var stringo = "";
+						var temp = 0;
+						var name = id.id;
+						var wat = true;
+						if (id.checked) {
+							wat = false;
+						}
+						console.log(name);
+						var checkboxs = document.getElementsByClassName("checko");
+						console.log(checkboxs);
+						for (var j = 0; j < checkboxs.length; j++) {
+							var checkbox = checkboxs[j];
+							var name2 = checkbox.id;
+							if (name === name2 && wat) {
+								temp += 1;
+								stringo += checkbox.value + ", "
+							} else if (name != name2 && checkbox.checked) {
+								temp += 1;
+								stringo += checkbox.value + ", "
+
+							}
+						}
+						if (temp > 0) {
+							stringo = stringo.substring(0, stringo.length - 2) + " ";
+						} else {
+							stringo = "* "
+						}
+						console.log(stringo);
+						pieces[1] = stringo;
+						document.getElementById("input-38").value = pieces[0] + pieces[1] + pieces[2] + pieces[3];
+						document.getElementById("sendQ").value = pieces[0] + pieces[1] + pieces[2] + pieces[3];
+					}
+				}
+				window.setInterval(function () {
+						update()
+					}, 500);
 			</script>
 	</body>
 </html>
