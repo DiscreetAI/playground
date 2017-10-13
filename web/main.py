@@ -1,8 +1,6 @@
-from flask import Flask, render_template, request, redirect, url_for, Response
+from flask import Flask, render_template, request, redirect, url_for, Response, json
 from flask_sqlalchemy import SQLAlchemy
 import pandas as pd
-import requests
-import json
 from collections import defaultdict
 
 #from models import db

@@ -3,3 +3,4 @@ Flask-Cors==2.1.2
 Flask-SQLAlchemy==2.3.1
 psycopg2==2.7.3.1
 SQLAlchemy==1.0.13
+pandas==0.19.2

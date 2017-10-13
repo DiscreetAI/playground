@@ -10,7 +10,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 	</head>
@@ -20,8 +20,7 @@
 
 					<!-- Header -->
 					<header id="header">
-						<input class="input__field input__field--isao"  disabled type="text" id="input-38" />
-						<label class="input__label input__label--isao" for="input-38" data-content="First Name">
+						<input disabled type="text" id="input-38" />
 							<div>
 								
 								<form action="/execute" method="post">
@@ -31,10 +30,10 @@
 								
 							</div>
 					</header>
-
+				<br><br>
 			<!-- Main -->
-				<div id="main" class="wrapper style1 align-left">
-					<div>
+				<div id="main" class="wrapper style1 align-center">
+					<div class="">
 							<h2>Fitbit Data: </h2>
 							<h4>Select the columns that you want, and we will build the query. Or, build the query yourself!</h4> <br> 
 							<div id = "stuff">
@@ -50,14 +49,14 @@
 		</div>
 
 		<!-- Scripts -->
-			<script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
-			<script src="{{ url_for('static', filename='assets/js/jquery.scrolly.min.js') }}"></script>
-			<script src="{{ url_for('static', filename='assets/js/jquery.dropotron.min.js') }}"></script>
-			<script src="{{ url_for('static', filename='assets/js/jquery.scrollex.min.js') }}"></script>
-			<script src="{{ url_for('static', filename='assets/js/skel.min.js') }}"></script>
-			<script src="{{ url_for('static', filename='assets/js/util.js') }}"></script>
+			<script src="{{ url_for('static', filename='styles/js/jquery.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='styles/js/jquery.scrolly.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='styles/js/jquery.dropotron.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='styles/js/jquery.scrollex.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='styles/js/skel.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='styles/js/util.js') }}"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+			<script src="{{ url_for('static', filename='styles/js/main.js') }}"></script>
 			<script>
 				var pieces = ["select ", "* ", "from ", '{{table}} '];
 				var size = 0;
@@ -72,8 +71,7 @@
 					var col_name = col[i][0];
 					var col_desc = col[i][1];
 					var ido = "switch" + i;
-					place.innerHTML += "<input type='checkbox' value = '" + col_name + "' class = 'checko' id='" + ido + "'/><label class = 'colo' onclick = 'queryBuilder(" + ido + ")' for='" + ido + "'><b>" + col_name + ": </b></label>" 
-					place.innerHTML += "<span class = 'desco'>" + col_desc + "</span><br>"
+					place.innerHTML += "<div class = 'control-group'>  <label class='control control--checkbox colo'>" + col_name + ": <span class = 'desco'>" + col_desc + "</span>" + "<input onclick = 'queryBuilder(" + ido + ")' class = 'checko' id='" + ido + "' value = '" + col_name + "' type= 'checkbox'/><div class='control__indicator'></div></label> </div><br>";
 				}
 
 				function update() {
@@ -110,9 +108,10 @@
 					}
 				}
 				function queryBuilder(id) {
+					console.log(id);
 					var checko = document.getElementById("input-38");
 					if (checko.disabled) {
-						console.log(id);
+						
 						var stringo = "";
 						var temp = 0;
 						var name = id.id;
@@ -120,16 +119,14 @@
 						if (id.checked) {
 							wat = false;
 						}
+						console.log(wat);
 						console.log(name);
 						var checkboxs = document.getElementsByClassName("checko");
 						console.log(checkboxs);
 						for (var j = 0; j < checkboxs.length; j++) {
 							var checkbox = checkboxs[j];
 							var name2 = checkbox.id;
-							if (name === name2 && wat) {
-								temp += 1;
-								stringo += checkbox.value + ", "
-							} else if (name != name2 && checkbox.checked) {
+							if (checkbox.checked) {
 								temp += 1;
 								stringo += checkbox.value + ", "
 
@@ -144,6 +141,7 @@
 						pieces[1] = stringo;
 						document.getElementById("input-38").value = pieces[0] + pieces[1] + pieces[2] + pieces[3];
 						document.getElementById("sendQ").value = pieces[0] + pieces[1] + pieces[2] + pieces[3];
+						console.log("end");
 					}
 				}
 				window.setInterval(function () {
