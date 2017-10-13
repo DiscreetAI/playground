@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="OptionView">
+        <attr name="questionText" format="string" />
+        <attr name="optionType" format="enum">
+            <enum name="multi" value="0"/>
+            <enum name="single" value="1"/>
+        </attr>
+        <attr name="numOptions" format="integer" />
+    </declare-styleable>
+</resources>
