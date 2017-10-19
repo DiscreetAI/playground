@@ -63,7 +63,7 @@ def execute():
         )
 
 
-@application.route('/insert', methods=['POST'])
+@application.route('/insert', methods=['POST', 'GET'])
 def insert():
     ## FOR DATASHARK
     client_id = '228MWF'
