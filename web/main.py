@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, Response, json
 from flask_sqlalchemy import SQLAlchemy
+import requests
 import pandas as pd
 from collections import defaultdict
 
@@ -23,8 +24,7 @@ application.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
 db.init_app(application)
 
 
-
-@application.route("/")
+@application.route("/", methods=['GET', 'POST'])
 def main():
     return render_template('index.html')
 
@@ -63,17 +63,19 @@ def execute():
         )
 
 
-@application.route('/insert', methods=['POST'])
+@application.route('/insert', methods=['POST', 'GET'])
 def insert():
     ## FOR DATASHARK
+    print("HERE v3")
+    print(request.form)
+    access_token = request.form['accessToken']
     client_id = '228MWF'
     client_secret = 'ed16cd1e79a28f00c990e304b87f3bb6'
 
-
     ## FOR SPECIFIC USER - ROHAN - CONFIDENTIAL
-    access_token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1U1pMN0YiLCJhdWQiOiIyMjhNV0YiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJhY3QgcnNldCBybG9jIHJ3ZWkgcmhyIHJwcm8gcm51dCByc2xlIiwiZXhwIjoxNTA3NDM5OTc3LCJpYXQiOjE1MDc0MTExNzd9.RGXvH1fUoAJjhqGEwP_wsjL7MYkP2xvzQgs36BtxlvA'
+    #access_token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1U1pMN0YiLCJhdWQiOiIyMjhNV0YiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJhY3QgcnNldCBybG9jIHJ3ZWkgcmhyIHJwcm8gcm51dCByc2xlIiwiZXhwIjoxNTA3NDM5OTc3LCJpYXQiOjE1MDc0MTExNzd9.RGXvH1fUoAJjhqGEwP_wsjL7MYkP2xvzQgs36BtxlvA'
     refresh_token = 'bbb44b3a0e05a4235b9bd837481d4796372ee3d51d5a1f4b2b82af4c85216534'
-
+    print("Access: " + access_token)
     header = {'Authorization': 'Bearer ' + access_token}
 
 
@@ -103,6 +105,8 @@ def insert():
     fitbit_daily_activity_summary_df = pd.DataFrame(dict)
 
     fitbit_daily_activity_summary_df.to_sql('fitbit_daily_activity_summary', db.engine, if_exists='append', index=False)
+
+    print("finished you monkeys")
 
 
 
