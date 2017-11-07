@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity implements AuthenticationHa
         binding = DataBindingUtil.setContentView(this, R.layout.activity_authorizefitbit);
 
         ClientCredentials clientCredentials = getIntent().getParcelableExtra(CLIENT_CREDENTIALS_KEY);
-        Long expiresIn = getIntent().getLongExtra(EXPIRES_IN_KEY, 604800);
+        Long expiresIn = getIntent().getLongExtra(EXPIRES_IN_KEY, 100);
         Parcelable[] scopes = getIntent().getParcelableArrayExtra(SCOPES_KEY);
         Set<Scope> scopesSet = new HashSet<>();
         for (Parcelable scope : scopes) {

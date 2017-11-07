@@ -1,32 +1,18 @@
 package data.shark.activities.tab;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSnapHelper;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.nshmura.snappysmoothscroller.SnappyLinearLayoutManager;
-import com.squareup.picasso.Picasso;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -35,31 +21,18 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
-import com.fitbit.authentication.AuthenticationHandler;
-import com.fitbit.authentication.AuthenticationManager;
-import com.fitbit.authentication.AuthenticationResult;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 import data.shark.R;
-import data.shark.activities.profile.ProfileActivity;
-import data.shark.models.OGUser;
-import data.shark.services.DataSource;
-import data.shark.util.Authentication;
-import data.shark.util.FontUtilities;
+import data.shark.authentication.AuthenticationHandler;
+import data.shark.authentication.AuthenticationManager;
+import data.shark.authentication.AuthenticationResult;
 
 /**
  * Second tab in TabbedActivity
  * Greets user and displays progress in their current program
  */
 public class HomeFragment extends Fragment implements View.OnClickListener, AuthenticationHandler {
-
+    private final String SERVER_BASE_URL = "http://datashark7.jn6tkty4uh.us-west-1.elasticbeanstalk.com/";
     private Context context;
     private TextView money;
     public void onLoginClick(View view) {
@@ -68,15 +41,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Auth
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        AuthenticationManager.onActivityResult(requestCode, resultCode, data, (AuthenticationHandler) this);
+        AuthenticationManager.onActivityResult(requestCode, resultCode, data, this);
     }
 
 
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
     public void onAuthFinished(AuthenticationResult authenticationResult) {
         if (authenticationResult.isSuccessful()) {
-            new GetMethodDemo().execute("http://127.0.0.1:5000/insert");
+//            new GetMethodDemo().execute(SERVER_BASE_URL+"/insert");
+            money.setText("you are on your way to making money!");
         } else {
+            money.setText("you are a failure");
             //Uh oh... errors...
         }
     }
@@ -93,7 +68,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Auth
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         context = getContext();
-        TextView money = (TextView) view.findViewById(R.id.money);
+        money = (TextView) view.findViewById(R.id.money);
         Button auth = (Button) view.findViewById(R.id.authorize);
         money.setOnClickListener(this);
         auth.setOnClickListener(this);
@@ -135,73 +110,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Auth
 //                startActivity(activeIntent);
 //                break;
             default:
-                AuthenticationManager.login(this.getActivity());
                 break;
-        }
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
-    private class GetMethodDemo extends AsyncTask<String , Void ,String> {
-        String server_response;
-
-        @Override
-        protected String doInBackground(String... strings) {
-
-            URL url;
-            HttpURLConnection urlConnection = null;
-
-            try {
-                url = new URL(strings[0]);
-                urlConnection = (HttpURLConnection) url.openConnection();
-
-                int responseCode = urlConnection.getResponseCode();
-
-                if(responseCode == HttpURLConnection.HTTP_OK){
-                    server_response = readStream(urlConnection.getInputStream());
-                    Log.v("CatalogClient", server_response);
-                }
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-            Log.e("Response", "" + server_response);
-
-
-        }
-
-// Converting InputStream to String
-
-        private String readStream(InputStream in) {
-            BufferedReader reader = null;
-            StringBuffer response = new StringBuffer();
-            try {
-                reader = new BufferedReader(new InputStreamReader(in));
-                String line = "";
-                while ((line = reader.readLine()) != null) {
-                    response.append(line);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            return response.toString();
         }
     }
 }

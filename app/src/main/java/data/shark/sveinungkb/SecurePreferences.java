@@ -1,4 +1,4 @@
-package data.shark.com.sveinungkb;
+package data.shark.sveinungkb;
 
 /*
 Copyright (C) 2012 Sveinung Kval Bakken, sveinung.bakken@gmail.com

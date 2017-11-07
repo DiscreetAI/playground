@@ -1,4 +1,4 @@
-package data.shark.com.fitbit.authentication;
+package data.shark.authentication;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;

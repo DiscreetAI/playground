@@ -1,4 +1,4 @@
-package data.shark.com.fitbit.authentication;
+package data.shark.authentication;
 
 import android.os.AsyncTask;
 import android.os.Handler;

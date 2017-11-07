@@ -1,4 +1,4 @@
-package data.shark.com.fitbit.authentication.ui;
+package data.shark.authentication.ui;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,11 +17,11 @@ import com.fitbit.fitbitauth.databinding.ActivityAuthorizefitbitBinding;
 import java.util.HashSet;
 import java.util.Set;
 
-import data.shark.com.fitbit.authentication.AuthenticationHandler;
-import data.shark.com.fitbit.authentication.AuthenticationResult;
-import data.shark.com.fitbit.authentication.AuthorizationController;
-import data.shark.com.fitbit.authentication.ClientCredentials;
-import data.shark.com.fitbit.authentication.Scope;
+import data.shark.authentication.AuthenticationHandler;
+import data.shark.authentication.AuthenticationResult;
+import data.shark.authentication.AuthorizationController;
+import data.shark.authentication.ClientCredentials;
+import data.shark.authentication.Scope;
 
 
 public class LoginActivity extends AppCompatActivity implements AuthenticationHandler {

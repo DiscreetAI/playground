@@ -1,4 +1,4 @@
-package data.shark.com.fitbit.authentication;
+package data.shark.authentication;
 
 /**
  * Created by jboggess on 9/19/16.

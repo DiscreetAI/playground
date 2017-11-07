@@ -81,7 +81,6 @@ public class AuthenticationManager {
                             setCurrentAccessToken(authenticationResult.getAccessToken());
                         }
                     }
-
                     authenticationHandler.onAuthFinished(authenticationResult);
                 } else {
                     authenticationHandler.onAuthFinished(AuthenticationResult.dismissed());

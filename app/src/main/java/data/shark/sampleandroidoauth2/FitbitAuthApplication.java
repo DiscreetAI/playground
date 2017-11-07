@@ -1,10 +1,10 @@
 package data.shark.sampleandroidoauth2;
 
-import com.fitbit.authentication.AuthenticationConfiguration;
-import com.fitbit.authentication.AuthenticationConfigurationBuilder;
-import com.fitbit.authentication.AuthenticationManager;
-import com.fitbit.authentication.ClientCredentials;
-import com.fitbit.authentication.Scope;
+import data.shark.authentication.AuthenticationConfiguration;
+import data.shark.authentication.AuthenticationConfigurationBuilder;
+import data.shark.authentication.AuthenticationManager;
+import data.shark.authentication.ClientCredentials;
+import data.shark.authentication.Scope;
 
 import android.app.Activity;
 import android.app.Application;
@@ -14,7 +14,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
-import static com.fitbit.authentication.Scope.activity;
+import static data.shark.authentication.Scope.activity;
 
 /**
  * Created by jboggess on 9/28/16.

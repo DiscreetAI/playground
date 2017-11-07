@@ -3,25 +3,30 @@ package data.shark.activities.tab;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.facebook.CallbackManager;
+import data.shark.authentication.AuthenticationHandler;
+import data.shark.authentication.AuthenticationManager;
 
 import data.shark.R;
+import data.shark.authentication.AuthenticationResult;
+import data.shark.sampleandroidoauth2.FitbitAuthApplication;
 
-public class TabbedActivity extends AppCompatActivity {
+public class TabbedActivity extends AppCompatActivity implements AuthenticationHandler{
 
-    CallbackManager callbackManager;
+
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabbed);
-
+        FitbitAuthApplication app = new FitbitAuthApplication();
         //Three Tab Layout
         TabPagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(), 3);
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(2);
 
@@ -36,6 +41,14 @@ public class TabbedActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.homeFragment);
+        AuthenticationHandler authenticationHandler = (AuthenticationHandler) fragment;
+        AuthenticationManager.onActivityResult(requestCode, resultCode, data, this);
+//        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onAuthFinished(AuthenticationResult result) {
+        System.out.println("I did it!");
     }
 }

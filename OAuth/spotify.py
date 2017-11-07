@@ -47,3 +47,5 @@ if token:
         results = sp.current_user_top_tracks(time_range=range, limit=50)
         for i, item in enumerate(results['items']):
             print(i, item['name'], '//', item['artists'][0]['name'])
+
+#TODO: Put this into a database. @AMOG

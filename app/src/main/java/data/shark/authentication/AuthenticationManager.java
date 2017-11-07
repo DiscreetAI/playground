@@ -1,4 +1,4 @@
-package data.shark.com.fitbit.authentication;
+package data.shark.authentication;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,8 +10,8 @@ import android.support.annotation.Nullable;
 import java.util.HashSet;
 import java.util.Set;
 
-import data.shark.com.fitbit.authentication.ui.LoginActivity;
-import data.shark.com.sveinungkb.SecurePreferences;
+import data.shark.authentication.ui.LoginActivity;
+import data.shark.sveinungkb.SecurePreferences;
 import data.shark.fitbitcommon.network.BasicHttpRequestBuilder;
 
 /**
@@ -64,11 +64,10 @@ public class AuthenticationManager {
 
     public static boolean onActivityResult(int requestCode, int resultCode, Intent data, @NonNull AuthenticationHandler authenticationHandler) {
         checkPreconditions();
-        authenticationHandler = HomeFragment.newInstance();
         switch (requestCode) {
             case (RESULT_CODE): {
                 if (resultCode == Activity.RESULT_OK) {
-                    AuthenticationResult authenticationResult = data.getParcelableExtra(data.shark.com.fitbit.authentication.ui.LoginActivity.AUTHENTICATION_RESULT_KEY);
+                    AuthenticationResult authenticationResult = data.getParcelableExtra(LoginActivity.AUTHENTICATION_RESULT_KEY);
 
                     if (authenticationResult.isSuccessful()) {
                         Set<Scope> grantedScopes = new HashSet<>(authenticationResult.getAccessToken().getScopes());
@@ -76,14 +75,14 @@ public class AuthenticationManager {
 
                         requiredScopes.removeAll(grantedScopes);
                         if (requiredScopes.size() > 0) {
-                            authenticationResult = data.shark.com.fitbit.authentication.AuthenticationResult.missingRequiredScopes(requiredScopes);
+                            authenticationResult = AuthenticationResult.missingRequiredScopes(requiredScopes);
                         } else {
                             setCurrentAccessToken(authenticationResult.getAccessToken());
                         }
                     }
                     authenticationHandler.onAuthFinished(authenticationResult);
                 } else {
-                    authenticationHandler.onAuthFinished(data.shark.com.fitbit.authentication.AuthenticationResult.dismissed());
+                    authenticationHandler.onAuthFinished(AuthenticationResult.dismissed());
                 }
                 return true;
             }
