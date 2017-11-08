@@ -4,11 +4,16 @@ import requests
 import pandas as pd
 from collections import defaultdict
 # import OAuth.spotify
-from OAuth.server import fitbit_data
 # import OAuth.youtube1
 # import OAuth.twitter
 
 #from models import db
+import sys
+serverpath = "/OAuth/server"
+if not serverpath in sys.path:
+    sys.path.insert(0, serverpath)
+
+from OAuth.server import fitbit_data
 
 db = SQLAlchemy()
 
@@ -131,7 +136,7 @@ def insertInsta():
     header = {'Authorization': 'Bearer ' + access_token}
     endpoint = 'https://api.instagram.com/v1/users/self/follows?access_token=' + access_token
 
-    
+
 
 
 
