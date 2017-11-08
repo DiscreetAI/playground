@@ -108,6 +108,24 @@ def insert():
 
     print("finished you monkeys")
 
+@application.route('/insertInsta', methods=['POST', 'GET'])
+def insertInsta():
+    ## FOR DATASHARK
+    print("HERE v3")
+    print(request.form)
+    #access_token = request.form['accessToken']
+    client_id = '82d738adc7b7424ea472ce523bea8966'
+    client_secret = 'ed16cd1e79a28f00c990e304b87f3bb6'
+
+    access_token = '3267610983.1677ed0.2240d1a1d85f49a48a5a58a90cb40703'
+    #access_token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1U1pMN0YiLCJhdWQiOiIyMjhNV0YiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJhY3QgcnNldCBybG9jIHJ3ZWkgcmhyIHJwcm8gcm51dCByc2xlIiwiZXhwIjoxNTA3NDM5OTc3LCJpYXQiOjE1MDc0MTExNzd9.RGXvH1fUoAJjhqGEwP_wsjL7MYkP2xvzQgs36BtxlvA'
+    refresh_token = 'bbb44b3a0e05a4235b9bd837481d4796372ee3d51d5a1f4b2b82af4c85216534'
+    print("Access: " + access_token)
+    header = {'Authorization': 'Bearer ' + access_token}
+    endpoint = 'https://api.instagram.com/v1/users/self/follows?access_token=' + access_token
+
+    
+
 
 
 def get_columns(categ):
