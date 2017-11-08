@@ -48,6 +48,7 @@ public class TestMainActivity extends AppCompatActivity implements View.OnClickL
         context = getApplicationContext();
     }
     private final String SERVER_BASE_URL = "http://datashark7.jn6tkty4uh.us-west-1.elasticbeanstalk.com/";
+//    private final String SERVER_BASE_URL = "http://localhost:5000/";
     private TextView money;
     public void onLoginClick(View view) {
         AuthenticationManager.login(this);
@@ -86,6 +87,7 @@ public class TestMainActivity extends AppCompatActivity implements View.OnClickL
         RequestQueue MyRequestQueue = Volley.newRequestQueue(context);
 
         public void execute(String s, AccessToken accessToken) {
+            Log.v("accessToken", accessToken.getAccessToken());
             //Create an error listener to handle errors appropriately.
             StringRequest MyStringRequest = new StringRequest(Request.Method.POST, s, response -> {
                 //This code is executed if the server responds, whether or not the response contains data.

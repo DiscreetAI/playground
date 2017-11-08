@@ -1,0 +1,20 @@
+branch-defaults:
+  default:
+    environment: datashark7
+environment-defaults:
+  datashark7:
+    branch: null
+    repository: null
+global:
+  application_name: datashark
+  default_ec2_keyname: null
+  default_platform: arn:aws:elasticbeanstalk:us-west-1::platform/Python 2.7 running
+    on 64bit Amazon Linux/2.5.2
+  default_region: us-west-1
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: eb-cli
+  sc: null
+  workspace_type: Application
