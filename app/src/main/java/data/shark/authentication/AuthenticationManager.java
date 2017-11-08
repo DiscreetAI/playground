@@ -1,7 +1,4 @@
-package com.fitbit.authentication;
-
-import com.fitbit.authentication.ui.LoginActivity;
-import data.shark.fitbitcommon.network.BasicHttpRequestBuilder;
+package data.shark.authentication;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,10 +7,12 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.sveinungkb.SecurePreferences;
-
 import java.util.HashSet;
 import java.util.Set;
+
+import data.shark.authentication.ui.LoginActivity;
+import data.shark.sveinungkb.SecurePreferences;
+import data.shark.fitbitcommon.network.BasicHttpRequestBuilder;
 
 /**
  * Created by jboggess on 9/14/16.
