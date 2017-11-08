@@ -15,6 +15,14 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import static data.shark.authentication.Scope.activity;
+import static data.shark.authentication.Scope.heartrate;
+import static data.shark.authentication.Scope.location;
+import static data.shark.authentication.Scope.nutrition;
+import static data.shark.authentication.Scope.profile;
+import static data.shark.authentication.Scope.settings;
+import static data.shark.authentication.Scope.sleep;
+import static data.shark.authentication.Scope.social;
+import static data.shark.authentication.Scope.weight;
 
 /**
  * Created by jboggess on 9/28/16.
@@ -66,8 +74,8 @@ public class FitbitAuthApplication extends Application {
                     .setEncryptionKey(SECURE_KEY)
                     .setTokenExpiresIn(2592000L) // 30 days
                     .setBeforeLoginActivity(new Intent(context, mainActivityClass))
-                    .addRequiredScopes(Scope.profile, Scope.settings)
-                    .addOptionalScopes(activity, Scope.weight)
+                    .addRequiredScopes(profile, settings, activity, heartrate, location, nutrition, profile, settings, sleep, social,
+                            weight)
                     .setLogoutOnAuthFailure(true)
 
                     .build();
@@ -88,8 +96,8 @@ public class FitbitAuthApplication extends Application {
         AuthenticationConfiguration config = new AuthenticationConfigurationBuilder()
                 .setClientCredentials(clientCredentials)
                 .setEncryptionKey("25fBNoJXm3hHREB/3EWK4UeznmZQold0XPS8wBbfENE=")
-                .addRequiredScopes(Scope.profile, Scope.settings)
-                .build();
+                .addRequiredScopes(profile, settings, activity, heartrate, location, nutrition, profile, settings, sleep, social,
+                        weight)                .build();
 
         AuthenticationManager.configure(this, config)    ;
     }
