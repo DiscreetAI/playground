@@ -8,12 +8,12 @@ from collections import defaultdict
 # import OAuth.twitter
 
 #from models import db
-import sys
-serverpath = "/OAuth/server"
-if not serverpath in sys.path:
-    sys.path.insert(0, serverpath)
-
-from OAuth.server import fitbit_data
+# import sys
+# serverpath = "/OAuth/server"
+# if not serverpath in sys.path:
+#     sys.path.insert(0, serverpath)
+#
+# from OAuth.server import fitbit_data
 
 db = SQLAlchemy()
 
@@ -71,6 +71,36 @@ def execute():
         headers={"Content-disposition": "attachment; filename=data.csv"}
         )
 
+def fitbit_data(access_token):
+	header = {'Authorization': 'Bearer ' + access_token}
+
+
+	## FOR FITBIT DAILY ACTIVITY SUMMARY
+
+	fitbit_daily_activity_summary_values = ['lightlyActiveMinutes', 'caloriesBMR', 'caloriesOut', 'marginalCalories', 'fairlyActiveMinutes', 'veryActiveMinutes', 'sedentaryMinutes', 'restingHeartRate', 'elevation', 'activityCalories', 'activeScore', 'floors', 'steps']
+	fitbit_daily_activity_summary_endpoint = 'https://api.fitbit.com/1/user/-/activities/date/2017-9-{0}.json'
+
+	dict = defaultdict(lambda: [])
+
+	for date in range(1, 30):
+		endpoint = fitbit_daily_activity_summary_endpoint.format(str(date).zfill(2))
+		# print(endpoint)
+		response = requests.get(endpoint, headers=header)
+		parsed = json.loads(response.text)
+
+		# print(date)
+		for value in fitbit_daily_activity_summary_values:
+			if value in parsed['summary']:
+				dict[value].append(parsed['summary'][value])
+			else:
+				dict[value].append(None)
+		if 'distances' in parsed['summary']:
+			distances = parsed['summary']['distances']
+			if len(distances) > 0:
+				if 'distance' in distances[0]:
+					dict['distance'].append(distances[0]['distance'])
+	fitbit_daily_activity_summary_df = pd.DataFrame(dict)
+	return fitbit_daily_activity_summary_df
 
 @application.route('/insert', methods=['POST', 'GET'])
 def insert():
