@@ -1,0 +1,119 @@
+<!DOCTYPE HTML>
+<!--
+	Landed by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>DataShark</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body>
+		<div class="overlay">
+			<div class="d-a-t-a-s-h-a-r-k">
+				<img id="shark2" src="{{ url_for('static', filename='images/shark.png') }}" alt="">
+				D A T A S H A R K
+				<img id = "shark" src="{{ url_for('static', filename='images/shark.png') }}" alt="">
+			</div>
+			<br> <br> <br> <br> <br> <br> <br> <br>
+			<form id="myForm" action="/results" method="post">
+			<div class = "insta rectangle">
+				<div class = "testo">
+					<input class="icon" name = "categ" id="inst" type="image" value = "Fitbit" src="{{ url_for('static', filename='images/fitbit.png') }}">
+					<div class = "vertical">Fitbit</div>
+				</div>
+				<div class = "testo">
+					<input disabled class="icon nogo" id="inst" type="image" src="{{ url_for('static', filename='images/instagram.png') }}">
+					<div class="vertical nogo2">Instagram</div>
+				</div>
+				<div class="testo">
+					<input disabled class="icon nogo" id="inst" type="image" src="{{ url_for('static', filename='images/fb.png') }}">
+					<div class="vertical nogo2">Facebook</div>
+				</div>
+			</div>
+			</form>
+		</div>
+		
+<!-- Four
+					<a href="#four" class="goto-next scrolly">Next</a>
+				</section>
+
+
+			 
+				<section id="four" class="wrapper style1 special fade-up">
+
+					<div class="container">
+						<header class="major">
+							<h2>hi dude</h2>
+							<p>Iaculis ac volutpat vis non enim gravida nisi faucibus posuere arcu consequat</p>
+						</header>
+						<div class="box alt">
+							<div class="row uniform">
+								<section class="4u 6u(medium) 12u$(xsmall)">
+									<span class="icon alt major fa-area-chart"></span>
+									<h3>Ipsum sed commodo</h3>
+									<p>Feugiat accumsan lorem eu ac lorem amet accumsan donec. Blandit orci porttitor.</p>
+								</section>
+								<section class="4u 6u$(medium) 12u$(xsmall)">
+									<span class="icon alt major fa-comment"></span>
+									<h3>Eleifend lorem ornare</h3>
+									<p>Feugiat accumsan lorem eu ac lorem amet accumsan donec. Blandit orci porttitor.</p>
+								</section>
+								<section class="4u$ 6u(medium) 12u$(xsmall)">
+									<span class="icon alt major fa-flask"></span>
+									<h3>Cubilia cep lobortis</h3>
+									<p>Feugiat accumsan lorem eu ac lorem amet accumsan donec. Blandit orci porttitor.</p>
+								</section>
+								<section class="4u 6u$(medium) 12u$(xsmall)">
+									<span class="icon alt major fa-paper-plane"></span>
+									<h3>Non semper interdum</h3>
+									<p>Feugiat accumsan lorem eu ac lorem amet accumsan donec. Blandit orci porttitor.</p>
+								</section>
+								<section class="4u 6u(medium) 12u$(xsmall)">
+									<span class="icon alt major fa-file"></span>
+									<h3>Odio laoreet accumsan</h3>
+									<p>Feugiat accumsan lorem eu ac lorem amet accumsan donec. Blandit orci porttitor.</p>
+								</section>
+								<section class="4u$ 6u$(medium) 12u$(xsmall)">
+									<span class="icon alt major fa-lock"></span>
+									<h3>Massa arcu accumsan</h3>
+									<p>Feugiat accumsan lorem eu ac lorem amet accumsan donec. Blandit orci porttitor.</p>
+								</section>
+							</div>
+						</div>
+						<footer class="major">
+							<ul class="actions">
+								<li><a href="#" class="button">Magna sed feugiat</a></li>
+							</ul>
+						</footer>
+					</div>
+				</section>
+
+			-->
+
+
+
+		</div>
+		
+		<!-- Scripts -->
+			
+
+
+	</body>
+
+	<script>
+	function printMonkey() {
+		console.log("You are a monkey");
+	}
+
+	$('#ParentContainer').scroll(function () {
+			$('#sidebar').css('top', $(this).scrollTop());
+		});
+	</script>
+</html>

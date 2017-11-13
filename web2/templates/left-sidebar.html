@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<!--
+	Landed by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>DataShark</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body>
+		<div class="overlay">
+			<div class="d-a-t-a-s-h-a-r-k">
+				<img id="shark2" src="{{ url_for('static', filename='images/shark.png') }}" alt=""> D A T A S H A R K
+				<img id="shark" src="{{ url_for('static', filename='images/shark.png') }}" alt="">
+			</div>
+			<br> <br> <br> 
+
+			<div class = "fitbit">
+				<img class="icon2 align" src="{{ url_for('static', filename='images/fitbit.png') }}" alt=""> F I T B I T
+			</div>
+			<div class= "overall">
+				<div class="rectangle7">
+					<div class="customize-search">
+						CUSTOMIZE SEARCH
+					</div> <br>
+					<div class="bel">
+						<div class="budget">
+							BUDGET
+						</div>
+						<div class="slido">
+							<span class="lab">$50</span> <input id="bud" type="range" min=50 max=500 value=300> <span class="lab">$500</span>
+						</div>
+						<span class="verticalo bel" id="budgo"></span>
+						<br>
+					</div>
+					<div class="bel">
+						<div class="budget">
+							USERS
+						</div>
+						<div class="slido">
+							<span class="lab">10</span> <input id="us" type="range" min=10 max=200 value=50> <span class="lab">200</span>
+						</div>
+						<span class="verticalo bel" id="use"></span>
+						<br>
+					</div>
+					<div class="bel">
+						<div class="budget">
+							DURATION
+						</div>
+						<div class="slido">
+							<span class="lab">1 mon</span> <input id="dur" type="range" min=1 max=12 value=6> <span class="lab">12 mon</span>
+						</div>
+						<span class="verticalo bel" id="dura"></span>
+					</div>
+
+					
+				</div>
+				<div class="rectangle7" >
+					<div class="customize-search">
+						VARIABLES
+					</div> <br>
+					<div id = "stuff">
+
+					</div>
+					<button class="add-to-bag">ADD TO BAG</button>
+				</div>
+			</div>
+			
+		</div>
+
+		<!-- Scripts -->
+		<script>
+			var table = '{{table}}';
+			var col = JSON.parse('{{cols|safe}}');
+			console.log(col[0]);
+			var place = document.getElementById('stuff');
+			for (var i = 0; i < col.length; i++) {
+				var col_name = col[i][0];
+				var ido = "switch" + i;
+				place.innerHTML += "<button class = 'coloo' id = '" + ido + "'onclick='changeClass(" + ido + ")'> " + col_name + "</button>";
+			}
+
+		function changeClass(ido) {
+			console.log(ido);
+			if (ido.className === "coloo") {
+				ido.className = "coloo2";
+			} else {
+				ido.className = "coloo";
+			}
+			
+		}
+		function update() {
+			document.getElementById('budgo').innerHTML = "$" + document.getElementById('bud').value;
+			document.getElementById('use').innerHTML = document.getElementById('us').value;
+			document.getElementById('dura').innerHTML = document.getElementById('dur').value;
+		}
+		window.setInterval(function () {
+				update()
+			}, 10);
+		</script>
+	</body>
+</html>
