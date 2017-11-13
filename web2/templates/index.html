@@ -14,40 +14,32 @@
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 	</head>
-	<body class="landing">
-		<div id="page-wrapper">
-
-
-
-			<!-- Banner -->
-				<section id="banner">
-					<div class="content">
-						<header>
-							<h2>Welcome to DataShark!</h2>
-							<p>Select among the categories below to get started.</p>
-
-						</header>
-						<br> <br>
-						<form id = "myForm" action="/results" method = "post">
-							<div>
-
-								<input type="submit" id="op1" name = "categ" value = "Fitbit" class="button marg">
-
-
-								<input type="submit" id="op2" name = "categ" value = "Facebook (Not Implemented!)" disabled class="button marg">
-
-
-								<input type="submit" id="op3" name = "categ" value = "Instagram" class="button marg">
-
-
-								<input type="submit" id="op4" name = "categ" value = "LinkedIn (Not Implemented!)" disabled class="button marg">
-
-							</div>
-
-							
-						</form>
-
-					</div>
+	<body>
+		<div class="overlay">
+			<div class="d-a-t-a-s-h-a-r-k">
+				<img id="shark2" src="{{ url_for('static', filename='images/shark.png') }}" alt="">
+				D A T A S H A R K
+				<img id = "shark" src="{{ url_for('static', filename='images/shark.png') }}" alt="">
+			</div>
+			<br> <br> <br> <br> <br> <br> <br> <br>
+			<form id="myForm" action="/results" method="post">
+			<div class = "insta rectangle">
+				<div class = "testo">
+					<input class="icon" name = "categ" id="inst" type="image" value = "Fitbit" src="{{ url_for('static', filename='images/fitbit.png') }}">
+					<div class = "vertical">Fitbit</div>
+				</div>
+				<div class = "testo">
+					<input disabled class="icon nogo" id="inst" type="image" src="{{ url_for('static', filename='images/instagram.png') }}">
+					<div class="vertical nogo2">Instagram</div>
+				</div>
+				<div class="testo">
+					<input disabled class="icon nogo" id="inst" type="image" src="{{ url_for('static', filename='images/fb.png') }}">
+					<div class="vertical nogo2">Facebook</div>
+				</div>
+			</div>
+			</form>
+		</div>
+		
 <!-- Four
 					<a href="#four" class="goto-next scrolly">Next</a>
 				</section>
@@ -110,14 +102,7 @@
 		</div>
 		
 		<!-- Scripts -->
-			<script src="{{ url_for('static', filename='styles/js/jquery.min.js') }}"></script>
-			<script src="{{ url_for('static', filename='styles/js/jquery.scrolly.min.js') }}"></script>
-			<script src="{{ url_for('static', filename='styles/js/jquery.dropotron.min.js') }}"></script>
-			<script src="{{ url_for('static', filename='styles/js/jquery.scrollex.min.js') }}"></script>
-			<script src="{{ url_for('static', filename='styles/js/skel.min.js') }}"></script>
-			<script src="{{ url_for('static', filename='styles/js/util.js') }}"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="{{ url_for('static', filename='styles/js/main.js') }}"></script>
+			
 
 
 	</body>
