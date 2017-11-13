@@ -41,6 +41,5 @@ def fitbit_data(access_token=accesstoken):
 			if len(distances) > 0:
 				if 'distance' in distances[0]:
 					dict['distance'].append(distances[0]['distance'])
-
 	fitbit_daily_activity_summary_df = pd.DataFrame(dict)
 	return fitbit_daily_activity_summary_df
