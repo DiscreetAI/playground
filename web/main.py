@@ -102,7 +102,7 @@ def fitbit_data(access_token):
 	fitbit_daily_activity_summary_df = pd.DataFrame(dict)
 	return fitbit_daily_activity_summary_df
 
-@application.route('/insert', methods=['POST', 'GET'])
+@application.route('/insertFitbit', methods=['POST', 'GET'])
 def insert():
     ## FOR DATASHARK
     print("HERE v3")
@@ -149,8 +149,45 @@ def insert():
 
     print("finished you monkeys")
     return "I inserted Fitbit data!"
+def spotify_data(token):
+    sp = spotipy.Spotify(auth=token)
+    playlists = sp.user_playlists(username)
+    dict = defaultdict(lambda: [])
+    for playlist in playlists['items']:
+        if playlist['owner']['id'] == username:
+            print(playlist['name'])
+            print('  total tracks', playlist['tracks']['total'])
+            results = sp.user_playlist(username, playlist['id'],
+                fields="tracks,next")
+            tracks = results['tracks']
+            show_tracks(tracks)
+            while tracks['next']:
+                tracks = sp.next(tracks)
+                show_tracks(tracks)
+    results = sp.current_user_saved_tracks()
+    for item in results['items']:
+        track = item['track']
+        print(track['name'] + ' - ' + track['artists'][0]['name'])
+    sp.trace = False
+    ranges = ['short_term', 'medium_term', 'long_term']
+    for range in ranges:
+        print("range:", range)
+        results = sp.current_user_top_artists(time_range=range, limit=50)
+        for i, item in enumerate(results['items']):
+            print(i, item['name'])
+        results = sp.current_user_top_tracks(time_range=range, limit=50)
+        for i, item in enumerate(results['items']):
+            print(i, item['name'], '//', item['artists'][0]['name'])
+@application.route('/insertSpotify', methods=['POST, 'GET])
+def insertSpotify():
+    print(request.form)
+    access_token = request.form['accessToken']
+    refresh_token = request.form['refreshToken']
+    data = spotify_data(access_token)
+    data.to_sql('spotify_data', db.engine, if_exists='append', index=False)
+    return "I inserted Spotify data!"
 
-@application.route('/insertInsta', methods=['POST', 'GET'])
+@application.route('/insertInstagram', methods=['POST', 'GET'])
 def insertInsta():
     ## FOR DATASHARK
     print("HERE v3")
