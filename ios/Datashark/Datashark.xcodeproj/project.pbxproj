@@ -1,0 +1,825 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FB09A33B1FB95E510027F183 /* RoundedCornersExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB09A33A1FB95E510027F183 /* RoundedCornersExtension.swift */; };
+		FB09A3561FB99D200027F183 /* OAuthSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB09A3471FB98D660027F183 /* OAuthSwift.framework */; };
+		FB09A3571FB99D200027F183 /* OAuthSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB09A3471FB98D660027F183 /* OAuthSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FBA618B01FB904BB0047492D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA618AF1FB904BB0047492D /* AppDelegate.swift */; };
+		FBA618B21FB904BB0047492D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA618B11FB904BB0047492D /* ViewController.swift */; };
+		FBA618B51FB904BB0047492D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBA618B31FB904BB0047492D /* Main.storyboard */; };
+		FBA618B81FB904BB0047492D /* Datashark.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FBA618B61FB904BB0047492D /* Datashark.xcdatamodeld */; };
+		FBA618BA1FB904BB0047492D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBA618B91FB904BB0047492D /* Assets.xcassets */; };
+		FBA618BD1FB904BB0047492D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBA618BB1FB904BB0047492D /* LaunchScreen.storyboard */; };
+		FBA618C81FB904BB0047492D /* DatasharkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA618C71FB904BB0047492D /* DatasharkTests.swift */; };
+		FBA618D31FB904BB0047492D /* DatasharkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA618D21FB904BB0047492D /* DatasharkUITests.swift */; };
+		FBA618F21FB90FBA0047492D /* Nunito-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBA618E41FB90FB90047492D /* Nunito-ExtraLight.ttf */; };
+		FBA618F31FB90FBA0047492D /* Nunito-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBA618E51FB90FB90047492D /* Nunito-BoldItalic.ttf */; };
+		FBA618F41FB90FBA0047492D /* Nunito-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBA618E61FB90FB90047492D /* Nunito-Black.ttf */; };
+		FBA618F51FB90FBA0047492D /* Nunito-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBA618E71FB90FB90047492D /* Nunito-Bold.ttf */; };
+		FBA618F61FB90FBA0047492D /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBA618E81FB90FB90047492D /* Nunito-Regular.ttf */; };
+		FBA618F71FB90FBA0047492D /* Nunito-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBA618E91FB90FB90047492D /* Nunito-SemiBoldItalic.ttf */; };
+		FBA618F81FB90FBA0047492D /* Nunito-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBA618EA1FB90FB90047492D /* Nunito-Light.ttf */; };
+		FBA618F91FB90FBA0047492D /* Nunito-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBA618EB1FB90FB90047492D /* Nunito-ExtraBoldItalic.ttf */; };
+		FBA618FA1FB90FBA0047492D /* Nunito-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBA618EC1FB90FB90047492D /* Nunito-ExtraLightItalic.ttf */; };
+		FBA618FB1FB90FBA0047492D /* Nunito-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBA618ED1FB90FB90047492D /* Nunito-Italic.ttf */; };
+		FBA618FC1FB90FBA0047492D /* Nunito-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBA618EE1FB90FB90047492D /* Nunito-ExtraBold.ttf */; };
+		FBA618FD1FB90FBA0047492D /* Nunito-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBA618EF1FB90FBA0047492D /* Nunito-BlackItalic.ttf */; };
+		FBA618FE1FB90FBA0047492D /* Nunito-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBA618F01FB90FBA0047492D /* Nunito-LightItalic.ttf */; };
+		FBA618FF1FB90FBA0047492D /* Nunito-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBA618F11FB90FBA0047492D /* Nunito-SemiBold.ttf */; };
+		FBA619021FB915220047492D /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA619011FB915220047492D /* AccountViewController.swift */; };
+		FBA619041FB92BAD0047492D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA619031FB92BAD0047492D /* MainViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FB09A3461FB98D660027F183 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FB09A33C1FB98D660027F183 /* OAuthSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F435027A1A6791B200038A29;
+			remoteInfo = OAuthSwift;
+		};
+		FB09A3481FB98D660027F183 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FB09A33C1FB98D660027F183 /* OAuthSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C48B28021AFA598D00C7DEF6;
+			remoteInfo = OAuthSwiftOSX;
+		};
+		FB09A34A1FB98D660027F183 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FB09A33C1FB98D660027F183 /* OAuthSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C4B6EE1E1BF74CE300443596;
+			remoteInfo = OAuthSwiftTVOS;
+		};
+		FB09A34C1FB98D660027F183 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FB09A33C1FB98D660027F183 /* OAuthSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C40890C01C11B37000E3146A;
+			remoteInfo = OAuthSwiftWatchOS;
+		};
+		FB09A34E1FB98D660027F183 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FB09A33C1FB98D660027F183 /* OAuthSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F451E3C5195B8CD80051434C;
+			remoteInfo = OAuthSwiftDemo;
+		};
+		FB09A3501FB98D660027F183 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FB09A33C1FB98D660027F183 /* OAuthSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C49FD5241AFB5DF500791E1A;
+			remoteInfo = OAuthSwiftOSXDemo;
+		};
+		FB09A3521FB98D660027F183 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FB09A33C1FB98D660027F183 /* OAuthSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C4D50DF71BFB693F0053B624;
+			remoteInfo = OAuthSwiftTests;
+		};
+		FB09A3541FB98D8E0027F183 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FB09A33C1FB98D660027F183 /* OAuthSwift.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F43502791A6791B200038A29;
+			remoteInfo = OAuthSwift;
+		};
+		FB09A3581FB99D200027F183 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FB09A33C1FB98D660027F183 /* OAuthSwift.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F43502791A6791B200038A29;
+			remoteInfo = OAuthSwift;
+		};
+		FBA618C41FB904BB0047492D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FBA618A41FB904BB0047492D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FBA618AB1FB904BB0047492D;
+			remoteInfo = Datashark;
+		};
+		FBA618CF1FB904BB0047492D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FBA618A41FB904BB0047492D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FBA618AB1FB904BB0047492D;
+			remoteInfo = Datashark;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FB09A35A1FB99D210027F183 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FB09A3571FB99D200027F183 /* OAuthSwift.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		FB09A33A1FB95E510027F183 /* RoundedCornersExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCornersExtension.swift; sourceTree = "<group>"; };
+		FB09A33C1FB98D660027F183 /* OAuthSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuthSwift.xcodeproj; path = ../OAuthSwift/OAuthSwift.xcodeproj; sourceTree = "<group>"; };
+		FBA618AC1FB904BB0047492D /* Datashark.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Datashark.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FBA618AF1FB904BB0047492D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		FBA618B11FB904BB0047492D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		FBA618B41FB904BB0047492D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FBA618B71FB904BB0047492D /* Datashark.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Datashark.xcdatamodel; sourceTree = "<group>"; };
+		FBA618B91FB904BB0047492D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FBA618BC1FB904BB0047492D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		FBA618BE1FB904BB0047492D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FBA618C31FB904BB0047492D /* DatasharkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DatasharkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FBA618C71FB904BB0047492D /* DatasharkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatasharkTests.swift; sourceTree = "<group>"; };
+		FBA618C91FB904BB0047492D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FBA618CE1FB904BB0047492D /* DatasharkUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DatasharkUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FBA618D21FB904BB0047492D /* DatasharkUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatasharkUITests.swift; sourceTree = "<group>"; };
+		FBA618D41FB904BB0047492D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FBA618E41FB90FB90047492D /* Nunito-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-ExtraLight.ttf"; sourceTree = "<group>"; };
+		FBA618E51FB90FB90047492D /* Nunito-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-BoldItalic.ttf"; sourceTree = "<group>"; };
+		FBA618E61FB90FB90047492D /* Nunito-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Black.ttf"; sourceTree = "<group>"; };
+		FBA618E71FB90FB90047492D /* Nunito-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Bold.ttf"; sourceTree = "<group>"; };
+		FBA618E81FB90FB90047492D /* Nunito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Regular.ttf"; sourceTree = "<group>"; };
+		FBA618E91FB90FB90047492D /* Nunito-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		FBA618EA1FB90FB90047492D /* Nunito-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Light.ttf"; sourceTree = "<group>"; };
+		FBA618EB1FB90FB90047492D /* Nunito-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
+		FBA618EC1FB90FB90047492D /* Nunito-ExtraLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
+		FBA618ED1FB90FB90047492D /* Nunito-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Italic.ttf"; sourceTree = "<group>"; };
+		FBA618EE1FB90FB90047492D /* Nunito-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-ExtraBold.ttf"; sourceTree = "<group>"; };
+		FBA618EF1FB90FBA0047492D /* Nunito-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-BlackItalic.ttf"; sourceTree = "<group>"; };
+		FBA618F01FB90FBA0047492D /* Nunito-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-LightItalic.ttf"; sourceTree = "<group>"; };
+		FBA618F11FB90FBA0047492D /* Nunito-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-SemiBold.ttf"; sourceTree = "<group>"; };
+		FBA619011FB915220047492D /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		FBA619031FB92BAD0047492D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FBA618A91FB904BB0047492D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB09A3561FB99D200027F183 /* OAuthSwift.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FBA618C01FB904BB0047492D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FBA618CB1FB904BB0047492D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FB09A33D1FB98D660027F183 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FB09A3471FB98D660027F183 /* OAuthSwift.framework */,
+				FB09A3491FB98D660027F183 /* OAuthSwift.framework */,
+				FB09A34B1FB98D660027F183 /* OAuthSwift.framework */,
+				FB09A34D1FB98D660027F183 /* OAuthSwift.framework */,
+				FB09A34F1FB98D660027F183 /* OAuthSwiftDemo.app */,
+				FB09A3511FB98D660027F183 /* OAuthSwiftOSXDemo.app */,
+				FB09A3531FB98D660027F183 /* OAuthSwiftTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FBA618A31FB904BB0047492D = {
+			isa = PBXGroup;
+			children = (
+				FB09A33C1FB98D660027F183 /* OAuthSwift.xcodeproj */,
+				FBA619001FB90FC90047492D /* Nunito */,
+				FBA618AE1FB904BB0047492D /* Datashark */,
+				FBA618C61FB904BB0047492D /* DatasharkTests */,
+				FBA618D11FB904BB0047492D /* DatasharkUITests */,
+				FBA618AD1FB904BB0047492D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FBA618AD1FB904BB0047492D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FBA618AC1FB904BB0047492D /* Datashark.app */,
+				FBA618C31FB904BB0047492D /* DatasharkTests.xctest */,
+				FBA618CE1FB904BB0047492D /* DatasharkUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FBA618AE1FB904BB0047492D /* Datashark */ = {
+			isa = PBXGroup;
+			children = (
+				FBA618AF1FB904BB0047492D /* AppDelegate.swift */,
+				FBA618B11FB904BB0047492D /* ViewController.swift */,
+				FBA619011FB915220047492D /* AccountViewController.swift */,
+				FBA618B31FB904BB0047492D /* Main.storyboard */,
+				FB09A33A1FB95E510027F183 /* RoundedCornersExtension.swift */,
+				FBA619031FB92BAD0047492D /* MainViewController.swift */,
+				FBA618B91FB904BB0047492D /* Assets.xcassets */,
+				FBA618BB1FB904BB0047492D /* LaunchScreen.storyboard */,
+				FBA618BE1FB904BB0047492D /* Info.plist */,
+				FBA618B61FB904BB0047492D /* Datashark.xcdatamodeld */,
+			);
+			path = Datashark;
+			sourceTree = "<group>";
+		};
+		FBA618C61FB904BB0047492D /* DatasharkTests */ = {
+			isa = PBXGroup;
+			children = (
+				FBA618C71FB904BB0047492D /* DatasharkTests.swift */,
+				FBA618C91FB904BB0047492D /* Info.plist */,
+			);
+			path = DatasharkTests;
+			sourceTree = "<group>";
+		};
+		FBA618D11FB904BB0047492D /* DatasharkUITests */ = {
+			isa = PBXGroup;
+			children = (
+				FBA618D21FB904BB0047492D /* DatasharkUITests.swift */,
+				FBA618D41FB904BB0047492D /* Info.plist */,
+			);
+			path = DatasharkUITests;
+			sourceTree = "<group>";
+		};
+		FBA619001FB90FC90047492D /* Nunito */ = {
+			isa = PBXGroup;
+			children = (
+				FBA618E61FB90FB90047492D /* Nunito-Black.ttf */,
+				FBA618EF1FB90FBA0047492D /* Nunito-BlackItalic.ttf */,
+				FBA618E71FB90FB90047492D /* Nunito-Bold.ttf */,
+				FBA618E51FB90FB90047492D /* Nunito-BoldItalic.ttf */,
+				FBA618EE1FB90FB90047492D /* Nunito-ExtraBold.ttf */,
+				FBA618EB1FB90FB90047492D /* Nunito-ExtraBoldItalic.ttf */,
+				FBA618E41FB90FB90047492D /* Nunito-ExtraLight.ttf */,
+				FBA618EC1FB90FB90047492D /* Nunito-ExtraLightItalic.ttf */,
+				FBA618ED1FB90FB90047492D /* Nunito-Italic.ttf */,
+				FBA618EA1FB90FB90047492D /* Nunito-Light.ttf */,
+				FBA618F01FB90FBA0047492D /* Nunito-LightItalic.ttf */,
+				FBA618E81FB90FB90047492D /* Nunito-Regular.ttf */,
+				FBA618F11FB90FBA0047492D /* Nunito-SemiBold.ttf */,
+				FBA618E91FB90FB90047492D /* Nunito-SemiBoldItalic.ttf */,
+			);
+			path = Nunito;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FBA618AB1FB904BB0047492D /* Datashark */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FBA618D71FB904BB0047492D /* Build configuration list for PBXNativeTarget "Datashark" */;
+			buildPhases = (
+				FBA618A81FB904BB0047492D /* Sources */,
+				FBA618A91FB904BB0047492D /* Frameworks */,
+				FBA618AA1FB904BB0047492D /* Resources */,
+				FB09A35A1FB99D210027F183 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FB09A3551FB98D8E0027F183 /* PBXTargetDependency */,
+				FB09A3591FB99D200027F183 /* PBXTargetDependency */,
+			);
+			name = Datashark;
+			productName = Datashark;
+			productReference = FBA618AC1FB904BB0047492D /* Datashark.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FBA618C21FB904BB0047492D /* DatasharkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FBA618DA1FB904BB0047492D /* Build configuration list for PBXNativeTarget "DatasharkTests" */;
+			buildPhases = (
+				FBA618BF1FB904BB0047492D /* Sources */,
+				FBA618C01FB904BB0047492D /* Frameworks */,
+				FBA618C11FB904BB0047492D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FBA618C51FB904BB0047492D /* PBXTargetDependency */,
+			);
+			name = DatasharkTests;
+			productName = DatasharkTests;
+			productReference = FBA618C31FB904BB0047492D /* DatasharkTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		FBA618CD1FB904BB0047492D /* DatasharkUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FBA618DD1FB904BB0047492D /* Build configuration list for PBXNativeTarget "DatasharkUITests" */;
+			buildPhases = (
+				FBA618CA1FB904BB0047492D /* Sources */,
+				FBA618CB1FB904BB0047492D /* Frameworks */,
+				FBA618CC1FB904BB0047492D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FBA618D01FB904BB0047492D /* PBXTargetDependency */,
+			);
+			name = DatasharkUITests;
+			productName = DatasharkUITests;
+			productReference = FBA618CE1FB904BB0047492D /* DatasharkUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FBA618A41FB904BB0047492D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0900;
+				LastUpgradeCheck = 0900;
+				ORGANIZATIONNAME = "Gokul Swamy";
+				TargetAttributes = {
+					FBA618AB1FB904BB0047492D = {
+						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+					};
+					FBA618C21FB904BB0047492D = {
+						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+						TestTargetID = FBA618AB1FB904BB0047492D;
+					};
+					FBA618CD1FB904BB0047492D = {
+						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+						TestTargetID = FBA618AB1FB904BB0047492D;
+					};
+				};
+			};
+			buildConfigurationList = FBA618A71FB904BB0047492D /* Build configuration list for PBXProject "Datashark" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FBA618A31FB904BB0047492D;
+			productRefGroup = FBA618AD1FB904BB0047492D /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = FB09A33D1FB98D660027F183 /* Products */;
+					ProjectRef = FB09A33C1FB98D660027F183 /* OAuthSwift.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				FBA618AB1FB904BB0047492D /* Datashark */,
+				FBA618C21FB904BB0047492D /* DatasharkTests */,
+				FBA618CD1FB904BB0047492D /* DatasharkUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		FB09A3471FB98D660027F183 /* OAuthSwift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OAuthSwift.framework;
+			remoteRef = FB09A3461FB98D660027F183 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FB09A3491FB98D660027F183 /* OAuthSwift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OAuthSwift.framework;
+			remoteRef = FB09A3481FB98D660027F183 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FB09A34B1FB98D660027F183 /* OAuthSwift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OAuthSwift.framework;
+			remoteRef = FB09A34A1FB98D660027F183 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FB09A34D1FB98D660027F183 /* OAuthSwift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OAuthSwift.framework;
+			remoteRef = FB09A34C1FB98D660027F183 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FB09A34F1FB98D660027F183 /* OAuthSwiftDemo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = OAuthSwiftDemo.app;
+			remoteRef = FB09A34E1FB98D660027F183 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FB09A3511FB98D660027F183 /* OAuthSwiftOSXDemo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = OAuthSwiftOSXDemo.app;
+			remoteRef = FB09A3501FB98D660027F183 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FB09A3531FB98D660027F183 /* OAuthSwiftTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = OAuthSwiftTests.xctest;
+			remoteRef = FB09A3521FB98D660027F183 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FBA618AA1FB904BB0047492D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FBA618F21FB90FBA0047492D /* Nunito-ExtraLight.ttf in Resources */,
+				FBA618F31FB90FBA0047492D /* Nunito-BoldItalic.ttf in Resources */,
+				FBA618F41FB90FBA0047492D /* Nunito-Black.ttf in Resources */,
+				FBA618F51FB90FBA0047492D /* Nunito-Bold.ttf in Resources */,
+				FBA618F61FB90FBA0047492D /* Nunito-Regular.ttf in Resources */,
+				FBA618F71FB90FBA0047492D /* Nunito-SemiBoldItalic.ttf in Resources */,
+				FBA618F81FB90FBA0047492D /* Nunito-Light.ttf in Resources */,
+				FBA618F91FB90FBA0047492D /* Nunito-ExtraBoldItalic.ttf in Resources */,
+				FBA618FA1FB90FBA0047492D /* Nunito-ExtraLightItalic.ttf in Resources */,
+				FBA618FB1FB90FBA0047492D /* Nunito-Italic.ttf in Resources */,
+				FBA618FC1FB90FBA0047492D /* Nunito-ExtraBold.ttf in Resources */,
+				FBA618FD1FB90FBA0047492D /* Nunito-BlackItalic.ttf in Resources */,
+				FBA618FE1FB90FBA0047492D /* Nunito-LightItalic.ttf in Resources */,
+				FBA618FF1FB90FBA0047492D /* Nunito-SemiBold.ttf in Resources */,
+				FBA618BD1FB904BB0047492D /* LaunchScreen.storyboard in Resources */,
+				FBA618BA1FB904BB0047492D /* Assets.xcassets in Resources */,
+				FBA618B51FB904BB0047492D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FBA618C11FB904BB0047492D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FBA618CC1FB904BB0047492D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FBA618A81FB904BB0047492D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FBA618B81FB904BB0047492D /* Datashark.xcdatamodeld in Sources */,
+				FBA618B21FB904BB0047492D /* ViewController.swift in Sources */,
+				FBA619021FB915220047492D /* AccountViewController.swift in Sources */,
+				FBA618B01FB904BB0047492D /* AppDelegate.swift in Sources */,
+				FB09A33B1FB95E510027F183 /* RoundedCornersExtension.swift in Sources */,
+				FBA619041FB92BAD0047492D /* MainViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FBA618BF1FB904BB0047492D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FBA618C81FB904BB0047492D /* DatasharkTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FBA618CA1FB904BB0047492D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FBA618D31FB904BB0047492D /* DatasharkUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FB09A3551FB98D8E0027F183 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = OAuthSwift;
+			targetProxy = FB09A3541FB98D8E0027F183 /* PBXContainerItemProxy */;
+		};
+		FB09A3591FB99D200027F183 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = OAuthSwift;
+			targetProxy = FB09A3581FB99D200027F183 /* PBXContainerItemProxy */;
+		};
+		FBA618C51FB904BB0047492D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FBA618AB1FB904BB0047492D /* Datashark */;
+			targetProxy = FBA618C41FB904BB0047492D /* PBXContainerItemProxy */;
+		};
+		FBA618D01FB904BB0047492D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FBA618AB1FB904BB0047492D /* Datashark */;
+			targetProxy = FBA618CF1FB904BB0047492D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		FBA618B31FB904BB0047492D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FBA618B41FB904BB0047492D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		FBA618BB1FB904BB0047492D /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FBA618BC1FB904BB0047492D /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FBA618D51FB904BB0047492D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FBA618D61FB904BB0047492D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FBA618D81FB904BB0047492D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ZVC58YN32D;
+				INFOPLIST_FILE = Datashark/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = me.gokulswamy.Datashark;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		FBA618D91FB904BB0047492D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ZVC58YN32D;
+				INFOPLIST_FILE = Datashark/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = me.gokulswamy.Datashark;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		FBA618DB1FB904BB0047492D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ZVC58YN32D;
+				INFOPLIST_FILE = DatasharkTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = me.gokulswamy.DatasharkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Datashark.app/Datashark";
+			};
+			name = Debug;
+		};
+		FBA618DC1FB904BB0047492D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ZVC58YN32D;
+				INFOPLIST_FILE = DatasharkTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = me.gokulswamy.DatasharkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Datashark.app/Datashark";
+			};
+			name = Release;
+		};
+		FBA618DE1FB904BB0047492D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ZVC58YN32D;
+				INFOPLIST_FILE = DatasharkUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = me.gokulswamy.DatasharkUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Datashark;
+			};
+			name = Debug;
+		};
+		FBA618DF1FB904BB0047492D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ZVC58YN32D;
+				INFOPLIST_FILE = DatasharkUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = me.gokulswamy.DatasharkUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Datashark;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FBA618A71FB904BB0047492D /* Build configuration list for PBXProject "Datashark" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FBA618D51FB904BB0047492D /* Debug */,
+				FBA618D61FB904BB0047492D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FBA618D71FB904BB0047492D /* Build configuration list for PBXNativeTarget "Datashark" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FBA618D81FB904BB0047492D /* Debug */,
+				FBA618D91FB904BB0047492D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FBA618DA1FB904BB0047492D /* Build configuration list for PBXNativeTarget "DatasharkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FBA618DB1FB904BB0047492D /* Debug */,
+				FBA618DC1FB904BB0047492D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FBA618DD1FB904BB0047492D /* Build configuration list for PBXNativeTarget "DatasharkUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FBA618DE1FB904BB0047492D /* Debug */,
+				FBA618DF1FB904BB0047492D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		FBA618B61FB904BB0047492D /* Datashark.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				FBA618B71FB904BB0047492D /* Datashark.xcdatamodel */,
+			);
+			currentVersion = FBA618B71FB904BB0047492D /* Datashark.xcdatamodel */;
+			path = Datashark.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = FBA618A41FB904BB0047492D /* Project object */;
+}
