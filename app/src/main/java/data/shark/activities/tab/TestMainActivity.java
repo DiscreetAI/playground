@@ -63,7 +63,7 @@ public class TestMainActivity extends AppCompatActivity implements View.OnClickL
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
     public void onAuthFinished(AuthenticationResult authenticationResult) {
         if (authenticationResult.isSuccessful()) {
-            new PostMethodDemo().execute(SERVER_BASE_URL+"insert", authenticationResult.getAccessToken() );
+            new PostMethodDemo().execute(SERVER_BASE_URL+"insertFitbit", authenticationResult.getAccessToken() );
             money.setText("you are on your way to making money!");
         } else {
             money.setText("you are a failure");

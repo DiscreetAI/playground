@@ -155,6 +155,7 @@ def spotify_data(token):
     dict = defaultdict(lambda: [])
     for playlist in playlists['items']:
         if playlist['owner']['id'] == username:
+            dict[playlist['name']]
             print(playlist['name'])
             print('  total tracks', playlist['tracks']['total'])
             results = sp.user_playlist(username, playlist['id'],
