@@ -677,6 +677,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZVC58YN32D;
 				INFOPLIST_FILE = Datashark/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.gokulswamy.Datashark;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -693,6 +694,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZVC58YN32D;
 				INFOPLIST_FILE = Datashark/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.gokulswamy.Datashark;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -709,6 +711,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZVC58YN32D;
 				INFOPLIST_FILE = DatasharkTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.gokulswamy.DatasharkTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -726,6 +729,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZVC58YN32D;
 				INFOPLIST_FILE = DatasharkTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.gokulswamy.DatasharkTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -742,6 +746,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZVC58YN32D;
 				INFOPLIST_FILE = DatasharkUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.gokulswamy.DatasharkUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -758,6 +763,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZVC58YN32D;
 				INFOPLIST_FILE = DatasharkUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.gokulswamy.DatasharkUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

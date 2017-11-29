@@ -48,6 +48,20 @@ def results():
     return render_template('left-sidebar.html', table = table_name, cols=json.dumps(col_names))
 
 
+@application.route('/checkout', methods=['POST'])
+def checkout():
+    return render_template('checkout.html')
+
+
+@application.route('/account', methods=['POST'])
+def account():
+    return render_template('account.html')
+
+
+@application.route('/payment', methods=['POST'])
+def payment():
+    return render_template('payment.html')
+
 @application.route('/execute', methods=['POST'])
 def execute():
     print("execute called")

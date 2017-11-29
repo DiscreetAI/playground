@@ -15,13 +15,47 @@
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 	</head>
 	<body>
+		<div id="popup" class="shopCart">
+		
+			<div class="ordero tb2">SHOPPING CART</div>
+			<div class="fitbit2 tb2">
+					<img class="icon3 align" src="{{ url_for('static', filename='images/fitbit.png') }}" alt=""> F I T B I T
+				<br>
+				<br>
+				<div class="desc outer">150 users, 12 months</div>
+				<div class="outer">
+					<div class="lefto white">Remove | Edit</div>
+					<div class="righto white">$200</div>
+				</div>
+		
+			</div>
+		
+			<div class="fitbit2 tb2">
+				<img class="icon3 align" src="{{ url_for('static', filename='images/instagram.png') }}" alt=""> I N S T A G R A M
+				<br>
+				<br>
+				<div class="desc outer">200 users, 6 months</div>
+				<div class="outer">
+					<div class="lefto white">Remove | Edit</div>
+					<div class="righto white">$200</div>
+				</div>
+				
+			</div>
+		
+		</div>
 		<div class="overlay">
+			<form action="/checkout" method="post">
 			<div class="d-a-t-a-s-h-a-r-k">
+				
 				<img id="shark2" src="{{ url_for('static', filename='images/shark.png') }}" alt="">
 				D A T A S H A R K
 				<img id = "shark" src="{{ url_for('static', filename='images/shark.png') }}" alt="">
+				
+					<input type="image" id="cart" src="{{ url_for('static', filename='images/cart.png') }}" alt="">
+				
 			</div>
-			<br> <br> <br> <br> <br> <br> <br> <br>
+			</form>
+			<br> <br> <br> <br> <br>
 			<form id="myForm" action="/results" method="post">
 			<div class = "insta rectangle">
 				<div class = "testo">
@@ -29,12 +63,66 @@
 					<div class = "vertical">Fitbit</div>
 				</div>
 				<div class = "testo">
-					<input disabled class="icon nogo" id="inst" type="image" src="{{ url_for('static', filename='images/instagram.png') }}">
-					<div class="vertical nogo2">Instagram</div>
+					<input class="icon" name = "categ"id="inst" type="image" value = "Fitbit"src="{{ url_for('static', filename='images/instagram.png') }}">
+					<div class="vertical">Instagram</div>
 				</div>
 				<div class="testo">
-					<input disabled class="icon nogo" id="inst" type="image" src="{{ url_for('static', filename='images/fb.png') }}">
-					<div class="vertical nogo2">Facebook</div>
+					<input class="icon" name = "categ"id="inst" type="image" value = "Fitbit"src="{{ url_for('static', filename='images/fb.png') }}">
+					<div class="vertical">Facebook</div>
+				</div>
+				<div class="testo">
+					<input class="icon" name = "categ"id="inst" type="image" value = "Fitbit"src="{{ url_for('static', filename='images/twitter.png') }}">
+					<div class="vertical">Twitter</div>
+				</div>
+				<div class="testo">
+					<input class="icon" name="categ" id="inst" type="image" value = "Fitbit"src="{{ url_for('static', filename='images/snap.png') }}">
+					<div class="vertical">Snapchat</div>
+				</div>
+			</div>
+			<br> <br>
+			<div class="insta rectangle"> 
+				<div class="testo">
+					<input class="icon" name = "categ"id="inst" type="image" value = "Fitbit"src="{{ url_for('static', filename='images/ln.png') }}">
+					<div class="vertical">LinkedIn</div>
+				</div>
+				<div class="testo">
+					<input class="icon" name = "categ"id="inst" type="image" value = "Fitbit"src="{{ url_for('static', filename='images/Pint.gif') }}">
+					<div class="vertical">Pinterest</div>
+				</div>
+				<div class="testo">
+					<input class="icon" name="categ" id="inst" type="image" value = "Fitbit"src="{{ url_for('static', filename='images/yelp.png') }}">
+					<div class="vertical">Yelp</div>
+				</div>
+				<div class="testo">
+					<input class="icon" name="categ" id="inst" type="image" value = "Fitbit"src="{{ url_for('static', filename='images/locations.png') }}">
+					<div class="vertical">Google Maps</div>
+				</div>
+				<div class="testo">
+					<input class="icon" name="categ" id="inst" type="image" value = "Fitbit"src="{{ url_for('static', filename='images/apple.png') }}">
+					<div class="vertical">Apple Health</div>
+				</div>
+			</div>
+			<br>
+			<div class="insta rectangle">
+				<div class="testo">
+					<input class="icon" name="categ" id="inst" type="image" value="Fitbit" src="{{ url_for('static', filename='images/amazon.png') }}">
+					<div class="vertical">Amazon</div>
+				</div>
+				<div class="testo">
+					<input class="icon" name="categ" id="inst" type="image" value="Fitbit" src="{{ url_for('static', filename='images/wsup.png') }}">
+					<div class="vertical">WhatsApp</div>
+				</div>
+				<div class="testo">
+					<input class="icon" name="categ" id="inst" type="image" value="Fitbit" src="{{ url_for('static', filename='images/spotify.png') }}">
+					<div class="vertical">Spotify</div>
+				</div>
+				<div class="testo">
+					<input class="icon" name="categ" id="inst" type="image" value="Fitbit" src="{{ url_for('static', filename='images/reddit.png') }}">
+					<div class="vertical">Reddit</div>
+				</div>
+				<div class="testo">
+					<input class="icon" name="categ" id="inst" type="image" value="Fitbit" src="{{ url_for('static', filename='images/venmo.png') }}">
+					<div class="vertical">Venmo</div>
 				</div>
 			</div>
 			</form>
@@ -107,6 +195,27 @@
 
 	</body>
 
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+    <script type="text/javascript">
+      $(function() {
+        var moveLeft = 500;
+        var moveDown = 10;
+        
+        $('input#cart').hover(function(e) {
+          $('div#popup').show();
+          //.css('top', e.pageY + moveDown)
+          //.css('left', e.pageX + moveLeft)
+          //.appendTo('body');
+        }, function() {
+          $('div#popup').hide();
+        });
+        
+        $('input#cart').mousemove(function(e) {
+          $("div#popup").css('top', e.pageY + moveDown).css('left', e.pageX - moveLeft);
+        });
+        
+      });
+    </script>
 	<script>
 	function printMonkey() {
 		console.log("You are a monkey");
