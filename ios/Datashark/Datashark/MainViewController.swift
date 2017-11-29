@@ -18,15 +18,15 @@ class MainViewController: UIViewController {
     @IBOutlet weak var walletButton: UIButton!
     
     
-    let allNames = ["Facebook", "Fitbit"]
-    let name2url = ["Facebook": "URL", "Fitbit": "https://www.fitbit.com/oauth2/authorize"]
+    let allNames = ["Facebook", "Fitbit", "Instagram"]
+    let name2url = ["Facebook": "URL", "Fitbit": "https://www.fitbit.com/oauth2/authorize", "Instagram": "URL"]
     let name2consumerKey = ["Fitbit": "228MWM"]
     let name2consumerSecret = ["Fitbit": "699ed916a01faff2cb3139f437b897f1"]
-    let name2icon = ["Facebook": #imageLiteral(resourceName: "logo_facebook"), "Fitbit": #imageLiteral(resourceName: "logo_fitbit")]
+    let name2icon = ["Facebook": #imageLiteral(resourceName: "logo_facebook"), "Fitbit": #imageLiteral(resourceName: "logo_fitbit"), "Instagram": #imageLiteral(resourceName: "logo_instagram")]
     let name2scope = ["Fitbit": "sleep"]
     
-    var enabledNames: [String] = ["Facebook", "Fitbit", "Fitbit", "Facebook", "Facebook", "Fitbit", "Facebook"]
-    var disabledNames: [String] = ["Facebook", "Facebook", "Facebook", "Fitbit", "Facebook", "Fitbit", "Facebook", "Facebook", "Facebook", "Fitbit", "Facebook", "Fitbit"]
+    var enabledNames: [String] = ["Facebook", "Instagram"]
+    var disabledNames: [String] = ["Fitbit"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
