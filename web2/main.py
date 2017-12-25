@@ -122,7 +122,7 @@ def insert():
 
     print("finished you monkeys")
 
-@application.route('/insert/Insta', methods=['POST', 'GET'])
+@application.route('/insert/Instagram', methods=['POST', 'GET'])
 def insertInsta():
     ## FOR DATASHARK
     print("HERE v3")
@@ -137,15 +137,18 @@ def insertInsta():
     print("Access: " + access_token)
     header = {'Authorization': 'Bearer ' + access_token}
     
-@application.route('transactionHistory', methods=['GET'])
+@application.route('/transactionHistory', methods=['GET'])
+def transactionHistory():
 	print(request.form)
 	return jsonify({'Fitbit': 10.02, 'Facebook': 3.75})
     
-@application.route('loginUser', methods=['POST'])
+@application.route('/loginUser', methods=['POST'])
+def loginUser():
 	print(request.form)
 	return jsonify({'userID': 1246743, 'address': '0x56ABCD'})
 
-@application.route('createUser', methods=['POST'])
+@application.route('/createUser', methods=['POST'])
+def createUser():
 	print(request.form)
 	return jsonify({'userID': 1246743, 'address': '0x56ABCD'})
 
