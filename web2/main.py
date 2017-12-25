@@ -140,7 +140,7 @@ def insertInsta():
 @application.route('/transactionHistory', methods=['GET'])
 def transactionHistory():
 	print(request.form)
-	return jsonify({'Fitbit': 10.02, 'Facebook': 3.75})
+	return jsonify({'Fitbit': 10.02, 'Uber': 13.75, 'Lyft': 2.25})
     
 @application.route('/loginUser', methods=['POST'])
 def loginUser():
