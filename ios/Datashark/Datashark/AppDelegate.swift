@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  Datashark
+//  DataShark
 //
-//  Created by Gokul Swamy on 11/12/17.
+//  Created by Gokul Swamy on 12/23/17.
 //  Copyright © 2017 Gokul Swamy. All rights reserved.
 //
 
@@ -16,15 +16,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        // Override point for customization after application launch.
+        return true
+    }
+    
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         if (url.host == "oauth-callback") {
             OAuthSwift.handle(url: url)
         }
-        return true
-    }
-    
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         return true
     }
 
@@ -40,6 +40,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "loginVC")
+        self.window?.rootViewController = controller
+        self.window?.makeKeyAndVisible()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -61,7 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          application to it. This property is optional since there are legitimate
          error conditions that could cause the creation of the store to fail.
         */
-        let container = NSPersistentContainer(name: "Datashark")
+        let container = NSPersistentContainer(name: "DataShark")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.

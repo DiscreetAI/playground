@@ -1,15 +1,15 @@
 //
-//  DatasharkTests.swift
-//  DatasharkTests
+//  DataSharkTests.swift
+//  DataSharkTests
 //
-//  Created by Gokul Swamy on 11/12/17.
+//  Created by Gokul Swamy on 12/23/17.
 //  Copyright © 2017 Gokul Swamy. All rights reserved.
 //
 
 import XCTest
-@testable import Datashark
+@testable import DataShark
 
-class DatasharkTests: XCTestCase {
+class DataSharkTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

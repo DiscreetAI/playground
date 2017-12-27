@@ -1,14 +1,14 @@
 //
-//  DatasharkUITests.swift
-//  DatasharkUITests
+//  DataSharkUITests.swift
+//  DataSharkUITests
 //
-//  Created by Gokul Swamy on 11/12/17.
+//  Created by Gokul Swamy on 12/23/17.
 //  Copyright © 2017 Gokul Swamy. All rights reserved.
 //
 
 import XCTest
 
-class DatasharkUITests: XCTestCase {
+class DataSharkUITests: XCTestCase {
         
     override func setUp() {
         super.setUp()
