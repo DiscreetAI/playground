@@ -1,0 +1,22 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'DataShark' do
+  use_frameworks!
+  pod 'Charts'
+  pod 'Locksmith'
+  pod 'OAuthSwift'
+
+  # Pods for DataShark
+
+  target 'DataSharkTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  target 'DataSharkUITests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, Response, json
+from flask import Flask, render_template, request, redirect, url_for, Response, json, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import requests
 import pandas as pd
@@ -77,7 +77,7 @@ def execute():
         )
 
 
-@application.route('/insert', methods=['POST', 'GET'])
+@application.route('/insert/Fitbit', methods=['POST', 'GET'])
 def insert():
     ## FOR DATASHARK
     print("HERE v3")
@@ -122,7 +122,7 @@ def insert():
 
     print("finished you monkeys")
 
-@application.route('/insertInsta', methods=['POST', 'GET'])
+@application.route('/insert/Instagram', methods=['POST', 'GET'])
 def insertInsta():
     ## FOR DATASHARK
     print("HERE v3")
@@ -137,9 +137,20 @@ def insertInsta():
     print("Access: " + access_token)
     header = {'Authorization': 'Bearer ' + access_token}
     
-
+@application.route('/transactionHistory', methods=['GET'])
+def transactionHistory():
+	print(request.form)
+	return jsonify({'Fitbit': 10.02, 'Uber': 13.75, 'Lyft': 2.25})
     
+@application.route('/loginUser', methods=['POST'])
+def loginUser():
+	print(request.form)
+	return jsonify({'userID': 1246743, 'address': '0x56ABCD'})
 
+@application.route('/createUser', methods=['POST'])
+def createUser():
+	print(request.form)
+	return jsonify({'userID': 1246743, 'address': '0x56ABCD'})
 
 
 def get_columns(categ):

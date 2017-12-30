@@ -1,190 +1,115 @@
 //
 //  MainViewController.swift
-//  Datashark
+//  DataShark
 //
-//  Created by Gokul Swamy on 11/12/17.
+//  Created by Gokul Swamy on 12/24/17.
 //  Copyright © 2017 Gokul Swamy. All rights reserved.
 //
 
 import UIKit
-import OAuthSwift
-import CoreData
+import Charts
 
-class MainViewController: UIViewController {
 
-    @IBOutlet weak var topStackView: UIStackView!
-    @IBOutlet weak var bottomStackRow1View: UIStackView!
-    @IBOutlet weak var bottomStackRow2View: UIStackView!
-    @IBOutlet weak var walletButton: UIButton!
+class ServiceTableViewCell: UITableViewCell {
+    @IBOutlet weak var serviceIcon: UIImageView!
+    @IBOutlet weak var serviceName: UILabel!
+    @IBOutlet weak var serviceProfit: UILabel!
+}
+
+class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    var userID: String = ""
+    var address: String = ""
+    var serviceNames: [String] = []
+    var serviceProfits: [Double] = []
+    var scopes: [String: [String]] = [:]
+    let nameToLogo: [String: UIImage] = ["fitbit": #imageLiteral(resourceName: "Fitbit"), "uber": #imageLiteral(resourceName: "Uber"), "lyft": #imageLiteral(resourceName: "Lyft")] // Needs to be updated with each new service
     
-    
-    let allNames = ["Facebook", "Fitbit", "Instagram"]
-    let name2url = ["Facebook": "URL", "Fitbit": "https://www.fitbit.com/oauth2/authorize", "Instagram": "URL"]
-    let name2consumerKey = ["Fitbit": "228MWM"]
-    let name2consumerSecret = ["Fitbit": "699ed916a01faff2cb3139f437b897f1"]
-    let name2icon = ["Facebook": #imageLiteral(resourceName: "logo_facebook"), "Fitbit": #imageLiteral(resourceName: "logo_fitbit"), "Instagram": #imageLiteral(resourceName: "logo_instagram")]
-    let name2scope = ["Fitbit": "sleep"]
-    
-    var enabledNames: [String] = ["Facebook", "Instagram"]
-    var disabledNames: [String] = ["Fitbit"]
-    
+    @IBOutlet weak var chartView: UIView!
+    @IBOutlet weak var noDataLabel: UILabel!
+    @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Service")
-        request.returnsObjectsAsFaults = false
-        do {
-            let result = try context.fetch(request)
-            for data in result as! [NSManagedObject] {
-                enabledNames.append(data.value(forKey: "name") as! String)
-            }
-        } catch {
-            print("ERROR")
-        }
-        for name in allNames {
-            if !enabledNames.contains(name) {
-                disabledNames.append(name)
-            }
-        }
-        
-        
-        walletButton.layer.cornerRadius = 10
-        topStackView.addArrangedSubview(UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10)))
-        var idx = 0
-        var enabledIcons: [UIImage] = []
-        for name in enabledNames {
-            enabledIcons.append(name2icon[name]!)
-        }
-        for icon in enabledIcons{
-            let iconView = UIImageView(image: icon)
-            iconView.translatesAutoresizingMaskIntoConstraints = false
-            iconView.addConstraint(NSLayoutConstraint(item: iconView,
-                                                            attribute: NSLayoutAttribute.height,
-                                                            relatedBy: NSLayoutRelation.equal,
-                                                            toItem: iconView,
-                                                            attribute: NSLayoutAttribute.width,
-                                                            multiplier: 1,
-                                                            constant: 0))
-            iconView.clipsToBounds = true
-            iconView.layer.cornerRadius = 22 // T-Swift
-            iconView.isUserInteractionEnabled = true
-            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(enabledAppIconTapped))
-            iconView.addGestureRecognizer(tapRecognizer)
-            iconView.tag = idx
-            topStackView.addArrangedSubview(iconView)
-            idx = idx + 1
-        }
-        
-        bottomStackRow1View.addArrangedSubview(UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10)))
-        bottomStackRow2View.addArrangedSubview(UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10)))
-        var disabledIcons: [UIImage] = []
-        for name in disabledNames {
-            disabledIcons.append(name2icon[name]!)
-        }
-        var index = 0
-        for icon in disabledIcons {
-            let iconView = UIImageView(image: convertImageToBW(image: icon))
-            iconView.translatesAutoresizingMaskIntoConstraints = false
-            iconView.addConstraint(NSLayoutConstraint(item: iconView,
-                                                      attribute: NSLayoutAttribute.height,
-                                                      relatedBy: NSLayoutRelation.equal,
-                                                      toItem: iconView,
-                                                      attribute: NSLayoutAttribute.width,
-                                                      multiplier: 1,
-                                                      constant: 0))
-         
-            iconView.clipsToBounds = true
-            iconView.layer.cornerRadius = 15 // T-Swift
-            iconView.alpha = 0.7
-            iconView.isUserInteractionEnabled = true
-            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(disabledAppIconTapped))
-            iconView.addGestureRecognizer(tapRecognizer)
-            iconView.tag = index
-            if index % 2 == 0 {
-                bottomStackRow1View.addArrangedSubview(iconView)
-            } else {
-                bottomStackRow2View.addArrangedSubview(iconView)
-            }
-            index = index + 1
-        }
-
-
-        // Do any additional setup after loading the view.
-    }
-    func convertImageToBW(image:UIImage) -> UIImage {
-        let filter = CIFilter(name: "CIPhotoEffectMono")
-        let ciInput = CIImage(image: image)
-        filter?.setValue(ciInput, forKey: "inputImage")
-        let ciOutput = filter?.outputImage
-        let ciContext = CIContext()
-        let cgImage = ciContext.createCGImage(ciOutput!, from: (ciOutput?.extent)!)
-        return UIImage(cgImage: cgImage!)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.backgroundColor = .clear
+        refreshData()
     }
     
-    @objc func enabledAppIconTapped(recognizer: UITapGestureRecognizer) {
-        let serviceName = disabledNames[recognizer.view!.tag]
-        print(serviceName)
+    override func viewDidAppear(_ animated: Bool) {
+        refreshData()
     }
     
-    @objc func disabledAppIconTapped(recognizer: UITapGestureRecognizer) {
-        let serviceName = disabledNames[recognizer.view!.tag]
-        let url = name2url[serviceName]
-        let consumerKey = name2consumerKey[serviceName]
-        let consumerSecret = name2consumerSecret[serviceName]
-        let oauthswift = OAuth2Swift(
-            consumerKey:    consumerKey!,
-            consumerSecret: consumerSecret!,
-            authorizeUrl:   url!,
-            responseType:   "token"
-        )
-        let handle = oauthswift.authorize(
-            withCallbackURL: URL(string: "oauth-swift://oauth-callback/" + serviceName)!,
-            scope: name2scope[serviceName]!,
-            state: serviceName,
-            success: { credential, response, parameters in
-                let token = credential.oauthToken
-                let body = ["token": token]
-                do{
-                    let json = try (JSONSerialization.data(withJSONObject: body, options: JSONSerialization.WritingOptions.prettyPrinted))
-                    var request = URLRequest(url: URL(string:"http://datashark7.jn6tkty4uh.us-west-1.elasticbeanstalk.com/insert/" + serviceName)!)
-                    //App Transport Security blocks http:// connections, disable if needed
-                    request.httpMethod = "POST" //"GET", ...
-                    request.httpBody = json
-                    URLSession.shared.dataTask(with: request) { data, response, error in
-                        if error != nil {
-                            //Your HTTP request failed.
-                            print(error?.localizedDescription)
-                        } else {
-                            //Your HTTP request succeeded
-                            print(String(data: data!, encoding: String.Encoding.utf8))
+    func refreshData() {
+        var request = URLRequest(url: URL(string:"http://datashark7.jn6tkty4uh.us-west-1.elasticbeanstalk.com/transactionHistory")!)
+        request.httpMethod = "GET"
+        request.addValue(address, forHTTPHeaderField: "address")
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if error == nil {
+                if let data = data {
+                    do {
+                        let serialized = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                        if let response = serialized{
+                            self.serviceNames = Array(response.keys).sorted()
+                            self.serviceProfits = []
+                            for name in self.serviceNames {
+                                let val = Double(String(describing: response[name]!))
+                                self.serviceProfits.append(val!)
+                            }
                         }
-                        }.resume()
+                    } catch {
+                        
+                    }
                 }
-                catch {
-                    print("incompatable body")
-                }
-                let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                let context = appDelegate.persistentContainer.viewContext
-                let entity = NSEntityDescription.entity(forEntityName: "Service", in: context)
-                let newService = NSManagedObject(entity: entity!, insertInto: context)
-                newService.setValue(serviceName, forKey: "name")
-                do {
-                    try context.save()
-                } catch {
-                    print("Failed saving")
-                }
-        },
-            failure: { error in
-                print(error.localizedDescription)
-        }
-        )
+            }
+            self.createChart(labels: self.serviceNames, values: self.serviceProfits)
+            DispatchQueue.main.async { // Required for threading issues
+                self.tableView.reloadData()
+            }
+            }.resume()
     }
-
-
-    @IBAction func walletButtonTapped(_ sender: Any) {
-        print("button tapped")
+    
+    func createChart(labels: [String], values: [Double]) {
+        DispatchQueue.main.async { // Required for threading issues
+            self.chartView.isHidden = true // Just there for shape and error handling
+            self.noDataLabel.isHidden = true
+            
+            let pieChart = PieChartView(frame: self.chartView.frame)
+            pieChart.noDataText = "No Data Available."
+            
+            let total = values.reduce(0, +)
+            var str = ""
+            if total < 10.0 {
+                str = " Total: \n $\(values.reduce(0, +))" // Approximate text centering
+            } else {
+                str = "  Total: \n $\(values.reduce(0, +))" // Approximate text centering
+            }
+            
+            pieChart.centerAttributedText = NSAttributedString(string: str,
+                                                               attributes: [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "Nunito-Regular", size: 25.0)!])
+            pieChart.holeRadiusPercent = 0.6
+            pieChart.holeColor = UIColor.clear
+            pieChart.chartDescription = nil
+            pieChart.legend.enabled = false
+            
+            var dataEntries: [ChartDataEntry] = []
+            for (index, value) in values.enumerated() {
+                let dataEntry = PieChartDataEntry(value: value, label: labels[index])
+                dataEntries.append(dataEntry)
+            }
+            
+            let dataset = PieChartDataSet(values: dataEntries, label: nil)
+            let red = UIColor(red: 255.0 / 255.0, green: 59.0 / 255.0, blue: 48.0 / 255.0, alpha: 1.0)
+            let orange = UIColor(red: 255.0 / 255.0, green: 149.0 / 255.0, blue: 0.0 / 255.0, alpha: 1.0)
+            let yellow = UIColor(red: 255.0 / 255.0, green: 204.0 / 255.0, blue: 0.0 / 255.0, alpha: 1.0)
+            let purple = UIColor(red: 88.0 / 255.0, green: 86.0 / 255.0, blue: 214.0 / 255.0, alpha: 1.0)
+            let pink = UIColor(red: 255.0 / 255.0, green: 45.0 / 255.0, blue: 85.0 / 255.0, alpha: 1.0)
+            dataset.colors = [red, orange, yellow, purple, pink]
+            
+            let data = PieChartData(dataSet: dataset)
+            pieChart.data = data
+            pieChart.highlightPerTapEnabled = false
+            self.view.addSubview(pieChart)
+        }
     }
     
 
@@ -193,15 +118,96 @@ class MainViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        var request = URLRequest(url: URL(string:"http://datashark7.jn6tkty4uh.us-west-1.elasticbeanstalk.com/userServices")!)
+        request.httpMethod = "GET"
+        request.addValue(address, forHTTPHeaderField: "address") // Check this for auth
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if error == nil {
+                if let data = data {
+                    do {
+                        let serialized = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                        if let response = serialized {
+                            self.scopes[self.serviceNames[indexPath.row]] =  (response[self.serviceNames[indexPath.row]] as! String).components(separatedBy: ", ")
+                        }
+                        self.performSegue(withIdentifier: "mainToService", sender: indexPath)
+                    } catch {
+                        
+                    }
+                }
+            }
+        }.resume()
     }
-    */
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "serviceCell", for: indexPath) as! ServiceTableViewCell
+        cell.serviceName.text = serviceNames[indexPath.row]
+        cell.serviceProfit.text = "$" + String(serviceProfits[indexPath.row])
+        
+        if (nameToLogo.keys.contains(serviceNames[indexPath.row].lowercased())) {
+            cell.serviceIcon.image = self.nameToLogo[serviceNames[indexPath.row].lowercased()]
+        } else {
+            cell.serviceIcon.image = #imageLiteral(resourceName: "Unknown") // Unknown service
+        }
+        
+        cell.serviceIcon.translatesAutoresizingMaskIntoConstraints = false
+        cell.serviceIcon.addConstraint(NSLayoutConstraint(item: cell.serviceIcon,
+                                                  attribute: NSLayoutAttribute.height,
+                                                  relatedBy: NSLayoutRelation.equal,
+                                                  toItem: cell.serviceIcon,
+                                                  attribute: NSLayoutAttribute.width,
+                                                  multiplier: 1,
+                                                  constant: 0))
+        cell.serviceIcon.clipsToBounds = true
+        cell.serviceIcon.layer.cornerRadius = 22
+        
+        let bgColorView = UIView()
+        bgColorView.backgroundColor = #colorLiteral(red: 0.1098039216, green: 0.7568627451, blue: 0.7568627451, alpha: 1)
+        cell.selectedBackgroundView = bgColorView
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return serviceNames.count
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
+        return 100.0
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "mainToSearch" {
+            if let destinationVC = segue.destination as? SearchViewController{
+                destinationVC.address = self.address
+                destinationVC.userID = self.userID
+                destinationVC.activeServiceNames = self.serviceNames
+            }
+        }
+        if segue.identifier == "mainToService" {
+            if let destinationVC = segue.destination as? ServiceViewController{
+                if let idx = sender as? IndexPath {
+                    destinationVC.address = self.address
+                    destinationVC.userID = self.userID
+                    destinationVC.serviceName = self.serviceNames[idx.row]
+                    destinationVC.serviceProfit = self.serviceProfits[idx.row]
+                    destinationVC.scopes = self.scopes[self.serviceNames[idx.row]]!
+                }
+            }
+        }
+        
+    }
+    
+    @IBAction func sendToBank(_ sender: Any) {
+        //TODO: Send To Bank
+        let alertController = UIAlertController(title: "To Be Implemented", message: "Will be implemented in a future version.", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+    }
 
 }
