@@ -7,7 +7,7 @@ from rest_framework_swagger.views import get_swagger_view
 from rest_framework.documentation import include_docs_urls
 
 urlpatterns = [
-    url(r'^docs/', include_docs_urls(title='Users API', description='RESTful API for Users')),
+    url(r'^docs/', include_docs_urls(title='Authentication API', description='RESTful API for Authentication.')),
     url(r'^auth/', include('rest_auth.urls')),
     url(r'^auth/registration/', include('rest_auth.registration.urls')),
 ]
