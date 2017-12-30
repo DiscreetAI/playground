@@ -5,3 +5,5 @@ django-allauth>=0.24.1
 six==1.9.0
 django-rest-swagger==2.0.7
 psycopg2==2.7.3.2
+coreapi==2.3.3
+coreapi-cli==1.0.6
