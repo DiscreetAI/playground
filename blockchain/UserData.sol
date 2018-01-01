@@ -1,21 +1,3 @@
-  #smart contract functionality: transfer
-  #smart contract structs: mapping of datasets to amounts paid (basically an augmented transaction history)
-  #smart contract exchanges data | seller -> buyer and token | buyer -> seller
-  #price minimum
-  
-  #mobile app functionality: show user transaction history and smart contract balance
-  	#provide transaction history by parsing through events of smart contract
-    #allow user to input new data for sale
-  
-  #server needs to get information from smart contract and provides it to mobile
-  	#>means that server needs to have a data structure of smart contract addresses
-    #POST(<smart contract address>) returns TRNXN HISTORY // add endpoint to server
-    
-//https://docs.bigchaindb.com/en/latest/permissions.html#read-permissions
-//https://ethereum.stackexchange.com/questions/2024/how-to-access-the-event-log-by-knowing-the-contract-address-web3
-//pro tip: use remix to get web3 deployment code (straight up copy code into remix, then get the web3 deployment code)
-/////////////////////////////////////////////////
-  
 pragma solidity ^0.4.15;
 
 contract UserData {
