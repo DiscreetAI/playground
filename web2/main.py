@@ -20,7 +20,7 @@ POSTGRES = {
 }
 application.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
 %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
-
+#test
 db.init_app(application)
 
 
