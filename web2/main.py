@@ -15,12 +15,12 @@ POSTGRES = {
 	'user': 'datashark',
 	'pw': 'datashark',
 	'db': 'datasharkdb',
-	'host':  'datashark-database.cwnzqu4zi2kl.us-west-1.rds.amazonaws.com',
+	'host':  'datasharkdatabase.cwnzqu4zi2kl.us-west-1.rds.amazonaws.com',
 	'port': '5432'
 }
 application.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
 %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
-#test
+
 db.init_app(application)
 
 
@@ -173,6 +173,7 @@ def allServices():
 	return jsonify({'Fitbit': 'activity, heartrate, location, nutrition, profile, settings, sleep, social, weight',
 					'Uber': 'history, places, all_trips, request_receipt, request',
 					'Lyft': 'public_profile, rides.read'})
+
 def get_columns(categ):
 	cmd = 'select col, description from metadata where table_name=:val'
 	result = db.session.execute(cmd, {'val': categ})
