@@ -17,8 +17,6 @@ def _execute_insert(self, conn, keys, data_iter):
 SQLTable._execute_insert = _execute_insert
 #from models import db
 
-db = SQLAlchemy()
-
 application = Flask(__name__)
 application.config['DEBUG'] = True
 
@@ -32,8 +30,7 @@ POSTGRES = {
 application.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
 %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
 
-db.init_app(application)
-
+db = SQLAlchemy(application)
 
 @application.route("/", methods=['GET', 'POST'])
 def main():
@@ -82,7 +79,7 @@ def execute():
 	#print(query)
 	query = 'drop table uber'
 	df = pd.read_sql_query(query, db.engine)
-	query = 'create table uber (display_name varchar(255), distance real, end_time real, latitude real, longitude real, product_id varchar(255), request_id varchar(255), request_time real, start_time real, status varchar(255))'
+	query = 'create table ubero (num real, display_name varchar(255), distance real, end_time real, latitude real, longitude real, product_id varchar(255), request_id varchar(255), request_time real, start_time real, status varchar(255))'
 	df = pd.read_sql_query(query, db.engine)
 	return
 	#df = pd.read_sql_query("select * from fitbit_daily_activity_summary", db.engine)
@@ -173,6 +170,8 @@ def insertLyft():
 
 @application.route('/insert/Uber', methods=['POST', 'GET'])
 def insertUber():
+	pd.read_sql_table('yum', db.engine)
+	print('yum')
 	session = Session(server_token='BNgvucsIimnyDZxb9bDY1oH6Wi-Du1cK0pWqZYWS')
 	client = UberRidesClient(session)
 	#uber_endpoint = 'https://api.uber.com/v1.2/products?latitude=37.7759792&longitude=-122.41823'
@@ -210,15 +209,15 @@ def insertUber():
 			else:
 				dict[key.lower()].append(trip[key])
 	print(dict)
-	uber_df = pd.DataFrame(dict)
-	uber_df.to_csv('uber.csv')
-	ubero = pd.read_csv('uber.csv')
-	print(ubero['status'])
+	ubero = pd.DataFrame(dict)
+	# uber_df.to_csv('uber.csv')
+	# ubero = pd.read_csv('uber.csv')
+	# print(ubero['status'])
 	#db.session.execute('select * from uber;')
 	#db.engine.execute('insert into table t')
 	#db.session.execute("INSERT INTO uber (display_name, distance, end_time, latitude, longitude, product_id, request_id, request_time, start_time, status) VALUES ('b', '1', '1', '1', '1', 'a', 'a', '1', '1', 'c');")
 	db.session.commit()
-	ubero.to_sql(name = 'uber', con=db.engine, if_exists='append', index=False)
+	ubero.to_sql(name = 'yum', con=db.engine, if_exists='append', index=False)
 	print("finished uber")
 
 @application.route('/insert/Instagram/', methods=['POST', 'GET'])
