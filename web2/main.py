@@ -1,21 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, Response, json, jsonify
-from uber_rides.session import Session
-from uber_rides.client import UberRidesClient
 from flask_sqlalchemy import SQLAlchemy
 import requests
 import pandas as pd
 from collections import defaultdict
-from uber_rides.auth import AuthorizationCodeGrant
 from pandas.io.sql import SQLTable
 
-def _execute_insert(self, conn, keys, data_iter):
-    data = [dict((k, v) for k, v in zip(keys, row)) for row in data_iter]
-    print("Using monkey-patched _execute_insert", data)
-    
-    conn.execute(self.insert_statement().values(data))
-
-SQLTable._execute_insert = _execute_insert
-#from models import db
 
 application = Flask(__name__)
 application.config['DEBUG'] = True
@@ -45,7 +34,7 @@ def home():
 def results():
 	categ = request.form['categ']
 	#execute()
-	insertUber()
+	#insertLyft()
 	table_name = "fitbit_daily_activity_summary"
 	col_names = get_columns(table_name)
 	temp = str(col_names)
@@ -80,6 +69,7 @@ def execute():
 	query = 'drop table uber'
 	df = pd.read_sql_query(query, db.engine)
 	query = 'create table ubero (num real, display_name varchar(255), distance real, end_time real, latitude real, longitude real, product_id varchar(255), request_id varchar(255), request_time real, start_time real, status varchar(255))'
+	query = 'create table lyft_table (canceled_by varchar(255), origin varchar(255), line_items varchar(255), passenger varchar(255), distance_miles real, duration_seconds int, dropoff varchar(255),  charges varchar(255), requested_at varchar(255), price varchar(255), destination varchar(255), driver varchar(255), status varchar(255), pickup varchar(255), route_url varchar(255), ride_id varchar(255), vehicle varchar(255), ride_type varchar(255), pricing_details_url varchar(255), ride_profile varchar(255))'
 	df = pd.read_sql_query(query, db.engine)
 	return
 	#df = pd.read_sql_query("select * from fitbit_daily_activity_summary", db.engine)
@@ -115,21 +105,21 @@ def insert():
 	dict = defaultdict(lambda: [])
 
 	for date in range(1, 30):
-			endpoint = fitbit_daily_activity_summary_endpoint.format(str(date).zfill(2))
-			response = requests.get(endpoint, headers=header)
-			parsed = json.loads(response.text)
-			print(parsed)
-			return
-			for value in fitbit_daily_activity_summary_values:
-				if value in parsed['summary']:
-					dict[value.lower()].append(parsed['summary'][value])
-				else:
-					dict[value.lower()].append(None)
-			if 'distances' in parsed['summary']:
-				distances = parsed['summary']['distances']
-				if len(distances) > 0:
-					if 'distance' in distances[0]:
-						dict['distance'].append(distances[0]['distance'])
+		endpoint = fitbit_daily_activity_summary_endpoint.format(str(date).zfill(2))
+		response = requests.get(endpoint, headers=header)
+		parsed = json.loads(response.text)
+		print(parsed)
+		return
+		for value in fitbit_daily_activity_summary_values:
+			if value in parsed['summary']:
+				dict[value.lower()].append(parsed['summary'][value])
+			else:
+				dict[value.lower()].append(None)
+		if 'distances' in parsed['summary']:
+			distances = parsed['summary']['distances']
+			if len(distances) > 0:
+				if 'distance' in distances[0]:
+					dict['distance'].append(distances[0]['distance'])
 
 	fitbit_daily_activity_summary_df = pd.DataFrame(dict)
 
@@ -140,40 +130,52 @@ def insert():
 @application.route('/insert/Lyft', methods=['POST', 'GET'])
 def insertLyft():
 		client_id = 'xWcQoJgCDyyx'
-		#access_token = request.form['accessToken']
+		access_token = 's8FIXnUQkMe0huSo7UcRxiGJ9AMLKT/eBM6ILrsEeyGeMV6/sgU8/cn1EVB8AtohUqBe0EkfECVxjAMVrKZbdZaeLSeFH9jWbWiCOHL8CosCHcxR7fG6cFM='
+		refresh_token = 'C5BR2cGIWK4aMeHBMtmiNnGlp9Fi4lkmlxchUS5Nf0nDzwj2nhUdjqOdvV29sy+38C/OvCTcSMGxanMwEn0zj03FT4AkypGFr0q9pOgdrdzA'
 		client_secret = 've3ul8VMMiiQ7zrft33S2gzAy8258436'
 		print("Access: " + access_token)
 		header = {'Authorization': 'Bearer ' + access_token}
-		lyft_endpoint = 'https://api.lyft.com/v1/rides'
+		lyft_endpoint = 'https://api.lyft.com/v1/rides?start_time=2015-12-01T21:04:22Z'
 		lyft_values = ['ride_history']
-
 		dict = defaultdict(lambda: [])
-
-		for date in range(1, 30):
-			response = requests.get(lyft_endpoint, headers=header)
-			parsed = json.loads(response.text)
-			print(parsed)
-			for value in lyft_values:
-				if value in parsed['summary']:
-					dict[value.lower()].append(parsed['summary'][value])
-				else:
-					dict[value.lower()].append(None)
-			if 'distances' in parsed['summary']:
-				distances = parsed['summary']['distances']
-				if len(distances) > 0:
-					if 'distance' in distances[0]:
-						dict['distance'].append(distances[0]['distance'])
+		response = requests.get(lyft_endpoint, headers=header)
+		parsed = json.loads(response.text)
+		print(parsed['ride_history'])
+		history = parsed['ride_history']
+		normal = ['origin', 'line_items', 'passenger', 'requested_at', 'price', 'destination', 'status', 'route_url', 'ride_id', 'ride_type', 'pricing_details_url', 'ride_profile']
+		bad = ['distance_miles', 'duration_seconds', 'dropoff', 'charges', 'pickup']
+		weird = ['vehicle', 'driver']
+		#bad = ['dropoff_lat', 'dropoff_lng', 'dropoff_time', '']
+		for ride in history:
+			if 'vehicle' not in ride.keys():
+				dict['vehicle'].append(None)
+			if 'driver' not in ride.keys():
+				dict['driver'].append(None)
+			if 'canceled_by' in ride.keys():
+				for key in bad:
+					dict[key].append(None)
+				for key in normal:
+					dict[key].append(str(ride[key]))
+				for key in weird:
+					if key in ride.keys():
+						dict[key].append(str(ride[key]))	
+				dict['canceled_by'].append(ride['canceled_by'])
+			else:
+				dict['canceled_by'].append(None)
+				for key in ride.keys():
+					if key != 'beacon_color':
+						dict[key].append(str(ride[key]))
+		print(dict)
+		for key in dict.keys():
+				print(key, len(dict[key]))
 		lyft_df = pd.DataFrame(dict)
-		lyft_df.to_sql('lyft', db.engine, if_exists='append', index=False)
-
+		lyft_df.to_sql('lyft_table', db.engine, if_exists='append', index=False)
 		print("finished lyft")
 
 @application.route('/insert/Uber', methods=['POST', 'GET'])
 def insertUber():
 	pd.read_sql_table('yum', db.engine)
 	print('yum')
-	session = Session(server_token='BNgvucsIimnyDZxb9bDY1oH6Wi-Du1cK0pWqZYWS')
-	client = UberRidesClient(session)
 	#uber_endpoint = 'https://api.uber.com/v1.2/products?latitude=37.7759792&longitude=-122.41823'
 	access_token = 'KA.eyJ2ZXJzaW9uIjoyLCJpZCI6IldmM2wzdWZUUkx1YWZtVEZpY2Ira0E9PSIsImV4cGlyZXNfYXQiOjE1MTk1MzU2MzIsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.XyzA3qM5CRTzg0y3J05g9U8ntd61JMSRoyxy2jy8oQY'
 	header = {'Authorization': 'Bearer ' + access_token, 'Accept-Language': 'en_US', 'Content-Type': 'application/json'}
@@ -240,7 +242,7 @@ def insertInsta():
 def transactionHistory():
 	print(request.form)
 	r = request.args
-	return jsonify({'Fitbit': 10.02, 'Lyft': 2.25})
+	return jsonify({'Fitbit': 10.02, 'Uber': 2.25})
 	
 @application.route('/loginUser', methods=['POST'])
 def loginUser():
