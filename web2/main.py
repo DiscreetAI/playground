@@ -1,9 +1,11 @@
+from flask import Flask, render_template, request, redirect, url_for, Response, json, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import requests
 import pandas as pd
 from collections import defaultdict
 from pandas.io.sql import SQLTable
 import datetime
+import base64
 
 application = Flask(__name__)
 application.config['DEBUG'] = True
@@ -33,9 +35,15 @@ def home():
 
 @application.route('/results', methods=['POST'])
 def results():
-    categ = request.form['categ']
+    if 'test' in request.form:
+        categ = request.form['test']
+    else:
+        categ = 'lol'
     # execute()
-    insertUber()
+    #insertUber()
+    if categ == 'Fitbit':
+        return fitbitOAuth()
+    print('rip')
     table_name = "fitbit_daily_activity_summary"
     col_names = get_columns(table_name)
     temp = str(col_names)
@@ -82,7 +90,46 @@ def execute():
         headers={"Content-disposition": "attachment; filename=data.csv"}
     )
 
+@application.route('/getFitbit', methods = ['POST', 'GET'])
+def getFitbit():
+    code = request.args.get('code')
+    print('got code')
+    print(code)
+    client_id = '22CH8Y'
+    client_secret = '92ef15bf527e8c3684ff6f54517d235e'
+    encoded = base64.b64encode(
+        "{}:{}".format(
+            client_id,
+            client_secret
+        ).encode('utf-8')
+    ).decode('utf-8')
+    print('encoded')
+    print(encoded)
+    encode64 = 'MjJDSDhZOjkyZWYxNWJmNTI3ZThjMzY4NGZmNmY1NDUxN2QyMzVl'
+    encoded = encode64
+    header = {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Basic {}'.format(encoded),
+        }
+    r = requests.post(
+        get_auth_url(code),
+        headers=header
+    )
+    response = r.json()
+    response2 = json.loads(r.text)
+    print('Access token')
+    print(response2)
+    return render_template('payment.html')
 
+def get_auth_url(code):
+    return 'https://api.fitbit.com/oauth2/token?code={code}&client_id={client_id}&grant_type=authorization_code&redirect_uri=http://datashark7.jn6tkty4uh.us-west-1.elasticbeanstalk.com/getFitbit'.format(
+        code=code,
+        client_id='22CH8Y'
+    )
+
+@application.route('/oauth/Fitbit', methods = ['POST', 'GET'])
+def fitbitOAuth():
+    return redirect('http://www.fitbit.com/oauth2/authorize?client_id=22CH8Y&prompt=login&redirect_uri=http://datashark7.jn6tkty4uh.us-west-1.elasticbeanstalk.com/getFitbit&response_type=code&scope=activity%20nutrition%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&state=true')
 @application.route('/insert/Fitbit', methods=['POST', 'GET'])
 def insert():
     ## FOR DATASHARK
@@ -395,29 +442,7 @@ def get_columns(categ):
     return result.fetchall()
 
 
-if __name__ == "__main__":
-    application.run()
-
-    for key in bad:
-        dict[key].append(None)
-    for key in normal:
-        dict[key].append(str(ride[key]))
-    for key in weird:
-        if key in ride.keys():
-            dict[key].append(str(ride[key]))
-    dict['canceled_by'].append(ride['canceled_by'])
-else:
-    dict['canceled_by'].append(None)
-    for key in ride.keys():
-        if key != 'beacon_color':
-            dict[key].append(str(ride[key]))
-print(dict)
-for key in dict.keys():
-    print(key, len(dict[key]))
-lyft_df = pd.DataFrame(dict)
-lyft_df.to_sql('lyft_table', db.engine, if_exists='append', index=False)
-print("finished lyft")
-
+    
 '''
 @application.route('/insert/Uber', methods=['POST', 'GET'])
 def insertUber():
@@ -478,76 +503,6 @@ def insertUber():
     ubero.to_sql(name='yum', con=db.engine, if_exists='append', index=False)
     print("finished uber")
 '''
-
-@application.route('/insert/Instagram/', methods=['POST', 'GET'])
-def insertInsta():
-    ## FOR DATASHARK
-    print("HERE v3")
-    print(request.form)
-    r = request.args
-    # access_token = request.form['accessToken']
-    client_id = '228MWF'
-    client_secret = 'ed16cd1e79a28f00c990e304b87f3bb6'
-
-    access_token = '3267610983.1677ed0.2240d1a1d85f49a48a5a58a90cb40703'
-    # access_token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1U1pMN0YiLCJhdWQiOiIyMjhNV0YiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJhY3QgcnNldCBybG9jIHJ3ZWkgcmhyIHJwcm8gcm51dCByc2xlIiwiZXhwIjoxNTA3NDM5OTc3LCJpYXQiOjE1MDc0MTExNzd9.RGXvH1fUoAJjhqGEwP_wsjL7MYkP2xvzQgs36BtxlvA'
-    refresh_token = 'bbb44b3a0e05a4235b9bd837481d4796372ee3d51d5a1f4b2b82af4c85216534'
-    print("Access: " + access_token)
-    header = {'Authorization': 'Bearer ' + access_token}
-
-
-@application.route('/transactionHistory/', methods=['GET'])
-def transactionHistory():
-    print(request.form)
-    r = request.args
-    return jsonify({'Uber': 2.25})
-
-
-@application.route('/loginUser', methods=['POST'])
-def loginUser():
-    print(request.form)
-    r = request.get_json()
-    return jsonify({'userID': 1246743, 'address': '0x56ABCD'})
-
-
-@application.route('/createUser', methods=['POST'])
-def createUser():
-    print(request.form)
-    r = request.get_json()
-    return jsonify({'userID': 1246743, 'address': '0x56ABCD'})
-
-
-@application.route('/datasharkServices', methods=['GET'])
-def returnServices():
-    return jsonify({'services': 'Fitbit, Uber, Lyft'})
-
-
-@application.route('/userServices/', methods=['GET'])
-def userServices():
-    r = request.args
-    return jsonify({'Fitbit': 'activity, heartrate, location, nutrition, profile, settings, sleep, social, weight',
-                    'Uber': 'history, places, all_trips, request_receipt, request',
-                    'Lyft': 'public_profile, rides.read'})
-
-
-@application.route('/allServices/', methods=['GET'])
-def allServices():
-    r = request.args
-    return jsonify({'Fitbit': 'activity, heartrate, location, nutrition, profile, settings, sleep, social, weight',
-                    'Uber': 'history, places, all_trips, request_receipt, request',
-                    'Lyft': 'public_profile, rides.read'})
-
-
-def get_columns(categ):
-    cmd = 'select col, description from metadata where table_name=:val'
-    # result = db.session.execute(cmd, {'val': categ})
-    # result = db.session.execute('create table uber (display_name varchar(255), distance real, end_time real, latitude real, longitude real, product_id varchar(255), request_id varchar(255), request_time real, start_time real, status varchar(255))')
-    # result = db.session.execute('select * from fitbit_daily_activity_summary')
-    # print(result.fetchall())
-
-    result = db.session.execute(cmd, {'val': categ})
-    db.session.commit()
-    return result.fetchall()
 
 
 if __name__ == "__main__":
