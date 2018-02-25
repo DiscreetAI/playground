@@ -1,4 +1,4 @@
-,display_name,distance,end_time,latitude,longitude,product_id,request_id,request_time,start_time,status
+num,display_name,distance,end_time,latitude,longitude,product_id,request_id,request_time,start_time,status
 0,San Francisco,5.8520082451,1483127450,37.7749295,-122.4194155,1aafee90-9da2-40df-8be6-5b5382dae8df,430a5cd7-b3e1-4c47-a9d0-a83948e64fc0,1483124902,1483124921,completed
 1,San Francisco,0.1825960661,1480742372,37.7749295,-122.4194155,9ef1ce94-3234-4cc4-a891-4a8ec317bff7,bf483ffb-f63e-441c-af5b-d170a5ac68dd,1480741540,1480741568,completed
 2,San Francisco,1.2055598735,1480568195,37.7749295,-122.4194155,9ef1ce94-3234-4cc4-a891-4a8ec317bff7,3a04a291-e865-4a03-a572-fdba0f6b0709,1480565697,1480565757,completed
