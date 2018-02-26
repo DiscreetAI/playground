@@ -154,6 +154,20 @@ def allServices():
                     'Uber': 'history, places, all_trips, request_receipt, request',
                     'Lyft': 'public_profile, rides.read'})
 
+@application.route('/download/type/', methods=['POST'])
+def download():
+    print(request.form)
+    r = request.get_json()
+    datatype = r['type']
+    clause = "select * from "
+    # clause = // end selected table 
+    df = pd.read_sql(db.session.execute(clause))
+    if datatype.equals("csv"):
+        return df.to_csv()
+    elif datatype.equals("excel"):
+        return df.to_excel()
+    elif datatype.equals("json"):
+        return df.to_json()
 
 def get_columns(categ):
     cmd = 'select col, description from metadata where table_name=:val'
