@@ -6,6 +6,7 @@ from collections import defaultdict
 from pandas.io.sql import SQLTable
 import datetime
 import base64
+import os
 
 application = Flask(__name__)
 application.config['DEBUG'] = True
@@ -19,9 +20,9 @@ POSTGRES = {
 }
 application.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
 %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
-
+application.requests_session = requests.Session()
+application.secret_key = os.urandom(24)
 db = SQLAlchemy(application)
-
 
 @application.route("/", methods=['GET', 'POST'])
 def main():
@@ -43,6 +44,10 @@ def results():
     #insertUber()
     if categ == 'Fitbit':
         return fitbitOAuth()
+    elif categ == 'Uber':
+        return uberOAuth()
+    elif categ == 'Lyft':
+        return lyftOAuth()
     print('rip')
     table_name = "fitbit_daily_activity_summary"
     col_names = get_columns(table_name)
@@ -90,7 +95,7 @@ def execute():
         headers={"Content-disposition": "attachment; filename=data.csv"}
     )
 
-@application.route('/getFitbit', methods = ['POST', 'GET'])
+@application.route('/get/Fitbit', methods = ['POST', 'GET'])
 def getFitbit():
     code = request.args.get('code')
     print('got code')
@@ -109,7 +114,7 @@ def getFitbit():
     encoded = encode64
     header = {
             'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Basic {}'.format(encoded),
+            'Authorization': 'Basic {}'.format(encoded)
         }
     r = requests.post(
         get_auth_url(code),
@@ -122,14 +127,16 @@ def getFitbit():
     return render_template('payment.html')
 
 def get_auth_url(code):
-    return 'https://api.fitbit.com/oauth2/token?code={code}&client_id={client_id}&grant_type=authorization_code&redirect_uri=http://datashark7.jn6tkty4uh.us-west-1.elasticbeanstalk.com/getFitbit'.format(
+    return 'https://api.fitbit.com/oauth2/token?code={code}&client_id={client_id}&grant_type=authorization_code&redirect_uri=https://demo.dataagora.com/getFitbit'.format(
         code=code,
         client_id='22CH8Y'
     )
 
 @application.route('/oauth/Fitbit', methods = ['POST', 'GET'])
 def fitbitOAuth():
-    return redirect('http://www.fitbit.com/oauth2/authorize?client_id=22CH8Y&prompt=login&redirect_uri=http://datashark7.jn6tkty4uh.us-west-1.elasticbeanstalk.com/getFitbit&response_type=code&scope=activity%20nutrition%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&state=true')
+    return redirect('http://www.fitbit.com/oauth2/authorize?client_id=22CH8Y&prompt=login&redirect_uri=https://demo.dataagora.com/get/Fitbit&response_type=code&scope=activity%20nutrition%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&state=true')
+
+   
 @application.route('/insert/Fitbit', methods=['POST', 'GET'])
 def insert():
     ## FOR DATASHARK
@@ -261,6 +268,44 @@ def insert():
 
     print("finished you monkeys")
 
+@application.route('/oauth/Lyft', methods = ['POST', 'GET'])
+def lyftOAuth():
+    return redirect('https://api.lyft.com/oauth/authorize?client_id={client_id}&scope=public%20profile%20rides.read%20rides.request%20offline&state=true&response_type=code'.format(client_id='xWcQoJgCDyyx')) 
+
+@application.route('/get/Lyft', methods = ['POST', 'GET'])
+def getLyft():
+    code = request.args.get('code')
+    print('got code')
+    print(code)
+    client_id = 'xWcQoJgCDyyx'
+    client_secret = 've3ul8VMMiiQ7zrft33S2gzAy8258436'
+    params = {
+        'code': code,
+        'grant_type': 'authorization_code',
+    }
+    user = {client_id:client_secret}
+    encoded = base64.b64encode(
+        "{}:{}".format(
+            client_id,
+            client_secret
+        ).encode('utf-8')
+    ).decode('utf-8')
+    print('encoded')
+    print(encoded)
+    header = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Basic {}'.format(encoded), 
+    }
+    response = requests.post(
+        'https://api.lyft.com/oauth/token',
+        headers=header,
+        data = params
+    )
+   
+    r = json.loads(response.text)
+    print('Access token')
+    print(r)
+    return render_template('payment.html')
 
 @application.route('/insert/Lyft', methods=['POST', 'GET'])
 def insertLyft():
@@ -309,6 +354,38 @@ def insertLyft():
     lyft_df.to_sql('lyft_table', db.engine, if_exists='append', index=False)
     print("finished lyft")
 
+@application.route('/oauth/Uber', methods = ['POST', 'GET'])
+def uberOAuth():
+    return redirect('https://login.uber.com/oauth/v2/authorize?client_id=cvcaMdUYPlqkoFtrEECV1bbEEBnmpd5K&scope=profile%20history%20places&response_type=code&redirect_uri=https://demo.dataagora.com/get/Uber') 
+
+@application.route('/get/Uber', methods = ['POST', 'GET'])
+def getUber():
+    code = request.args.get('code')
+    print('got code')
+    print(code)
+    client_id = 'cvcaMdUYPlqkoFtrEECV1bbEEBnmpd5K'
+    client_secret = 'J7vY3yBGZr19EIrtibQZPhJm2qPulKy-Zs2VMMQz'
+    params = {
+        'client_id': client_id, 
+        'client_secret': client_secret,
+        'redirect_uri': 'https://demo.dataagora.com/get/Uber',
+        'code': code,
+        'grant_type': 'authorization_code',
+    }
+    header = {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    response = requests.post(
+        'https://login.uber.com/oauth/v2/token',
+        data=params,
+        headers=header
+    )
+   
+    r = json.loads(response.text)
+    print('Access token')
+    print(r)
+    return render_template('payment.html')
+
 
 @application.route('/insert/Uber', methods=['POST', 'GET'])
 def insertUber():
@@ -316,6 +393,8 @@ def insertUber():
     print('yum')
     # uber_endpoint = 'https://api.uber.com/v1.2/products?latitude=37.7759792&longitude=-122.41823'
     # access_token = 'KA.eyJ2ZXJzaW9uIjoyLCJpZCI6IldmM2wzdWZUUkx1YWZtVEZpY2Ira0E9PSIsImV4cGlyZXNfYXQiOjE1MTk1MzU2MzIsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.XyzA3qM5CRTzg0y3J05g9U8ntd61JMSRoyxy2jy8oQY'
+    # client_id = 'cvcaMdUYPlqkoFtrEECV1bbEEBnmpd5K'
+    # client_secret = 'J7vY3yBGZr19EIrtibQZPhJm2qPulKy-Zs2VMMQz'
     # access_token = request.form['accessToken']
     access_token = 'KA.eyJ2ZXJzaW9uIjoyLCJpZCI6ImpoaUtCMDJQVERxSHJ2YVNydzdrQkE9PSIsImV4cGlyZXNfYXQiOjE1MjEzNzM2ODEsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.j3og-jnfY1IDm8njcKt9P4ba53IMiUrCR61Ng-hqkXg'
     header = {'Authorization': 'Bearer ' + access_token, 'Accept-Language': 'en_US', 'Content-Type': 'application/json'}
