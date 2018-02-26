@@ -1,7 +1,7 @@
 from application import *
 
 @application.route('/insert/Uber', methods=['POST', 'GET'])
-def insertUber():
+def insert_uber():
     pd.read_sql_table('yum', db.engine)
     print('yum')
     # uber_endpoint = 'https://api.uber.com/v1.2/products?latitude=37.7759792&longitude=-122.41823'
@@ -54,7 +54,7 @@ def insertUber():
     ubero.to_sql(name='yum', con=db.engine, if_exists='append', index=False)
     print("finished uber")
 
-def getProfileInfo(accessToken, header):
+def get_profile_info(accessToken, header):
     uber_endpoint = "https://api.uber.com/v1.2/me"
     response = requests.get(uber_endpoint2, headers=header)
     parsed = json.loads(response.text)

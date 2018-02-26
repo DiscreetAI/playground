@@ -1,7 +1,7 @@
 from application import *
 
 @application.route('/insert/Lyft', methods=['POST', 'GET'])
-def insertLyft():
+def insert_lyft():
     client_id = 'xWcQoJgCDyyx'
     # access_token = 's8FIXnUQkMe0huSo7UcRxiGJ9AMLKT/eBM6ILrsEeyGeMV6/sgU8/cn1EVB8AtohUqBe0EkfECVxjAMVrKZbdZaeLSeFH9jWbWiCOHL8CosCHcxR7fG6cFM='
     refresh_token = 'C5BR2cGIWK4aMeHBMtmiNnGlp9Fi4lkmlxchUS5Nf0nDzwj2nhUdjqOdvV29sy+38C/OvCTcSMGxanMwEn0zj03FT4AkypGFr0q9pOgdrdzA'

@@ -52,7 +52,7 @@ def getTable(tableName):
 def fake_filter(userInfo, dfArr, minAge=0, maxAge=200, city=None, gender=None):
     filtereDFs = []
     for df, api in dfArr:
-        if not hasAge[api]
+        if not hasAge[api]:
             tempUser = userInfo[userInfo['age'] != None]
             merged = pd.merge(df, userInfo, left_on=idNames[api], right_on='userid', how='inner')
             merged = merged[df.columns + ['age']]
@@ -245,7 +245,29 @@ def insertUber():
     ubero.to_sql(name='yum', con=db.engine, if_exists='append', index=False)
     print("finished uber")
 '''
+from apispec import APISpec
+from flask_apispec.extension import FlaskApiSpec
+from marshmallow import fields, Schema
 
+application.config.update({
+    'APISPEC_SPEC': APISpec(
+        title='pets',
+        version='v1',
+        plugins=['apispec.ext.marshmallow'],
+    ),
+    'APISPEC_SWAGGER_URL': '/swagger/',
+})
+docs = FlaskApiSpec(application)
+
+docs.register(insert_fitbit)
+docs.register(insert_lyft)
+docs.register(insert_uber)
+docs.register(fitbit_oauth)
+docs.register(lyft_oauth)
+docs.register(uber_oauth)
+docs.register(get_fitbit)
+docs.register(get_lyft)
+docs.register(get_uber)
 
 if __name__ == "__main__":
     application.run()

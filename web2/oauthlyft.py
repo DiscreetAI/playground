@@ -1,11 +1,11 @@
 from application import *
 
 @application.route('/oauth/Lyft', methods = ['POST', 'GET'])
-def lyftOAuth():
+def lyft_oauth():
     return redirect('https://api.lyft.com/oauth/authorize?client_id={client_id}&scope=public%20profile%20rides.read%20rides.request%20offline&state=true&response_type=code'.format(client_id='xWcQoJgCDyyx')) 
 
 @application.route('/get/Lyft', methods = ['POST', 'GET'])
-def getLyft():
+def get_lyft():
     code = request.args.get('code')
     print('got code')
     print(code)

@@ -1,11 +1,11 @@
 from application import *
 
 @application.route('/oauth/Uber', methods = ['POST', 'GET'])
-def uberOAuth():
+def uber_oauth():
     return redirect('https://login.uber.com/oauth/v2/authorize?client_id=cvcaMdUYPlqkoFtrEECV1bbEEBnmpd5K&scope=profile%20history%20places&response_type=code&redirect_uri=https://demo.dataagora.com/get/Uber') 
 
 @application.route('/get/Uber', methods = ['POST', 'GET'])
-def getUber():
+def get_uber():
     code = request.args.get('code')
     print('got code')
     print(code)

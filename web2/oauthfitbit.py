@@ -1,7 +1,7 @@
 from application import *
 
 @application.route('/get/Fitbit', methods = ['POST', 'GET'])
-def getFitbit():
+def get_fitbit():
     code = request.args.get('code')
     print('got code')
     print(code)
@@ -40,5 +40,5 @@ def get_auth_url(code):
     )
 
 @application.route('/oauth/Fitbit', methods = ['POST', 'GET'])
-def fitbitOAuth():
+def fitbit_oauth():
     return redirect('https://www.fitbit.com/oauth2/authorize?client_id=22CH8Y&prompt=none&redirect_uri=https://demo.dataagora.com/get/Fitbit&response_type=code&scope=activity%20nutrition%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&state=true')

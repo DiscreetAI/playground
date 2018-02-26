@@ -1,7 +1,7 @@
 from application import *
 
 @application.route('/insert/Fitbit', methods=['POST', 'GET'])
-def insert():
+def insert_fitbit():
     ## FOR DATASHARK
     print("HERE v3")
     print(request.form)
@@ -132,7 +132,7 @@ def insert():
 
     print("finished you monkeys")
 
-def getProfileInfo(accessToken, header):
+def get_profile_info(accessToken, header):
     profile_endpoint = 'https://api.fitbit.com/1/user/-/profile.json'
     response2 = requests.get(profile_endpoint, headers=header)
     parsed2 = json.loads(response2.text)
