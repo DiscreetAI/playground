@@ -49,7 +49,7 @@ def getTable(tableName):
 
 #userDF is dataframe of userids with corresponding metadata.
 #dfArr is array of tuples (dataframe, api) to be filtered
-def filter(userInfo, dfArr, minAge=0, maxAge=200, city=None, gender=None):
+def fake_filter(userInfo, dfArr, minAge=0, maxAge=200, city=None, gender=None):
     filtereDFs = []
     for df, api in dfArr:
         if not hasAge[api]
@@ -75,7 +75,10 @@ def filter(userInfo, dfArr, minAge=0, maxAge=200, city=None, gender=None):
                 df = df[df['gender'] == gender]
         filtereDFs.append(df)
     return filteredDFs
-        
+
+#Assume given a dataframe where for each user, there is 1 for each API if user has data from API (0 otherwise), and demographic information.
+def count(userInfo, api):
+    return userInfo[userInfo['age'] != None & userInfo['city'] != None & userInfo['gender'] != None & userInfo['city'] != None & userInfo[api] == 1]        
         
     
 @application.route('/checkout', methods=['POST'])
