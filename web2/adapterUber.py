@@ -1,0 +1,60 @@
+from application import *
+
+@application.route('/insert/Uber', methods=['POST', 'GET'])
+def insertUber():
+    pd.read_sql_table('yum', db.engine)
+    print('yum')
+    # uber_endpoint = 'https://api.uber.com/v1.2/products?latitude=37.7759792&longitude=-122.41823'
+    # access_token = 'KA.eyJ2ZXJzaW9uIjoyLCJpZCI6IldmM2wzdWZUUkx1YWZtVEZpY2Ira0E9PSIsImV4cGlyZXNfYXQiOjE1MTk1MzU2MzIsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.XyzA3qM5CRTzg0y3J05g9U8ntd61JMSRoyxy2jy8oQY'
+    # client_id = 'cvcaMdUYPlqkoFtrEECV1bbEEBnmpd5K'
+    # client_secret = 'J7vY3yBGZr19EIrtibQZPhJm2qPulKy-Zs2VMMQz'
+    # access_token = request.form['accessToken']
+    access_token = 'KA.eyJ2ZXJzaW9uIjoyLCJpZCI6IkFPZzJxTTZOU0dXcEt6elYvZ2FkRWc9PSIsImV4cGlyZXNfYXQiOjE1MjIyMjI4MTcsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.gwO9ktyonepk30J14nUHi1WYdcTayLnaXrTwDUqW3hU'
+    header = {'Authorization': 'Bearer ' + access_token, 'Accept-Language': 'en_US', 'Content-Type': 'application/json'}
+    # auth_url = auth_flow.get_authorization_url()
+    # response = client.get_user_activity()
+    # history = response.json
+    # print(history)
+    print(SQLAlchemy.metadata)
+    print("my dude")
+    uber_endpoint2 = "https://api.uber.com/v1.2/history"
+    uber_endpoint3 = "https://api.uber.com/v1.2/requests/"
+    response = requests.get(uber_endpoint2, headers=header)
+    # print(response.text)
+    parsed = json.loads(response.text)
+    print(parsed)
+    for p in parsed['history']:
+        req_id = p['request_id']
+        endpoint = uber_endpoint3 + str(req_id)
+        response2 = requests.get(endpoint, headers=header)
+        parsed2 = json.loads(response2.text)
+        print(parsed2)
+    return
+    print(parsed['history'])
+    history = parsed['history']
+    print(history[0])
+    print(len(history))
+    dict = defaultdict(lambda: [])
+    for trip in history:
+        for key in trip.keys():
+            if key == 'start_city':
+                for k in trip['start_city']:
+                    dict[k.lower()].append(trip['start_city'][k])
+            else:
+                dict[key.lower()].append(trip[key])
+    print(dict)
+    ubero = pd.DataFrame(dict)
+    # uber_df.to_csv('uber.csv')
+    # ubero = pd.read_csv('uber.csv')
+    # print(ubero['status'])
+    # db.session.execute('select * from uber;')
+    # db.engine.execute('insert into table t')
+    # db.session.execute("INSERT INTO uber (display_name, distance, end_time, latitude, longitude, product_id, request_id, request_time, start_time, status) VALUES ('b', '1', '1', '1', '1', 'a', 'a', '1', '1', 'c');")
+    db.session.commit()
+    ubero.to_sql(name='yum', con=db.engine, if_exists='append', index=False)
+    print("finished uber")
+
+def getProfileInfo(accessToken, header):
+    uber_endpoint = "https://api.uber.com/v1.2/me"
+    response = requests.get(uber_endpoint2, headers=header)
+    parsed = json.loads(response.text)
