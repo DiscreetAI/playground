@@ -1,28 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for, Response, json, jsonify
-from flask_sqlalchemy import SQLAlchemy
-import requests
-import pandas as pd
-from collections import defaultdict
-from pandas.io.sql import SQLTable
-import datetime
-import base64
-import os
+from oauth import *
+from adapters import *
 
-application = Flask(__name__)
-application.config['DEBUG'] = True
-
-POSTGRES = {
-    'user': 'datashark',
-    'pw': 'datashark',
-    'db': 'datasharkdb',
-    'host': 'datasharkdatabase.cwnzqu4zi2kl.us-west-1.rds.amazonaws.com',
-    'port': '5432'
-}
-application.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
-%(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
-application.requests_session = requests.Session()
-application.secret_key = os.urandom(24)
-db = SQLAlchemy(application)
+hasAge = {'fitbit': True, 'uber': False, 'lyft': False}
+hasGender = {'fitbit': True, 'uber': False, 'lyft': False}
+hasCity = {'fitbit': True, 'uber': False, 'lyft': False}
+idNames = {'fitbit': 'encodedID', 'uber':'uiud', 'lyft':'userID'}
 
 @application.route("/", methods=['GET', 'POST'])
 def main():
@@ -41,7 +23,7 @@ def results():
     else:
         categ = 'lol'
     # execute()
-    #insertUber()
+    insert()
     if categ == 'Fitbit':
         return fitbitOAuth()
     elif categ == 'Uber':
@@ -60,7 +42,42 @@ def results():
     # print(col_names)
     return render_template('left-sidebar.html', table=table_name, cols=json.dumps(col_names))
 
+def getTable(tableName):
+    query = "select * from {};".format(tableName)
+    df = pd.read_sql_query(query)
+    return df 
 
+#userDF is dataframe of userids with corresponding metadata.
+#dfArr is array of tuples (dataframe, api) to be filtered
+def filter(userInfo, dfArr, minAge=0, maxAge=200, city=None, gender=None):
+    filtereDFs = []
+    for df, api in dfArr:
+        if not hasAge[api]
+            tempUser = userInfo[userInfo['age'] != None]
+            merged = pd.merge(df, userInfo, left_on=idNames[api], right_on='userid', how='inner')
+            merged = merged[df.columns + ['age']]
+            df = merged
+        df = df[df['age'] > minAge]
+        df = df[df['age'] < maxAge]
+        if not hasCity[api]:
+            tempUser = userInfo[userInfo['city'] != None]
+            merged = pd.merge(df, userInfo, left_on=idNames[api], right_on='userid', how='inner')
+            merged = merged[df.columns + ['city']]
+            df = merged
+        if city != None:
+            df = df[df['city'] == city]
+        if not hasGender[api]:
+            tempUser = userInfo[userInfo['gender'] != None]
+            merged = pd.merge(df, userInfo, left_on=idNames[api], right_on='userid', how='inner')
+            merged = merged[df.columns + ['gender']]
+            df = merged
+            if gender != None:
+                df = df[df['gender'] == gender]
+        filtereDFs.append(df)
+    return filteredDFs
+        
+        
+    
 @application.route('/checkout', methods=['POST'])
 def checkout():
     return render_template('checkout.html')
@@ -94,377 +111,6 @@ def execute():
         mimetype="text/csv",
         headers={"Content-disposition": "attachment; filename=data.csv"}
     )
-
-@application.route('/get/Fitbit', methods = ['POST', 'GET'])
-def getFitbit():
-    code = request.args.get('code')
-    print('got code')
-    print(code)
-    client_id = '22CH8Y'
-    client_secret = '92ef15bf527e8c3684ff6f54517d235e'
-    encoded = base64.b64encode(
-        "{}:{}".format(
-            client_id,
-            client_secret
-        ).encode('utf-8')
-    ).decode('utf-8')
-    print('encoded')
-    print(encoded)
-    encode64 = 'MjJDSDhZOjkyZWYxNWJmNTI3ZThjMzY4NGZmNmY1NDUxN2QyMzVl'
-    encoded = encode64
-    header = {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Basic {}'.format(encoded)
-        }
-    r = requests.post(
-        get_auth_url(code),
-        headers=header
-    )
-    response = r.json()
-    response2 = json.loads(r.text)
-    print('Access token')
-    print(response2)
-    return render_template('payment.html')
-
-def get_auth_url(code):
-    return 'https://api.fitbit.com/oauth2/token?code={code}&client_id={client_id}&grant_type=authorization_code&redirect_uri=https://demo.dataagora.com/getFitbit'.format(
-        code=code,
-        client_id='22CH8Y'
-    )
-
-@application.route('/oauth/Fitbit', methods = ['POST', 'GET'])
-def fitbitOAuth():
-    return redirect('http://www.fitbit.com/oauth2/authorize?client_id=22CH8Y&prompt=login&redirect_uri=https://demo.dataagora.com/get/Fitbit&response_type=code&scope=activity%20nutrition%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&state=true')
-
-   
-@application.route('/insert/Fitbit', methods=['POST', 'GET'])
-def insert():
-    ## FOR DATASHARK
-    print("HERE v3")
-    print(request.form)
-    # access_token = request.form['accessToken']
-    client_id = '22CH8Y'
-    client_secret = '92ef15bf527e8c3684ff6f54517d235e'
-
-    ## FOR SPECIFIC USER - ROHAN - CONFIDENTIAL
-    # access_token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1U1pMN0YiLCJhdWQiOiIyMjhNV0YiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJhY3QgcnNldCBybG9jIHJ3ZWkgcmhyIHJwcm8gcm51dCByc2xlIiwiZXhwIjoxNTA3NDM5OTc3LCJpYXQiOjE1MDc0MTExNzd9.RGXvH1fUoAJjhqGEwP_wsjL7MYkP2xvzQgs36BtxlvA'
-    access_token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1U05IVDgiLCJhdWQiOiIyMkNIOFkiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJhY3QgcnNldCBybG9jIHJ3ZWkgcmhyIHJwcm8gcm51dCByc2xlIiwiZXhwIjoxNTE3OTAzNTAxLCJpYXQiOjE1MTc4NzQ3MDF9.k62Hg6BmpTmXfdiXwXE9A9ZuFAFs2fsTG-RqMoitWDw'
-    refresh_token = 'bbb44b3a0e05a4235b9bd837481d4796372ee3d51d5a1f4b2b82af4c85216534'
-    encode64 = 'MjJDSDhZOjkyZWYxNWJmNTI3ZThjMzY4NGZmNmY1NDUxN2QyMzVl'
-    print("Access: " + access_token)
-    header = {'Authorization': 'Bearer ' + access_token}
-    month_days = {'1': 31, '2': 28, '3': 31, '4': 30, '5': 31, '6': 30, '7': 31, '8': 31, '9': 30, '10': 31, '11': 30,
-                  '12': 31}
-    now = datetime.datetime.now()
-    year = now.year
-    year2 = year - 3
-    month = now.month
-    month2 = month
-    day = now.day
-    day2 = day + 2
-    if day < 10:
-        day = '0' + str(day)
-    if day2 < 10:
-        day2 = '0' + str(day2)
-    elif day >= month_days[month]:
-        day2 = '01'
-        month2 += 1
-        if month2 == 13:
-            month2 = 1
-    if month < 10:
-        month = '0' + str(month)
-    if month2 < 10:
-        month2 = '0' + str(month2)
-    date = str(year) + "-" + str(month) + "-" + str(day)
-    date2 = str(year2) + "-" + str(month2) + "-" + str(day2)
-    print(date)
-    print(date2)
-    ## FOR FITBIT DAILY ACTIVITY SUMMARY
-
-    fitbit_daily_activity_summary_values = ['lightlyActiveMinutes', 'caloriesBMR', 'caloriesOut', 'marginalCalories',
-                                            'fairlyActiveMinutes', 'veryActiveMinutes', 'sedentaryMinutes',
-                                            'restingHeartRate', 'elevation', 'activityCalories', 'activeScore',
-                                            'floors', 'steps']
-    steps_endpoint = 'https://api.fitbit.com/1/user/-/activities/steps/date/' + date2 + '/' + date + '.json'
-    profile_endpoint = 'https://api.fitbit.com/1/user/-/profile.json'
-    print(steps_endpoint)
-    response2 = requests.get(profile_endpoint, headers=header)
-    parsed2 = json.loads(response2.text)
-    user_id = parsed2['user']['encodedId']
-    print(user_id)
-    # print(parsed2)
-
-    calories_endpoint = 'https://api.fitbit.com/1/user/-/activities/calories/date/' + date2 + '/' + date + '.json'
-    response = requests.get(steps_endpoint, headers=header)
-    parsed = json.loads(response.text)
-    # print(parsed)
-    steps = parsed['activities-steps']
-    dict = defaultdict(lambda: [])
-    count = 0
-    for activity in steps:
-        # endpoint = fitbit_daily_activity_summary_endpoint.format(str(date).zfill(2))
-        # print(parsed)
-        # print(date
-        # print(date2)
-        # print(activity)
-        val = int(activity['value'])
-        if val >= 0:
-            dict['user_id'].append(user_id)
-            dict['date_of_activity'].append(activity['dateTime'])
-            dict['calories'].append(val)
-            count += 1
-        '''
-        for value in fitbit_daily_activity_summary_values:
-            if value in parsed['summary']:
-                dict[value.lower()].append(parsed['summary'][value])
-            else:
-                dict[value.lower()].append(None)
-        if 'distances' in parsed['summary']:
-            distances = parsed['summary']['distances']
-            if len(distances) > 0:
-                if 'distance' in distances[0]:
-                    dict['distance'].append(distances[0]['distance'])
-        '''
-    steps_df = pd.DataFrame(dict)
-
-    print('steps')
-    print(steps_df)
-    steps_df.to_sql('fbcalories', db.engine, if_exists='append', index=False)
-
-    response = requests.get(steps_endpoint, headers=header)
-    parsed = json.loads(response.text)
-    steps = parsed['activities-steps']
-    dict = defaultdict(lambda: [])
-    count = 0
-    for activity in steps:
-        # endpoint = fitbit_daily_activity_summary_endpoint.format(str(date).zfill(2))
-        # print(parsed)
-        # print(date
-        # print(date2)
-        # print(activity)
-        val = int(activity['value'])
-        if val >= 0:
-            dict['user_id'].append(user_id)
-            dict['date_of_activity'].append(activity['dateTime'])
-            dict['steps'].append(val)
-            count += 1
-        '''
-        for value in fitbit_daily_activity_summary_values:
-            if value in parsed['summary']:
-                dict[value.lower()].append(parsed['summary'][value])
-            else:
-                dict[value.lower()].append(None)
-        if 'distances' in parsed['summary']:
-            distances = parsed['summary']['distances']
-            if len(distances) > 0:
-                if 'distance' in distances[0]:
-                    dict['distance'].append(distances[0]['distance'])
-        '''
-    steps_df = pd.DataFrame(dict)
-
-    print('steps')
-    print(steps_df)
-    steps_df.to_sql('fbsteps', db.engine, if_exists='append', index=False)
-
-    print("finished you monkeys")
-
-@application.route('/oauth/Lyft', methods = ['POST', 'GET'])
-def lyftOAuth():
-    return redirect('https://api.lyft.com/oauth/authorize?client_id={client_id}&scope=public%20profile%20rides.read%20rides.request%20offline&state=true&response_type=code'.format(client_id='xWcQoJgCDyyx')) 
-
-@application.route('/get/Lyft', methods = ['POST', 'GET'])
-def getLyft():
-    code = request.args.get('code')
-    print('got code')
-    print(code)
-    client_id = 'xWcQoJgCDyyx'
-    client_secret = 've3ul8VMMiiQ7zrft33S2gzAy8258436'
-    params = {
-        'code': code,
-        'grant_type': 'authorization_code',
-    }
-    user = {client_id:client_secret}
-    encoded = base64.b64encode(
-        "{}:{}".format(
-            client_id,
-            client_secret
-        ).encode('utf-8')
-    ).decode('utf-8')
-    print('encoded')
-    print(encoded)
-    header = {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Basic {}'.format(encoded), 
-    }
-    response = requests.post(
-        'https://api.lyft.com/oauth/token',
-        headers=header,
-        data = params
-    )
-   
-    r = json.loads(response.text)
-    print('Access token')
-    print(r)
-    return render_template('payment.html')
-
-@application.route('/insert/Lyft', methods=['POST', 'GET'])
-def insertLyft():
-    client_id = 'xWcQoJgCDyyx'
-    # access_token = 's8FIXnUQkMe0huSo7UcRxiGJ9AMLKT/eBM6ILrsEeyGeMV6/sgU8/cn1EVB8AtohUqBe0EkfECVxjAMVrKZbdZaeLSeFH9jWbWiCOHL8CosCHcxR7fG6cFM='
-    refresh_token = 'C5BR2cGIWK4aMeHBMtmiNnGlp9Fi4lkmlxchUS5Nf0nDzwj2nhUdjqOdvV29sy+38C/OvCTcSMGxanMwEn0zj03FT4AkypGFr0q9pOgdrdzA'
-    client_secret = 've3ul8VMMiiQ7zrft33S2gzAy8258436'
-    print("Access: " + access_token)
-    access_token = request.form['accessToken']
-    header = {'Authorization': 'Bearer ' + access_token}
-    lyft_endpoint = 'https://api.lyft.com/v1/rides?start_time=2015-12-01T21:04:22Z'
-    lyft_values = ['ride_history']
-    dict = defaultdict(lambda: [])
-    response = requests.get(lyft_endpoint, headers=header)
-    parsed = json.loads(response.text)
-    print(parsed['ride_history'])
-    history = parsed['ride_history']
-    normal = ['origin', 'line_items', 'passenger', 'requested_at', 'price', 'destination', 'status', 'route_url',
-              'ride_id', 'ride_type', 'pricing_details_url', 'ride_profile']
-    bad = ['distance_miles', 'duration_seconds', 'dropoff', 'charges', 'pickup']
-    weird = ['vehicle', 'driver']
-    # bad = ['dropoff_lat', 'dropoff_lng', 'dropoff_time', '']
-    for ride in history:
-        if 'vehicle' not in ride.keys():
-            dict['vehicle'].append(None)
-        if 'driver' not in ride.keys():
-            dict['driver'].append(None)
-        if 'canceled_by' in ride.keys():
-            for key in bad:
-                dict[key].append(None)
-            for key in normal:
-                dict[key].append(str(ride[key]))
-            for key in weird:
-                if key in ride.keys():
-                    dict[key].append(str(ride[key]))
-            dict['canceled_by'].append(ride['canceled_by'])
-        else:
-            dict['canceled_by'].append(None)
-            for key in ride.keys():
-                if key != 'beacon_color':
-                    dict[key].append(str(ride[key]))
-    print(dict)
-    for key in dict.keys():
-        print(key, len(dict[key]))
-    lyft_df = pd.DataFrame(dict)
-    lyft_df.to_sql('lyft_table', db.engine, if_exists='append', index=False)
-    print("finished lyft")
-
-@application.route('/oauth/Uber', methods = ['POST', 'GET'])
-def uberOAuth():
-    return redirect('https://login.uber.com/oauth/v2/authorize?client_id=cvcaMdUYPlqkoFtrEECV1bbEEBnmpd5K&scope=profile%20history%20places&response_type=code&redirect_uri=https://demo.dataagora.com/get/Uber') 
-
-@application.route('/get/Uber', methods = ['POST', 'GET'])
-def getUber():
-    code = request.args.get('code')
-    print('got code')
-    print(code)
-    client_id = 'cvcaMdUYPlqkoFtrEECV1bbEEBnmpd5K'
-    client_secret = 'J7vY3yBGZr19EIrtibQZPhJm2qPulKy-Zs2VMMQz'
-    params = {
-        'client_id': client_id, 
-        'client_secret': client_secret,
-        'redirect_uri': 'https://demo.dataagora.com/get/Uber',
-        'code': code,
-        'grant_type': 'authorization_code',
-    }
-    header = {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    response = requests.post(
-        'https://login.uber.com/oauth/v2/token',
-        data=params,
-        headers=header
-    )
-   
-    r = json.loads(response.text)
-    print('Access token')
-    print(r)
-    return render_template('payment.html')
-
-
-@application.route('/insert/Uber', methods=['POST', 'GET'])
-def insertUber():
-    pd.read_sql_table('yum', db.engine)
-    print('yum')
-    # uber_endpoint = 'https://api.uber.com/v1.2/products?latitude=37.7759792&longitude=-122.41823'
-    # access_token = 'KA.eyJ2ZXJzaW9uIjoyLCJpZCI6IldmM2wzdWZUUkx1YWZtVEZpY2Ira0E9PSIsImV4cGlyZXNfYXQiOjE1MTk1MzU2MzIsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.XyzA3qM5CRTzg0y3J05g9U8ntd61JMSRoyxy2jy8oQY'
-    # client_id = 'cvcaMdUYPlqkoFtrEECV1bbEEBnmpd5K'
-    # client_secret = 'J7vY3yBGZr19EIrtibQZPhJm2qPulKy-Zs2VMMQz'
-    # access_token = request.form['accessToken']
-    access_token = 'KA.eyJ2ZXJzaW9uIjoyLCJpZCI6ImpoaUtCMDJQVERxSHJ2YVNydzdrQkE9PSIsImV4cGlyZXNfYXQiOjE1MjEzNzM2ODEsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.j3og-jnfY1IDm8njcKt9P4ba53IMiUrCR61Ng-hqkXg'
-    header = {'Authorization': 'Bearer ' + access_token, 'Accept-Language': 'en_US', 'Content-Type': 'application/json'}
-    '''
-    auth_flow = AuthorizationCodeGrant(
-        'cvcaMdUYPlqkoFtrEECV1bbEEBnmpd5K',
-        <SCOPES>,
-        'J7vY3yBGZr19EIrtibQZPhJm2qPulKy-Zs2VMMQz',
-        'https://datasharkofficial.github.io/'
-    )
-    '''
-    # auth_url = auth_flow.get_authorization_url()
-    # response = client.get_user_activity()
-    # history = response.json
-    # print(history)
-    print(SQLAlchemy.metadata)
-    print("my dude")
-    uber_endpoint2 = "https://api.uber.com/v1.2/history"
-    uber_endpoint3 = "https://api.uber.com/v1.2/requests/"
-    response = requests.get(uber_endpoint2, headers=header)
-    # print(response.text)
-    parsed = json.loads(response.text)
-    print(parsed)
-    for p in parsed['history']:
-        req_id = p['request_id']
-        endpoint = uber_endpoint3 + str(req_id)
-        response2 = requests.get(endpoint, headers=header)
-        parsed2 = json.loads(response2.text)
-        print(parsed2)
-    return
-    print(parsed['history'])
-    history = parsed['history']
-    print(history[0])
-    print(len(history))
-    dict = defaultdict(lambda: [])
-    for trip in history:
-        for key in trip.keys():
-            if key == 'start_city':
-                for k in trip['start_city']:
-                    dict[k.lower()].append(trip['start_city'][k])
-            else:
-                dict[key.lower()].append(trip[key])
-    print(dict)
-    ubero = pd.DataFrame(dict)
-    # uber_df.to_csv('uber.csv')
-    # ubero = pd.read_csv('uber.csv')
-    # print(ubero['status'])
-    # db.session.execute('select * from uber;')
-    # db.engine.execute('insert into table t')
-    # db.session.execute("INSERT INTO uber (display_name, distance, end_time, latitude, longitude, product_id, request_id, request_time, start_time, status) VALUES ('b', '1', '1', '1', '1', 'a', 'a', '1', '1', 'c');")
-    db.session.commit()
-    ubero.to_sql(name='yum', con=db.engine, if_exists='append', index=False)
-    print("finished uber")
-
-
-@application.route('/insert/Instagram/', methods=['POST', 'GET'])
-def insertInsta():
-    ## FOR DATASHARK
-    print("HERE v3")
-    print(request.form)
-    r = request.args
-    # access_token = request.form['accessToken']
-    client_id = '228MWF'
-    client_secret = 'ed16cd1e79a28f00c990e304b87f3bb6'
-
-    access_token = '3267610983.1677ed0.2240d1a1d85f49a48a5a58a90cb40703'
-    # access_token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1U1pMN0YiLCJhdWQiOiIyMjhNV0YiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJhY3QgcnNldCBybG9jIHJ3ZWkgcmhyIHJwcm8gcm51dCByc2xlIiwiZXhwIjoxNTA3NDM5OTc3LCJpYXQiOjE1MDc0MTExNzd9.RGXvH1fUoAJjhqGEwP_wsjL7MYkP2xvzQgs36BtxlvA'
-    refresh_token = 'bbb44b3a0e05a4235b9bd837481d4796372ee3d51d5a1f4b2b82af4c85216534'
-    print("Access: " + access_token)
-    header = {'Authorization': 'Bearer ' + access_token}
 
 
 @application.route('/transactionHistory/', methods=['GET'])
