@@ -1,0 +1,114 @@
+swagger: "2.0"
+
+info:
+  version: 1.0.0
+  title: Data Quality Assurance Service
+  license:
+    name: MIT
+
+basePath: /api/v1.0
+
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+
+paths:
+  /fitbit:
+    post:
+      operationId: api.fitbit.FitbitValidation.post
+      parameters:
+        - in: body
+          name: fitbit-data
+          required: true
+          schema:
+            $ref: '#/definitions/FitbitData'
+      responses:
+        '200':
+          description: 'Fitbit data validated'
+          # schema:
+          #   $ref: '#/definitions/response'
+
+definitions:
+  # General API ###################
+  # response:
+  #   type: object
+  #   required:
+  #     - Success
+  #   properties:
+  #     Success:
+  #       type: boolean
+  #     Error:
+  #       $ref: '#/definitions/Error'
+  #
+  # Error:
+  #   type: object
+  #   required:
+  #     - Code
+  #     - Message
+  #   propeties:
+  #     Code:
+  #       type: integer
+  #     Message:
+  #       type: string
+  #################################
+
+  # API Specific ##################
+  FitbitData:
+    type: object
+    required:
+      - Id
+      - ActivityDay
+      - TotalSteps
+      - TotalDistance
+      - TrackerDistance
+      - VeryActiveDistance
+      - ModeratelyActiveDistance
+      - LightActiveDistance
+      - VeryActiveMinutes
+      - FairlyActiveMinutes
+      - LightlyActiveMinutes
+      - SedentaryMinutes
+      - Calories
+    properties:
+      Id:
+        type: string
+      ActivityDay:
+        type: string
+      TotalSteps:
+        type: integer
+      TotalDistance:
+        type: number
+        format: float
+      TrackerDistance:
+        type: number
+        format: float
+      VeryActiveDistance:
+        type: number
+        format: float
+      ModeratelyActiveDistance:
+        type: number
+        format: float
+      LightActiveDistance:
+        type: number
+        format: float
+      VeryActiveMinutes:
+        type: integer
+      FairlyActiveMinutes:
+        type: integer
+      LightlyActiveMinutes:
+        type: integer
+      SedentaryMinutes:
+        type: integer
+      Calories:
+        type: integer
+
+  # UberData:
+    # Need to be determined
+
+  # LyftData:
+    # Need to be determined
+
+  #################################

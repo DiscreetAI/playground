@@ -1,0 +1,137 @@
+Table: metadata
+Column: table_name
+Column: col
+Column: description
+
+
+Table: fitbit_daily_activity_summary
+Column: lightlyactiveminutes
+Column: caloriesbmr
+Column: caloriesout
+Column: marginalcalories
+Column: fairlyactiveminutes
+Column: veryactiveminutes
+Column: sedentaryminutes
+Column: restingheartrate
+Column: elevation
+Column: activitycalories
+Column: activescore
+Column: floors
+Column: steps
+Column: distance
+
+
+Table: uber
+Column: count
+Column: history
+Column: limit
+Column: offset
+
+
+Table: fb_steps
+Column: date_of_activity
+Column: steps
+Column: user_id
+
+
+Table: fitbitSteps
+Column: date_of_activity
+Column: steps
+Column: user_id
+
+
+Table: fb_calories
+Column: date_of_activity
+Column: calories
+Column: user_id
+
+
+Table: test4
+Column: date_of_activity
+Column: calories
+Column: user_id
+
+
+Table: fbcalories
+Column: calories
+Column: date_of_activity
+Column: user_id
+
+
+Table: ubero
+Column: display_name
+Column: distance
+Column: end_time
+Column: latitude
+Column: longitude
+Column: product_id
+Column: request_id
+Column: request_time
+Column: start_time
+Column: status
+
+
+Table: fbsteps
+Column: date_of_activity
+Column: steps
+Column: user_id
+
+
+Table: fitbitCalories
+Column: calories
+Column: date_of_activity
+Column: user_id
+
+
+Table: yum
+Column: num
+Column: display_name
+Column: distance
+Column: end_time
+Column: latitude
+Column: longitude
+Column: product_id
+Column: request_id
+Column: request_time
+Column: start_time
+Column: status
+
+
+Table: test2
+Column: step
+
+
+Table: test3
+Column: a
+Column: b
+Column: c
+
+
+Table: lyft
+Column: count
+Column: history
+Column: limit
+Column: offset
+
+
+Table: lyft_table
+Column: canceled_by
+Column: charges
+Column: destination
+Column: distance_miles
+Column: driver
+Column: dropoff
+Column: duration_seconds
+Column: line_items
+Column: origin
+Column: passenger
+Column: pickup
+Column: price
+Column: pricing_details_url
+Column: requested_at
+Column: ride_id
+Column: ride_profile
+Column: ride_type
+Column: route_url
+Column: status
+Column: vehicle
