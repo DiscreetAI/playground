@@ -1,3 +1,4 @@
+from django.urls import path
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import TemplateView, RedirectView
@@ -11,5 +12,6 @@ from views.facebook_login import FacebookLogin
 urlpatterns = [
     url(r'^docs/', include_docs_urls(title='Authentication API', description='RESTful API for Authentication.')),
     url(r'^auth/', include('rest_auth.urls')),
-    url(r'^auth/registration/', include('rest_auth.registration.urls'))
+    #url(r'^auth/registration/', include('rest_auth.registration.urls'))
+    path('admin/', admin.site.urls),
 ]
