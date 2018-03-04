@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'rest_auth.registration',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.twitter',
     'rest_framework_swagger',
 )
 
