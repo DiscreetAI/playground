@@ -12,9 +12,9 @@ import os
 
 application = Flask(__name__)
 application.config['DEBUG'] = True
-# SESSION_TYPE = 'redis'
+#SESSION_TYPE = 'redis'
 application.config.from_object(__name__)
-# Session(application)
+#Session(application)
 POSTGRES = {
     'user': 'datashark',
     'pw': 'datashark',
@@ -27,3 +27,5 @@ application.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
 application.requests_session = requests.Session()
 application.secret_key = os.urandom(24)
 db = SQLAlchemy(application)
+
+user_id_df = pd.DataFrame(columns = ['user_id', 'fitbit', 'uber', 'lyft', 'age', 'city', 'gender'])

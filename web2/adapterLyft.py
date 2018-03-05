@@ -9,6 +9,18 @@ def insert_lyft():
     print("Access: " + access_token)
     #access_token = request.form['accessToken']
     header = {'Authorization': 'Bearer ' + access_token}
+    lyft_endpoint = 'https://api.lyft.com/v1/profile'
+    response = requests.get(lyft_endpoint, headers=header)
+    parsed = json.loads(response.text)
+    user_id = parsed['id']
+    '''
+    #uncomment when session is resolved
+    if session['user_id'] in user_id_df['user_id']:
+        user_id_df.lyft[user_id_df.user_id == user_id] = user_id
+    else: 
+        row = [session['user_id'], None, user_id, None, None, None, None]
+        user_id_df.loc[len(user_id_df.index)] = row
+    '''
     lyft_endpoint = 'https://api.lyft.com/v1/rides?start_time=2015-12-01T21:04:22Z'
     lyft_values = ['ride_history']
     response = requests.get(lyft_endpoint, headers=header)

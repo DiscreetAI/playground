@@ -27,8 +27,29 @@ def insert_fitbit():
     profile_endpoint = 'https://api.fitbit.com/1/user/-/profile.json'
     #print(steps_endpoint)
     response2 = requests.get(profile_endpoint, headers=header)
-    
+    dicto = defaultdict(lambda: [])
     parsed2 = json.loads(response2.text)
+    user_id = parsed2['user']['encodedId']
+    gender = parsed2['user']['gender']
+    dob = parsed2['user']['dateOfBirth']
+    city = parsed2['user']['city']
+    '''
+    #uncomment when session is resolved
+    if session['user_id'] in user_id_df['user_id']:
+        user_id_df.gender[user_id_df.user_id == user_id] = gender
+        user_id_df.dob[user_id_df.user_id == user_id] = dob
+        user_id_df.city[user_id_df.user_id == user_id] = city
+        user_id_df.fitbit[user_id_df.user_id == user_id] = user_id
+    else: 
+        row = [session['user_id'], user_id, None, None, gender, dob, city]
+        user_id_df.loc[len(user_id_df.index)] = row
+    '''
+    for k,v in parsed2.items():
+        if type(v) != dict:
+            dicto[k].append(v)
+    profile_df = pd.DataFrame(dicto)
+    #profile_df.to_sql('fb_profile', db.engine, if_exists='append', index=False)
+    #return
     #print(parsed2)
     user_id = parsed2['user']['encodedId']
     print(user_id)
@@ -56,7 +77,7 @@ def insert_fitbit():
     parsed = list(zip(*parsed))
     print(parsed[0])
     # print(parsed)
-    dict = defaultdict(lambda: [])
+    dicto = defaultdict(lambda: [])
     count = 0
     for activity in parsed:
         # endpoint = fitbit_daily_activity_summary_endpoint.format(str(date).zfill(2))
@@ -66,10 +87,10 @@ def insert_fitbit():
         # print(activity)
         val = 1
         if val >= 0:
-            dict['user_id'].append(user_id)
-            dict['date_of_activity'].append(activity[0]['dateTime'])
+            dicto['user_id'].append(user_id)
+            dicto['date_of_activity'].append(activity[0]['dateTime'])
             for name, data in zip(real_names, activity):
-                dict[name].append(data['value'])
+                dicto[name].append(data['value'])
         '''
         for value in fitbit_daily_activity_summary_values:
             if value in parsed['summary']:
@@ -82,11 +103,11 @@ def insert_fitbit():
                 if 'distance' in distances[0]:
                     dict['distance'].append(distances[0]['distance'])
         '''
-    for k,v in dict.items():
+    for k,v in dicto.items():
         print(k, v[0])
-    for k,v in dict.items():
+    for k,v in dicto.items():
         print(k, len(v))
-    steps_df = pd.DataFrame(dict)
+    steps_df = pd.DataFrame(dicto)
 
     print('steps')
     print(steps_df)
@@ -175,3 +196,6 @@ def activities_endpoint_template(activity):
     #print(date2)
     #return ('https://api.fitbit.com/1/user/-/{}/date/' + date2 + '/' + date).format(activity)
     return ('https://api.fitbit.com/1/user/-/{}/date/today/1y.json').format(activity)
+
+def update_fitbit_user_count():
+    return None
