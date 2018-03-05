@@ -41,13 +41,24 @@ def results():
     # print(temp)
     import ast
     col_names = ast.literal_eval(temp)
-    # print(col_names)
-    return render_template('left-sidebar.html', table=table_name, cols=json.dumps(col_names))
+    maxUsers = -1
+    if 'categ' in request.form:
+        if request.form['categ'] == 'Fitbit':
+            maxUsers = get_user_count('user_id', 'fb_activities')
+            print(maxUsers)
 
-def getTable(tableName):
+    # print(col_names)
+    return render_template('left-sidebar.html', table=table_name, cols=json.dumps(col_names), users=maxUsers)
+
+def get_table(tableName):
     query = "select * from {};".format(tableName)
-    df = pd.read_sql_query(query)
+    df = pd.read_sql_query(query, db.engine)
     return df 
+
+def get_user_count(colName, tableName):
+    query = "select count(distinct {col_name}) as count from {table_name};".format(col_name=colName, table_name=tableName)
+    df = pd.read_sql_query(query, db.engine)
+    return df['count'][0] 
 
 #userDF is dataframe of userids with corresponding metadata.
 #dfArr is array of tuples (dataframe, api) to be filtered

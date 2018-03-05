@@ -11,9 +11,9 @@ import os
 
 application = Flask(__name__)
 application.config['DEBUG'] = True
-SESSION_TYPE = 'redis'
+#SESSION_TYPE = 'redis'
 application.config.from_object(__name__)
-Session(application)
+#Session(application)
 POSTGRES = {
     'user': 'datashark',
     'pw': 'datashark',
