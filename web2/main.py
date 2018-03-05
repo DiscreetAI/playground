@@ -32,6 +32,8 @@ def results():
         return lyft_oauth()
     elif categ == 'Twitter':
         return twitter_oauth()
+    elif categ == 'Spotify':
+        return spotify_oauth()
     table_name = "fitbit_daily_activity_summary"
     col_names = get_columns(table_name)
     temp = str(col_names)
