@@ -16,7 +16,6 @@ def main():
 def home():
     return redirect('/')
 
-
 @application.route('/results', methods=['POST'])
 def results():
     if 'test' in request.form:

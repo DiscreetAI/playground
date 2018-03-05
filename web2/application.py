@@ -1,5 +1,5 @@
 from flask import session, Flask, render_template, request, redirect, url_for, Response, json, jsonify
-from flask.ext.session import Session
+from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 import requests
 import pandas as pd
