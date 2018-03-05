@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for, Response, json, jsonify
+from flask import session, Flask, render_template, request, redirect, url_for, Response, json, jsonify
+from flask.ext.session import Session
 from flask_sqlalchemy import SQLAlchemy
 import requests
 import pandas as pd
@@ -10,7 +11,9 @@ import os
 
 application = Flask(__name__)
 application.config['DEBUG'] = True
-
+SESSION_TYPE = 'redis'
+application.config.from_object(__name__)
+Session(application)
 POSTGRES = {
     'user': 'datashark',
     'pw': 'datashark',

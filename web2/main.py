@@ -30,7 +30,8 @@ def results():
         return uber_oauth()
     elif categ == 'Lyft':
         return lyft_oauth()
-    #print('rip')
+    elif categ == 'Twitter':
+        return twitter_oauth()
     table_name = "fitbit_daily_activity_summary"
     col_names = get_columns(table_name)
     temp = str(col_names)
