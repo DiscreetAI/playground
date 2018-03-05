@@ -22,19 +22,19 @@ def results():
         categ = request.form['test']
     else:
         categ = 'lol'
-    # execute()
-    insert()
+    #return execute()
+    #insert_fitbit()
     if categ == 'Fitbit':
         return fitbit_oauth()
     elif categ == 'Uber':
         return uber_oauth()
     elif categ == 'Lyft':
         return lyft_oauth()
-    print('rip')
+    #print('rip')
     table_name = "fitbit_daily_activity_summary"
     col_names = get_columns(table_name)
     temp = str(col_names)
-    print(temp)
+    #print(temp)
     temp = temp.replace("'", '"')
     # print(temp)
     import ast
@@ -101,18 +101,17 @@ def execute():
     print("execute called")
     # query = request.form['query']
     # print(query)
-    query = 'create table fb_calories (date_of_activity varchar(255), calories int, user_id varchar(255));'
+    query = 'select * from fb_activities;'
     df = pd.read_sql_query(query, db.engine)
     # query = 'create table ubero (num real, display_name varchar(255), distance real, end_time real, latitude real, longitude real, product_id varchar(255), request_id varchar(255), request_time real, start_time real, status varchar(255))'
     # query = 'create table lyft_table (canceled_by varchar(255), origin varchar(255), line_items varchar(255), passenger varchar(255), distance_miles real, duration_seconds int, dropoff varchar(255),  charges varchar(255), requested_at varchar(255), price varchar(255), destination varchar(255), driver varchar(255), status varchar(255), pickup varchar(255), route_url varchar(255), ride_id varchar(255), vehicle varchar(255), ride_type varchar(255), pricing_details_url varchar(255), ride_profile varchar(255))'
     # df = pd.read_sql_query(query, db.engine)
-    return
     # df = pd.read_sql_query("select * from fitbit_daily_activity_summary", db.engine)
     csv = df.to_csv(index=False)
     return Response(
         csv,
         mimetype="text/csv",
-        headers={"Content-disposition": "attachment; filename=data.csv"}
+        headers={"Content-disposition": "attachment; filename=fb_activities.csv"}
     )
 
 
