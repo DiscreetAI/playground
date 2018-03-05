@@ -17,6 +17,19 @@ def insert_uber():
     # print(history)
     print(SQLAlchemy.metadata)
     print("my dude")
+    uber_endpoint = "https://api.uber.com/v1.2/me"
+    response = requests.get(uber_endpoint, headers=header)
+    # print(response.text)
+    parsed = json.loads(response.text)
+    user_id = parsed['uuid']
+    '''
+    #uncomment when session is resolved
+    if session['user_id'] in user_id_df['user_id']:
+        user_id_df.uber[user_id_df.user_id == user_id] = user_id
+    else: 
+        row = [session['user_id'], None, user_id, None, None, None, None]
+        user_id_df.loc[len(user_id_df.index)] = row
+    '''
     uber_endpoint2 = "https://api.uber.com/v1.2/history"
     uber_endpoint3 = "https://api.uber.com/v1.2/requests/"
     response = requests.get(uber_endpoint2, headers=header)

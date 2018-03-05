@@ -29,12 +29,27 @@ def insert_fitbit():
     response2 = requests.get(profile_endpoint, headers=header)
     dicto = defaultdict(lambda: [])
     parsed2 = json.loads(response2.text)
+    user_id = parsed2['user']['encodedId']
+    gender = parsed2['user']['gender']
+    dob = parsed2['user']['dateOfBirth']
+    city = parsed2['user']['city']
+    '''
+    #uncomment when session is resolved
+    if session['user_id'] in user_id_df['user_id']:
+        user_id_df.gender[user_id_df.user_id == user_id] = gender
+        user_id_df.dob[user_id_df.user_id == user_id] = dob
+        user_id_df.city[user_id_df.user_id == user_id] = city
+        user_id_df.fitbit[user_id_df.user_id == user_id] = user_id
+    else: 
+        row = [session['user_id'], user_id, None, None, gender, dob, city]
+        user_id_df.loc[len(user_id_df.index)] = row
+    '''
     for k,v in parsed2.items():
         if type(v) != dict:
             dicto[k].append(v)
     profile_df = pd.DataFrame(dicto)
-    profile_df.to_sql('fb_profile', db.engine, if_exists='append', index=False)
-    return
+    #profile_df.to_sql('fb_profile', db.engine, if_exists='append', index=False)
+    #return
     #print(parsed2)
     user_id = parsed2['user']['encodedId']
     print(user_id)
