@@ -25,11 +25,11 @@ def results():
     # execute()
     insert()
     if categ == 'Fitbit':
-        return fitbitOAuth()
+        return fitbit_oauth()
     elif categ == 'Uber':
-        return uberOAuth()
+        return uber_oauth()
     elif categ == 'Lyft':
-        return lyftOAuth()
+        return lyft_oauth()
     print('rip')
     table_name = "fitbit_daily_activity_summary"
     col_names = get_columns(table_name)
