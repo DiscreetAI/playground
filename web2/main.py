@@ -1,5 +1,6 @@
 from oauth import *
 from adapters import *
+from application import *
 
 hasAge = {'fitbit': True, 'uber': False, 'lyft': False}
 hasGender = {'fitbit': True, 'uber': False, 'lyft': False}
