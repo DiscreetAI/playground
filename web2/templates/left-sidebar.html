@@ -132,6 +132,7 @@
 		<script>
 			var table = '{{table}}';
 			var col = JSON.parse('{{cols|safe}}');
+			var maxUsers = '{{users}}';
 			console.log(col[0]);
 			var place = document.getElementById('stuff');
 			var baros = [
@@ -157,9 +158,13 @@
 		}
 		function update() {
 			document.getElementById('budgo').innerHTML = "$" + document.getElementById('bud').value;
+			var us = document.getElementById('us').value;
+			if (maxUsers && us > maxUsers) {
+				us = maxUsers;
+			}
 			document.getElementById('use').innerHTML = document.getElementById('us').value;
 			document.getElementById('dura').innerHTML = document.getElementById('dur').value;
-			document.getElementById('usero').innerHTML = document.getElementById('us').value;
+			document.getElementById('usero').innerHTML = us;
 			document.getElementById('agos').innerHTML = 5 * document.getElementById('ages').value;
 			var small = 5 * document.getElementById('ages').value - 2;
 			var big = 5 * document.getElementById('ages').value + 2;

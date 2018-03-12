@@ -1,5 +1,6 @@
 from oauth import *
 from adapters import *
+from application import *
 
 hasAge = {'fitbit': True, 'uber': False, 'lyft': False}
 hasGender = {'fitbit': True, 'uber': False, 'lyft': False}
@@ -15,37 +16,50 @@ def main():
 def home():
     return redirect('/')
 
-
 @application.route('/results', methods=['POST'])
 def results():
     if 'test' in request.form:
         categ = request.form['test']
     else:
         categ = 'lol'
-    # execute()
-    insert()
+    #return execute()
+    #insert_fitbit()
     if categ == 'Fitbit':
-        return fitbitOAuth()
+        return fitbit_oauth()
     elif categ == 'Uber':
-        return uberOAuth()
+        return uber_oauth()
     elif categ == 'Lyft':
-        return lyftOAuth()
-    print('rip')
+        return lyft_oauth()
+    elif categ == 'Twitter':
+        return twitter_oauth()
+    elif categ == 'Spotify':
+        return spotify_oauth()
     table_name = "fitbit_daily_activity_summary"
     col_names = get_columns(table_name)
     temp = str(col_names)
-    print(temp)
+    #print(temp)
     temp = temp.replace("'", '"')
     # print(temp)
     import ast
     col_names = ast.literal_eval(temp)
-    # print(col_names)
-    return render_template('left-sidebar.html', table=table_name, cols=json.dumps(col_names))
+    maxUsers = -1
+    if 'categ' in request.form:
+        if request.form['categ'] == 'Fitbit':
+            maxUsers = get_user_count('user_id', 'fb_activities')
+            print(maxUsers)
 
-def getTable(tableName):
+    # print(col_names)
+    return render_template('left-sidebar.html', table=table_name, cols=json.dumps(col_names), users=maxUsers)
+
+def get_table(tableName):
     query = "select * from {};".format(tableName)
-    df = pd.read_sql_query(query)
+    df = pd.read_sql_query(query, db.engine)
     return df 
+
+def get_user_count(colName, tableName):
+    query = "select count(distinct {col_name}) as count from {table_name};".format(col_name=colName, table_name=tableName)
+    df = pd.read_sql_query(query, db.engine)
+    return df['count'][0] 
 
 #userDF is dataframe of userids with corresponding metadata.
 #dfArr is array of tuples (dataframe, api) to be filtered
@@ -101,18 +115,17 @@ def execute():
     print("execute called")
     # query = request.form['query']
     # print(query)
-    query = 'create table fb_calories (date_of_activity varchar(255), calories int, user_id varchar(255));'
+    query = 'select * from fb_activities;'
     df = pd.read_sql_query(query, db.engine)
     # query = 'create table ubero (num real, display_name varchar(255), distance real, end_time real, latitude real, longitude real, product_id varchar(255), request_id varchar(255), request_time real, start_time real, status varchar(255))'
     # query = 'create table lyft_table (canceled_by varchar(255), origin varchar(255), line_items varchar(255), passenger varchar(255), distance_miles real, duration_seconds int, dropoff varchar(255),  charges varchar(255), requested_at varchar(255), price varchar(255), destination varchar(255), driver varchar(255), status varchar(255), pickup varchar(255), route_url varchar(255), ride_id varchar(255), vehicle varchar(255), ride_type varchar(255), pricing_details_url varchar(255), ride_profile varchar(255))'
     # df = pd.read_sql_query(query, db.engine)
-    return
     # df = pd.read_sql_query("select * from fitbit_daily_activity_summary", db.engine)
     csv = df.to_csv(index=False)
     return Response(
         csv,
         mimetype="text/csv",
-        headers={"Content-disposition": "attachment; filename=data.csv"}
+        headers={"Content-disposition": "attachment; filename=fb_activities.csv"}
     )
 
 

@@ -1,8 +1,13 @@
 Flask==0.11.1
+flask-apispec==0.4.2
 Flask-Cors==2.1.2
+Flask-Session==0.3.1
 Flask-SQLAlchemy==2.3.1
 psycopg2==2.7.3.1
 SQLAlchemy==1.0.13
 pandas==0.19.2
 requests==2.9.1
 rauth==0.7.3
+tweepy==3.6.0
+redis==2.10.6
+urllib3==1.22
