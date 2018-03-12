@@ -48,12 +48,29 @@ def insert_fitbit():
         if type(v) != dict:
             dicto[k].append(v)
     profile_df = pd.DataFrame(dicto)
-    #profile_df.to_sql('fb_profile', db.engine, if_exists='append', index=False)
+    profile_df.to_sql('fb_profile', db.engine, if_exists='append', index=False)
     #return
     #print(parsed2)
     user_id = parsed2['user']['encodedId']
     print(user_id)
     # print(parsed2)
+    weight_names = ['fat', 'weight']
+    endpoints = [get_weight_endpoint(name) for name in weight_names]
+    print(endpoints)
+    responses = [requests.get(endpoint, headers=header) for endpoint in endpoints]
+    parsed = [json.loads(response.text) for response in responses]
+    dicts = {}
+    for name in weight_names:
+        dicts[name] = defaultdict(lambda: [])
+    for data, name in zip(parsed, weight_names):
+        for entry in data[name]:
+            for k,v in entry.items():
+                dicts[name][k].append(v)
+    for k,v in dicts.items()
+        df = pd.DataFrame(v)
+        df.to_sql(k, db.engine, if_exists='append', index=False)
+                
+
     activities_names = ['activities/calories','activities/caloriesBMR','activities/steps','activities/distance',
     'activities/floors','activities/elevation','activities/minutesSedentary','activities/minutesLightlyActive',
     'activities/minutesFairlyActive','activities/minutesVeryActive','activities/activityCalories', 
@@ -196,6 +213,36 @@ def activities_endpoint_template(activity):
     #print(date2)
     #return ('https://api.fitbit.com/1/user/-/{}/date/' + date2 + '/' + date).format(activity)
     return ('https://api.fitbit.com/1/user/-/{}/date/today/1y.json').format(activity)
+
+def get_weight_endpoint(weight_attribute):
+    month_days = {'1': 31, '2': 28, '3': 31, '4': 30, '5': 31, '6': 30, '7': 31, '8': 31, '9': 30, '10': 31, '11': 30,
+                  '12': 31}
+    now = datetime.datetime.now()
+    year = now.year
+    year2 = year - 3
+    month = now.month
+    month2 = month
+    day = now.day
+    day2 = day + 2
+    if day < 10:
+        day = '0' + str(day)
+    if day2 < 10:
+        day2 = '0' + str(day2)
+    elif day >= month_days[str(month)]:
+        day2 = '01'
+        month2 += 1
+        if month2 == 13:
+            month2 = 1
+    if month < 10:
+        month = '0' + str(month)
+    if month2 < 10:
+        month2 = '0' + str(month2)
+    date = str(year) + "-" + str(month) + "-" + str(day)
+    date2 = str(year2) + "-" + str(month2) + "-" + str(day2)
+    #print(date)
+    #print(date2)
+    #return ('https://api.fitbit.com/1/user/-/{}/date/' + date2 + '/' + date).format(activity)
+    return ('https://api.fitbit.com/1/user/-/body/log/{}/date/today/1y.json').format(weight_attribute)
 
 def update_fitbit_user_count():
     return None
