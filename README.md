@@ -7,7 +7,11 @@ DataAgora is the first smart data exchange.
 
 - **web2**: V2 of website.
 
-- **auth**: authentication service.
+- **auth-enterprise**: authentication service for enterprise users.
+
+- **auth-user**: authentication service for normal users.
+
+- **auth-company**: authentication service for enterprise users.
 
 - **blockchain**: general folder for all blockchain-related code.
 
