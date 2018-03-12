@@ -21,7 +21,7 @@ SECRET_KEY = os.environ['SECRET_KEY'] if 'SECRET_KEY' in os.environ \
              else 'datajbsnmd5h84rbewvzx6*cax^jgmqw@m3$ds_%z-4*qy0n44fjr5shark'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*'] # Insecure... should change to actual host.
 
@@ -46,7 +46,7 @@ INSTALLED_APPS = (
     'rest_auth.registration',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
-    'allauth.socialaccount.providers.twitter',
+    'allauth.socialaccount.providers.google',
     'rest_framework_swagger',
 )
 
@@ -134,7 +134,6 @@ TEMPLATES = [
 
 REST_SESSION_LOGIN = True
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-SITE_ID = 1
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
@@ -167,10 +166,12 @@ REST_AUTH_SERIALIZERS = {
 }
 
 REST_AUTH_REGISTER_SERIALIZERS = {
-        'REGISTER_SERIALIZER': 'users.serializers.CustomRegisterSerializer',
+    'REGISTER_SERIALIZER': 'users.serializers.CustomRegisterSerializer',
 }
 
 SWAGGER_SETTINGS = {
     'LOGIN_URL': 'login',
     'LOGOUT_URL': 'logout',
 }
+
+SITE_ID = 2
