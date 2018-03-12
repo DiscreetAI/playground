@@ -7,6 +7,8 @@ DataAgora is the first smart data exchange.
 
 - **web2**: V2 of website.
 
+- **web3**: react version of the website.
+
 - **auth-enterprise**: authentication service for enterprise users.
 
 - **auth-user**: authentication service for normal users.
