@@ -20,7 +20,7 @@ class Header extends Component {
           <div id="navbarNav" className="navbar-collapse collapse w-100 order-3 dual-collapse2">
             <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
-                    <Link to="login" className="nav-link" href="#">Sign In</Link>
+                    <Link to="signin" className="nav-link" href="#">Sign In</Link>
                 </li>
             </ul>
         </div>

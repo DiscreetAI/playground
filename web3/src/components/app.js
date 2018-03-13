@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import Header from './common/loginHeader';
 import Routes from './../routes';
 
-import './app.css';
+import './common/app.css';
 
 class App extends Component {
   render() {

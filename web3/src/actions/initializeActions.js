@@ -19,4 +19,3 @@ var InitializeActions = {
 };
 
 export default InitializeActions;
-// module.exports = InitializeActions;
