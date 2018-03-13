@@ -45,9 +45,12 @@ INSTALLED_APPS = (
     'allauth.account',
     'rest_auth.registration',
     'rest_framework_swagger',
+    'corsheaders',
 )
 
 MIDDLEWARE = (
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -181,3 +184,8 @@ SWAGGER_SETTINGS = {
 }
 
 SITE_ID = 2
+
+CORS_ORIGIN_WHITELIST = (
+    'beta.dataagora.com',
+    'localhost:3000'
+)
