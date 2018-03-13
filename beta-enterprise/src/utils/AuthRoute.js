@@ -2,16 +2,16 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import AuthStore from './../stores/AuthStore';
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
+const AuthRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      AuthStore.isAuthenticated() ? (
+      !AuthStore.state.isAuthenticated ? (
         <Component {...props} />
       ) : (
         <Redirect
           to={{
-            pathname: "/",
+            pathname: "/secret",
             state: { from: props.location }
           }}
         />
@@ -20,4 +20,4 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   />
 );
 
-export default PrivateRoute;
+export default AuthRoute;
