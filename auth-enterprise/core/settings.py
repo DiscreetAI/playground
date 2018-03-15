@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
+from corsheaders.defaults import default_headers
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Quick-start development settings - unsuitable for production
@@ -185,7 +187,13 @@ SWAGGER_SETTINGS = {
 
 SITE_ID = 2
 
-CORS_ORIGIN_WHITELIST = (
-    'beta.dataagora.com',
-    'localhost:3000'
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_HEADERS = default_headers + (
+    'cache',
 )
+CORS_ORIGIN_REGEX_WHITELIST = (r'^(https?://)?(\w+\.)?dataagora\.com$', )
+
+# CORS_ORIGIN_WHITELIST = (
+#     'buy.dataagora.com',
+#     'localhost:3000'
+# )
