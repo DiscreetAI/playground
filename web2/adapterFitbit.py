@@ -66,7 +66,7 @@ def insert_fitbit():
         for entry in data[name]:
             for k,v in entry.items():
                 dicts[name][k].append(v)
-    for k,v in dicts.items()
+    for k,v in dicts.items():
         df = pd.DataFrame(v)
         df.to_sql(k, db.engine, if_exists='append', index=False)
                 

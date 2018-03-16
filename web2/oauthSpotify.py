@@ -35,8 +35,13 @@ auth_query_parameters = {
 @application.route('/oauth/Spotify/')
 def spotify_oauth():
     # Auth Step 1: Authorization
-    url_args = "&".join(["{}={}".format(key,urllib.quote(val)) for key,val in auth_query_parameters.items()])
-    auth_url = "{}/?{}".format(SPOTIFY_AUTH_URL, url_args)
+    scopes = ['user-read-private', 'user-read-email', 'user-read-birthdate', 'playlist-read-private']
+    #url_args = "&".join(["{}={}".format(key,urllib.quote(val)) for key,val in auth_query_parameters.items()])
+    auth_url = "{url}/?client_id={client_id}&response_type=code&redirect_uri={redirect}&state={state}&scope=".format(url=SPOTIFY_AUTH_URL, client_id=CLIENT_ID, redirect=REDIRECT_URI, state='')
+    for scope in scopes:
+        auth_url += scope + '%20'
+    auth_url = auth_url[:-3]
+    print(auth_url)
     return redirect(auth_url)
 @application.route('/get/Spotify/', methods=['POST', 'GET'])
 def get_spotify():
@@ -60,7 +65,7 @@ def get_spotify():
 
     # Auth Step 6: Use the access token to access Spotify API
     authorization_header = {"Authorization":"Bearer {}".format(access_token)}
-
+    print(access_token)
     # Get profile data
     user_profile_api_endpoint = "{}/me".format(SPOTIFY_API_URL)
     profile_response = requests.get(user_profile_api_endpoint, headers=authorization_header)
@@ -73,7 +78,7 @@ def get_spotify():
     
     # Combine profile and playlist data to display
     display_arr = [profile_data] + playlist_data["items"]
-    return 'OK'
+    #return 'OK'
     return render_template('payment.html')
 # #SET USERNAME
 # if len(sys.argv) > 1:
