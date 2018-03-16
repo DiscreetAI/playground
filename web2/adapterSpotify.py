@@ -5,9 +5,17 @@ def insert_spotify():
     CLIENT_ID = "78fd273678d54d5cb6f352307b578a42"
     CLIENT_SECRET = "6ce54cfc4e1b46059b7c2f433e4178d9"
     #access_token = "BQAEPazqLheMQs15UyMoy_0Yq7SP-9amQtEpeEjp6s2-RMI-"
-    access_token = request.form['acc']
-    user_id = request.form['uid']
-    print(user_id)
+    access_token = request.form['accessToken']
+    session_token = request.form['uid']
+    user_endpoint = 'http://auth.dataagora.com/auth/user/'
+    header = {"Authorization": "Token " + session_token}
+    response = requests.get(user_endpoint, headers = header)
+    parsed = json.loads(response)
+    if 'pk' in parsed:
+        user_id = parsed['pk']
+    else:
+        user_id = None #or some kind of error handling
+    print(session_token)
     base_url = "https://api.spotify.com/v1/"
     header = {'Authorization': 'Bearer ' + access_token}
     endpoints = ['me/tracks', 'me/following?type=artist', 'me/top/artists', 'me/top/tracks']

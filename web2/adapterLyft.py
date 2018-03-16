@@ -7,8 +7,16 @@ def insert_lyft():
     refresh_token = 'C5BR2cGIWK4aMeHBMtmiNnGlp9Fi4lkmlxchUS5Nf0nDzwj2nhUdjqOdvV29sy+38C/OvCTcSMGxanMwEn0zj03FT4AkypGFr0q9pOgdrdzA'
     client_secret = 've3ul8VMMiiQ7zrft33S2gzAy8258436'
     access_token = request.form['accessToken']
-    user_id = request.form['uid']
-    print(user_id)
+    session_token = request.form['uid']
+    print(session_token)
+    user_endpoint = 'http://auth.dataagora.com/auth/user/'
+    header = {"Authorization": "Token " + session_token}
+    response = requests.get(user_endpoint, headers = header)
+    parsed = json.loads(response)
+    if 'pk' in parsed:
+        user_id = parsed['pk']
+    else:
+        user_id = None #or some kind of error handling
     print("Access: " + access_token)
     header = {'Authorization': 'Bearer ' + access_token}
     lyft_endpoint = 'https://api.lyft.com/v1/profile'

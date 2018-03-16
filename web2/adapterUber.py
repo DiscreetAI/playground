@@ -9,7 +9,15 @@ def insert_uber():
     # client_id = 'cvcaMdUYPlqkoFtrEECV1bbEEBnmpd5K'
     # client_secret = 'J7vY3yBGZr19EIrtibQZPhJm2qPulKy-Zs2VMMQz'
     access_token = request.form['accessToken']
-    user_id = request.form['uid']
+    session_token = request.form['uid']
+    user_endpoint = 'http://auth.dataagora.com/auth/user/'
+    header = {"Authorization": "Token " + session_token}
+    response = requests.get(user_endpoint, headers = header)
+    parsed = json.loads(response)
+    if 'pk' in parsed:
+        user_id = parsed['pk']
+    else:
+        user_id = None #or some kind of error handling
     #access_token = 'KA.eyJ2ZXJzaW9uIjoyLCJpZCI6IlFtbFFuTnllUWFhaWYzMXpQYVR0VXc9PSIsImV4cGlyZXNfYXQiOjE1MjI4MDkxOTcsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.T67EHU7zifkLLQBLOiMyKbacugyjss-zI155GU52AwU'
     header = {'Authorization': 'Bearer ' + access_token, 'Accept-Language': 'en_US', 'Content-Type': 'application/json'}
     # auth_url = auth_flow.get_authorization_url()

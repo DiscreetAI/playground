@@ -2,8 +2,8 @@ from application import *
 
 @application.route('/oauth/Uber', methods = ['POST', 'GET'])
 def uber_oauth():
-    user_id = '' #GEORGY: pass in user id however you want, and fill in this variable
-    url = 'https://login.uber.com/oauth/v2/authorize?client_id={client}&response_type=code&redirect_uri={redirect}&state={state}&scope='.format(client = 'cvcaMdUYPlqkoFtrEECV1bbEEBnmpd5K', redirect = 'https://demo.dataagora.com/get/Uber', state = user_id)
+    session_token = '' #GEORGY: pass in session_token however you want, and fill in this variable
+    url = 'https://login.uber.com/oauth/v2/authorize?client_id={client}&response_type=code&redirect_uri={redirect}&state={state}&scope='.format(client = 'cvcaMdUYPlqkoFtrEECV1bbEEBnmpd5K', redirect = 'https://demo.dataagora.com/get/Uber', state = session_token)
     if 'scopes' in request.form:
         scopes = request.form['scopes']
     else:
@@ -16,7 +16,7 @@ def uber_oauth():
 @application.route('/get/Uber', methods = ['POST', 'GET'])
 def get_uber():
     code = request.args.get('code')
-    user_id = request.args.get('state')
+    session_token = request.args.get('state')
     print('got code')
     print(code)
     client_id = 'cvcaMdUYPlqkoFtrEECV1bbEEBnmpd5K'
@@ -40,5 +40,5 @@ def get_uber():
     r = json.loads(response.text)
     print('Access token')
     print(r)
-    requests.post('https://demo.dataagora.com/insert/Uber', data={'accessToken': r['access_token'], 'uid':user_id})
+    requests.post('https://demo.dataagora.com/insert/Uber', data={'accessToken': r['access_token'], 'uid':session_token})
     return render_template('payment.html')

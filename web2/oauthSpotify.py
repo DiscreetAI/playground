@@ -39,8 +39,8 @@ def spotify_oauth():
         scopes = request.form['scopes']
     else:
         scopes = ['user-read-private', 'user-read-email', 'user-read-birthdate', 'playlist-read-private']
-    user_id = '' #GEORGY: pass in user id however you want, and fill in this variable
-    auth_url = "{url}/?client_id={client_id}&response_type=code&redirect_uri={redirect}&state={state}&scope=".format(url=SPOTIFY_AUTH_URL, client_id=CLIENT_ID, redirect=REDIRECT_URI, state=user_id)
+    session_token = '' #GEORGY: pass in session_token however you want, and fill in this variable
+    auth_url = "{url}/?client_id={client_id}&response_type=code&redirect_uri={redirect}&state={state}&scope=".format(url=SPOTIFY_AUTH_URL, client_id=CLIENT_ID, redirect=REDIRECT_URI, state=session_token)
     for scope in scopes:
         auth_url += scope + '%20'
     auth_url = auth_url[:-3]
@@ -50,7 +50,7 @@ def spotify_oauth():
 def get_spotify():
 # Auth Step 4: Requests refresh and access tokens
     auth_token = request.args['code']
-    user_id = request.args['state']
+    session_token = request.args['state']
     print('oauth spotify')
     print(request.args)
     code_payload = {
@@ -86,7 +86,7 @@ def get_spotify():
     # Combine profile and playlist data to display
     display_arr = [profile_data] + playlist_data["items"]
     '''
-    requests.post('https://demo.dataagora.com/insert/Spotify', data={'acc':access_token, 'uid':user_id})
+    requests.post('https://demo.dataagora.com/insert/Spotify', data={'accessToken':access_token, 'uid':session_token})
     #return 'OK'
     return render_template('payment.html')#change this!
 # #SET USERNAME

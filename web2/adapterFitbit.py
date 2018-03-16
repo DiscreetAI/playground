@@ -7,8 +7,15 @@ def insert_fitbit():
     print(request)
     print(request.form)
     access_token = request.form['accessToken']
-    user_id = request.form['user_id']
-    
+    session_token = request.form['uid']
+    user_endpoint = 'http://auth.dataagora.com/auth/user/'
+    header = {"Authorization": "Token " + session_token}
+    response = requests.get(user_endpoint, headers = header)
+    parsed = json.loads(response)
+    if 'pk' in parsed:
+        user_id = parsed['pk']
+    else:
+        user_id = None #or some kind of error handling
     client_id = '22CH8Y'
     client_secret = '92ef15bf527e8c3684ff6f54517d235e'
 
