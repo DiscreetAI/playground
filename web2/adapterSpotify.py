@@ -4,12 +4,15 @@ from application import *
 def insert_spotify():
     CLIENT_ID = "78fd273678d54d5cb6f352307b578a42"
     CLIENT_SECRET = "6ce54cfc4e1b46059b7c2f433e4178d9"
-    access_token = "BQAEPazqLheMQs15UyMoy_0Yq7SP-9amQtEpeEjp6s2-RMI-"
+    #access_token = "BQAEPazqLheMQs15UyMoy_0Yq7SP-9amQtEpeEjp6s2-RMI-"
+    access_token = request.form['acc']
+    user_id = request.form['uid']
+    print(user_id)
     base_url = "https://api.spotify.com/v1/"
     header = {'Authorization': 'Bearer ' + access_token}
     endpoints = ['me/tracks', 'me/following?type=artist', 'me/top/artists', 'me/top/tracks']
     names = ['saved_tracks', 'followed_artists', 'top_artists', 'top_tracks']
-    user_id = None
+    #user_id = None
     for endpoint, name in zip(endpoints, names):
         response2 = requests.get(endpoint, headers=header)
         dicto = defaultdict(lambda: [])

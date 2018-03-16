@@ -32,12 +32,15 @@ auth_query_parameters = {
     # "show_dialog": SHOW_DIALOG_str,
     "client_id": CLIENT_ID
 }
-@application.route('/oauth/Spotify/')
+@application.route('/oauth/Spotify/', methods=['POST', 'GET'])
 def spotify_oauth():
     # Auth Step 1: Authorization
-    scopes = ['user-read-private', 'user-read-email', 'user-read-birthdate', 'playlist-read-private']
-    #url_args = "&".join(["{}={}".format(key,urllib.quote(val)) for key,val in auth_query_parameters.items()])
-    auth_url = "{url}/?client_id={client_id}&response_type=code&redirect_uri={redirect}&state={state}&scope=".format(url=SPOTIFY_AUTH_URL, client_id=CLIENT_ID, redirect=REDIRECT_URI, state='')
+    if 'scopes' in request.form:
+        scopes = request.form['scopes']
+    else:
+        scopes = ['user-read-private', 'user-read-email', 'user-read-birthdate', 'playlist-read-private']
+    user_id = '' #GEORGY: pass in user id however you want, and fill in this variable
+    auth_url = "{url}/?client_id={client_id}&response_type=code&redirect_uri={redirect}&state={state}&scope=".format(url=SPOTIFY_AUTH_URL, client_id=CLIENT_ID, redirect=REDIRECT_URI, state=user_id)
     for scope in scopes:
         auth_url += scope + '%20'
     auth_url = auth_url[:-3]
@@ -47,6 +50,9 @@ def spotify_oauth():
 def get_spotify():
 # Auth Step 4: Requests refresh and access tokens
     auth_token = request.args['code']
+    user_id = request.args['state']
+    print('oauth spotify')
+    print(request.args)
     code_payload = {
         "grant_type": "authorization_code",
         "code": str(auth_token),
@@ -67,6 +73,7 @@ def get_spotify():
     authorization_header = {"Authorization":"Bearer {}".format(access_token)}
     print(access_token)
     # Get profile data
+    '''
     user_profile_api_endpoint = "{}/me".format(SPOTIFY_API_URL)
     profile_response = requests.get(user_profile_api_endpoint, headers=authorization_header)
     profile_data = json.loads(profile_response.text)
@@ -78,8 +85,10 @@ def get_spotify():
     
     # Combine profile and playlist data to display
     display_arr = [profile_data] + playlist_data["items"]
+    '''
+    requests.post('https://demo.dataagora.com/insert/Spotify', data={'acc':access_token, 'uid':user_id})
     #return 'OK'
-    return render_template('payment.html')
+    return render_template('payment.html')#change this!
 # #SET USERNAME
 # if len(sys.argv) > 1:
 #     username = sys.argv[1]

@@ -3,16 +3,18 @@ from application import *
 @application.route('/insert/Lyft', methods=['POST', 'GET'])
 def insert_lyft():
     client_id = 'xWcQoJgCDyyx'
-    access_token = 'e7oVoPTz/ySGT3Avl709lh6dhMar2AeAHRpkg2qfmDmt5Nm4dVQRWmT2fcovUriEOeWb5DBiZbxN2rGVkFUVqEPeGbxinSiCLPgOh/c8xyq3TUyzrfunoGk='
+    #access_token = 'e7oVoPTz/ySGT3Avl709lh6dhMar2AeAHRpkg2qfmDmt5Nm4dVQRWmT2fcovUriEOeWb5DBiZbxN2rGVkFUVqEPeGbxinSiCLPgOh/c8xyq3TUyzrfunoGk='
     refresh_token = 'C5BR2cGIWK4aMeHBMtmiNnGlp9Fi4lkmlxchUS5Nf0nDzwj2nhUdjqOdvV29sy+38C/OvCTcSMGxanMwEn0zj03FT4AkypGFr0q9pOgdrdzA'
     client_secret = 've3ul8VMMiiQ7zrft33S2gzAy8258436'
+    access_token = request.form['accessToken']
+    user_id = request.form['uid']
+    print(user_id)
     print("Access: " + access_token)
-    #access_token = request.form['accessToken']
     header = {'Authorization': 'Bearer ' + access_token}
     lyft_endpoint = 'https://api.lyft.com/v1/profile'
     response = requests.get(lyft_endpoint, headers=header)
     parsed = json.loads(response.text)
-    user_id = parsed['id']
+    #user_id = parsed['id']
     '''
     #uncomment when session is resolved
     if session['user_id'] in user_id_df['user_id']:
@@ -37,6 +39,7 @@ def insert_lyft():
     for ride in history:
         if 'canceled_by' in ride.keys():
             for k in normal:
+                dict1['user_id'].append(user_id)
                 v = ride[k]
                 if isinstance(v, dict):
                     for k2, v2 in v.items():
@@ -49,6 +52,7 @@ def insert_lyft():
         if 'canceled_by' not in ride.keys():
             for k,v in ride.items():
                 if k not in weird:
+                    dict2['user_id'].append(user_id)
                     if k == 'charges':
                         v = v[0]
                     if isinstance(v, dict):
