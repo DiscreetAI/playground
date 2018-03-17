@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import datetime
 
 from corsheaders.defaults import default_headers
 
@@ -39,7 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
 
     'rest_framework',
-    'rest_framework.authtoken',
+    #'rest_framework.authtoken',
     'rest_auth',
 
     'enterprise_users',
@@ -55,7 +56,7 @@ MIDDLEWARE = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -134,7 +135,7 @@ TEMPLATES = [
     },
 ]
 
-REST_SESSION_LOGIN = True
+REST_SESSION_LOGIN = False
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
@@ -150,9 +151,14 @@ AUTHENTICATION_BACKENDS = (
 )
 
 REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        #'rest_framework.authentication.TokenAuthentication',
     ),
     'COERCE_DECIMAL_TO_STRING': False
 }
@@ -187,13 +193,25 @@ SWAGGER_SETTINGS = {
 
 SITE_ID = 2
 
+REST_USE_JWT = True
+JWT_AUTH = {
+    "JWT_PAYLOAD_HANDLER": 'custom.jwt.jwt_payload_handler',
+    "JWT_RESPONSE_PAYLOAD_HANDLER": 'custom.jwt.jwt_response_payload_handler',
+    "JWT_ALLOW_REFRESH": True,
+    "JWT_ISSUER": "buy",
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=300),
+}
+
+SESSION_COOKIE_DOMAIN = ".dataagora.com"
+CSRF_COOKIE_DOMAIN = ".dataagora.com"
+
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = default_headers + (
     'cache',
 )
 CORS_ORIGIN_REGEX_WHITELIST = (r'^(https?://)?(\w+\.)?dataagora\.com$', )
 
-# CORS_ORIGIN_WHITELIST = (
-#     'buy.dataagora.com',
-#     'localhost:3000'
-# )
+CORS_ORIGIN_WHITELIST = (
+    'buy.dataagora.com',
+    'localhost:3000'
+)
