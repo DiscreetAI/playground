@@ -11,6 +11,7 @@
     "popper.js": "^1.14.0",
     "react": "^16.2.0",
     "react-bootstrap": "^0.32.1",
+    "react-cookies": "^0.1.0",
     "react-dom": "^16.2.0",
     "react-mixin-decorator": "^1.2.3",
     "react-router": "^4.2.0",
@@ -22,11 +23,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
-  },
-  "babel": {
-    "plugins": [
-      "transform-decorators-legac"
-    ]
+    "eject": "react-scripts eject",
+    "deploy": "date > build/v.txt && s3cmd sync build/* s3://buy.dataagora.com && echo '🚀  Deployed!'",
+    "build-and-deploy": "npm run build && npm run deploy"
   }
 }

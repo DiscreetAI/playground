@@ -13,7 +13,7 @@ class SignOut extends Component {
     return (
       <div>
         <Redirect to="/"/>
-        Logging out...
+        Signing out...
       </div>
     );
   }
