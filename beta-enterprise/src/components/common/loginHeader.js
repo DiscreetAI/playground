@@ -13,8 +13,6 @@ class Header extends Reflux.Component {
   }
 
   render() {
-    console.log('header state', this.state);
-
     var rightElement;
     if (this.state.isAuthenticated) {
       rightElement = (

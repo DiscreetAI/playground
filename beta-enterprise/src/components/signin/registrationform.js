@@ -17,7 +17,6 @@ class RegistationForm extends Reflux.Component {
 
   componentWillUpdate(nextProps, nextState) {
     var isAuthenticated = nextState['isAuthenticated'];
-    console.log("reg auth status", isAuthenticated);
     if (isAuthenticated) {
       this.props.history.push("secret");
     }
@@ -35,8 +34,6 @@ class RegistationForm extends Reflux.Component {
       "password1": ReactDOM.findDOMNode(this.refs.password1).value,
       "password2": ReactDOM.findDOMNode(this.refs.password2).value
     };
-
-    console.log("reg", registrationObject);
 
     AuthActions.registration(registrationObject);
   }

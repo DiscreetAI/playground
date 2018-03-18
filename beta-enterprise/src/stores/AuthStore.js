@@ -32,8 +32,6 @@ class AuthStore extends Reflux.Store {
     this._changed();
 
     var endpoint = Endpoints["eauthLogin"];
-    console.log(endpoint);
-
     fetch(
       endpoint, {
         method: 'POST',
@@ -107,7 +105,6 @@ class AuthStore extends Reflux.Store {
 
   _handleLoginRegistrationResponse(response, refluxAction) {
     response.json().then(serverResponse => {
-      console.log(serverResponse);
       if (serverResponse && "token" in serverResponse) {
         var jwt = serverResponse['token'];
         refluxAction.completed(jwt);
