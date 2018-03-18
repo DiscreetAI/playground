@@ -4,14 +4,24 @@ from application import *
 def insert_fitbit():
     ## FOR DATASHARK
     print("HERE v3")
+    print(request)
     print(request.form)
-    # access_token = request.form['accessToken']
+    access_token = request.form['accessToken']
+    session_token = request.form['uid']
+    user_endpoint = 'http://auth.dataagora.com/auth/user/'
+    header = {"Authorization": "Token " + session_token}
+    response = requests.get(user_endpoint, headers = header)
+    parsed = json.loads(response)
+    if 'pk' in parsed:
+        user_id = parsed['pk']
+    else:
+        user_id = None #or some kind of error handling
     client_id = '22CH8Y'
     client_secret = '92ef15bf527e8c3684ff6f54517d235e'
 
     ## FOR SPECIFIC USER - ROHAN - CONFIDENTIAL
     # access_token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1U1pMN0YiLCJhdWQiOiIyMjhNV0YiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJhY3QgcnNldCBybG9jIHJ3ZWkgcmhyIHJwcm8gcm51dCByc2xlIiwiZXhwIjoxNTA3NDM5OTc3LCJpYXQiOjE1MDc0MTExNzd9.RGXvH1fUoAJjhqGEwP_wsjL7MYkP2xvzQgs36BtxlvA'
-    access_token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1U05IVDgiLCJhdWQiOiIyMkNIOFkiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJzZXQgcmFjdCBybG9jIHJ3ZWkgcmhyIHJudXQgcnBybyByc2xlIiwiZXhwIjoxNTIwMjQyNjQ1LCJpYXQiOjE1MjAyMTM4NDV9.gtrX-Aj2ky3bXsk4CusTo3hBnf1B45I0gv14Nu8t0y8'
+    #access_token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1U05IVDgiLCJhdWQiOiIyMkNIOFkiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJzZXQgcmFjdCBybG9jIHJ3ZWkgcmhyIHJudXQgcnBybyByc2xlIiwiZXhwIjoxNTIwMjQyNjQ1LCJpYXQiOjE1MjAyMTM4NDV9.gtrX-Aj2ky3bXsk4CusTo3hBnf1B45I0gv14Nu8t0y8'
     refresh_token = 'bbb44b3a0e05a4235b9bd837481d4796372ee3d51d5a1f4b2b82af4c85216534'
     encode64 = 'MjJDSDhZOjkyZWYxNWJmNTI3ZThjMzY4NGZmNmY1NDUxN2QyMzVl'
     print("Access: " + access_token)
@@ -29,7 +39,7 @@ def insert_fitbit():
     response2 = requests.get(profile_endpoint, headers=header)
     dicto = defaultdict(lambda: [])
     parsed2 = json.loads(response2.text)
-    user_id = parsed2['user']['encodedId']
+    #user_id = parsed2['user']['encodedId']
     gender = parsed2['user']['gender']
     dob = parsed2['user']['dateOfBirth']
     city = parsed2['user']['city']
@@ -47,6 +57,7 @@ def insert_fitbit():
     for k,v in parsed2.items():
         if type(v) != dict:
             dicto[k].append(v)
+    dicto['user_id'].append(user_id)
     profile_df = pd.DataFrame(dicto)
     profile_df.to_sql('fb_profile', db.engine, if_exists='append', index=False)
     #return
@@ -65,8 +76,9 @@ def insert_fitbit():
     for data, name in zip(parsed, weight_names):
         for entry in data[name]:
             for k,v in entry.items():
+                dicts[name]['user_id'].append(user_id)
                 dicts[name][k].append(v)
-    for k,v in dicts.items()
+    for k,v in dicts.items():
         df = pd.DataFrame(v)
         df.to_sql(k, db.engine, if_exists='append', index=False)
                 

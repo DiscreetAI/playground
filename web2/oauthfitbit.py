@@ -3,6 +3,7 @@ from application import *
 @application.route('/get/Fitbit', methods = ['POST', 'GET'])
 def get_fitbit():
     code = request.args.get('code')
+    session_token = request.args.get('state')
     print('got code')
     print(code)
     client_id = '22CH8Y'
@@ -29,7 +30,8 @@ def get_fitbit():
     response2 = json.loads(r.text)
     print('Access token')
     print(response2)
-    return render_template('payment.html')
+    requests.post('https://demo.dataagora.com/insert/Fitbit', data = {'accessToken':response2['access_token'], 'uid':session_token})
+    return render_template('payment.html') #change this!
 
 def get_auth_url(code):
     redirect_uri = 'https://demo.dataagora.com/get/Fitbit'
@@ -41,4 +43,13 @@ def get_auth_url(code):
 
 @application.route('/oauth/Fitbit', methods = ['POST', 'GET'])
 def fitbit_oauth():
-    return redirect('https://www.fitbit.com/oauth2/authorize?client_id=22CH8Y&prompt=none&redirect_uri=https://demo.dataagora.com/get/Fitbit&response_type=code&scope=activity%20nutrition%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&state=true')
+    session_token = '' #GEORGY: pass in session_token however you want, and fill in this variable
+    if 'scopes' in request.form:
+        scopes = request.form['scopes']
+    else:
+        scopes = ['activity', 'nutrition', 'heartrate', 'location', 'profile', 'sleep', 'settings', 'weight']
+    url = 'https://www.fitbit.com/oauth2/authorize?client_id=22CH8Y&prompt=none&redirect_uri=https://demo.dataagora.com/get/Fitbit&response_type=code&state={}&scope='.format(session_token)
+    for scope in scopes:
+        url += scope + '%20'
+    url = url[:-3]
+    return redirect(url)

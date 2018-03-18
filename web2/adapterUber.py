@@ -2,14 +2,23 @@ from application import *
 
 @application.route('/insert/Uber', methods=['POST', 'GET'])
 def insert_uber():
-    pd.read_sql_table('yum', db.engine)
-    print('yum')
+    #pd.read_sql_table('yum', db.engine)
+    #print('yum')
     # uber_endpoint = 'https://api.uber.com/v1.2/products?latitude=37.7759792&longitude=-122.41823'
     # access_token = 'KA.eyJ2ZXJzaW9uIjoyLCJpZCI6IldmM2wzdWZUUkx1YWZtVEZpY2Ira0E9PSIsImV4cGlyZXNfYXQiOjE1MTk1MzU2MzIsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.XyzA3qM5CRTzg0y3J05g9U8ntd61JMSRoyxy2jy8oQY'
     # client_id = 'cvcaMdUYPlqkoFtrEECV1bbEEBnmpd5K'
     # client_secret = 'J7vY3yBGZr19EIrtibQZPhJm2qPulKy-Zs2VMMQz'
-    # access_token = request.form['accessToken']
-    access_token = 'KA.eyJ2ZXJzaW9uIjoyLCJpZCI6IlFtbFFuTnllUWFhaWYzMXpQYVR0VXc9PSIsImV4cGlyZXNfYXQiOjE1MjI4MDkxOTcsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.T67EHU7zifkLLQBLOiMyKbacugyjss-zI155GU52AwU'
+    access_token = request.form['accessToken']
+    session_token = request.form['uid']
+    user_endpoint = 'http://auth.dataagora.com/auth/user/'
+    header = {"Authorization": "Token " + session_token}
+    response = requests.get(user_endpoint, headers = header)
+    parsed = json.loads(response)
+    if 'pk' in parsed:
+        user_id = parsed['pk']
+    else:
+        user_id = None #or some kind of error handling
+    #access_token = 'KA.eyJ2ZXJzaW9uIjoyLCJpZCI6IlFtbFFuTnllUWFhaWYzMXpQYVR0VXc9PSIsImV4cGlyZXNfYXQiOjE1MjI4MDkxOTcsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.T67EHU7zifkLLQBLOiMyKbacugyjss-zI155GU52AwU'
     header = {'Authorization': 'Bearer ' + access_token, 'Accept-Language': 'en_US', 'Content-Type': 'application/json'}
     # auth_url = auth_flow.get_authorization_url()
     # response = client.get_user_activity()
@@ -21,7 +30,7 @@ def insert_uber():
     response = requests.get(uber_endpoint, headers=header)
     # print(response.text)
     parsed = json.loads(response.text)
-    user_id = parsed['uuid']
+    #user_id = parsed['uuid']
     '''
     #uncomment when session is resolved
     if session['user_id'] in user_id_df['user_id']:
@@ -59,6 +68,7 @@ def insert_uber():
     dict = defaultdict(lambda: [])
     for trip in history:
         for key in trip.keys():
+            dict['user_id'].append(user_id)
             if key == 'start_city':
                 for k in trip['start_city']:
                     dict[k.lower()].append(trip['start_city'][k])

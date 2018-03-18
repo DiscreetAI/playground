@@ -32,16 +32,27 @@ auth_query_parameters = {
     # "show_dialog": SHOW_DIALOG_str,
     "client_id": CLIENT_ID
 }
-@application.route('/oauth/Spotify/')
+@application.route('/oauth/Spotify/', methods=['POST', 'GET'])
 def spotify_oauth():
     # Auth Step 1: Authorization
-    url_args = "&".join(["{}={}".format(key,urllib.quote(val)) for key,val in auth_query_parameters.items()])
-    auth_url = "{}/?{}".format(SPOTIFY_AUTH_URL, url_args)
+    if 'scopes' in request.form:
+        scopes = request.form['scopes']
+    else:
+        scopes = ['user-read-private', 'user-read-email', 'user-read-birthdate', 'playlist-read-private']
+    session_token = '' #GEORGY: pass in session_token however you want, and fill in this variable
+    auth_url = "{url}/?client_id={client_id}&response_type=code&redirect_uri={redirect}&state={state}&scope=".format(url=SPOTIFY_AUTH_URL, client_id=CLIENT_ID, redirect=REDIRECT_URI, state=session_token)
+    for scope in scopes:
+        auth_url += scope + '%20'
+    auth_url = auth_url[:-3]
+    print(auth_url)
     return redirect(auth_url)
 @application.route('/get/Spotify/', methods=['POST', 'GET'])
 def get_spotify():
 # Auth Step 4: Requests refresh and access tokens
     auth_token = request.args['code']
+    session_token = request.args['state']
+    print('oauth spotify')
+    print(request.args)
     code_payload = {
         "grant_type": "authorization_code",
         "code": str(auth_token),
@@ -60,8 +71,9 @@ def get_spotify():
 
     # Auth Step 6: Use the access token to access Spotify API
     authorization_header = {"Authorization":"Bearer {}".format(access_token)}
-
+    print(access_token)
     # Get profile data
+    '''
     user_profile_api_endpoint = "{}/me".format(SPOTIFY_API_URL)
     profile_response = requests.get(user_profile_api_endpoint, headers=authorization_header)
     profile_data = json.loads(profile_response.text)
@@ -73,8 +85,10 @@ def get_spotify():
     
     # Combine profile and playlist data to display
     display_arr = [profile_data] + playlist_data["items"]
-    return 'OK'
-    return render_template('payment.html')
+    '''
+    requests.post('https://demo.dataagora.com/insert/Spotify', data={'accessToken':access_token, 'uid':session_token})
+    #return 'OK'
+    return render_template('payment.html')#change this!
 # #SET USERNAME
 # if len(sys.argv) > 1:
 #     username = sys.argv[1]
