@@ -199,7 +199,7 @@ JWT_AUTH = {
     "JWT_RESPONSE_PAYLOAD_HANDLER": 'custom.jwt.jwt_response_payload_handler',
     "JWT_ALLOW_REFRESH": True,
     "JWT_ISSUER": "buy",
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=300),
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(weeks=1),
 }
 
 SESSION_COOKIE_DOMAIN = ".dataagora.com"
