@@ -27,8 +27,8 @@ class LoginForm extends Reflux.Component {
     event.preventDefault();
 
     AuthActions.login(
-      ReactDOM.findDOMNode(this.refs.email).value,//this.state.email,
-      ReactDOM.findDOMNode(this.refs.password).value//this.state.password
+      ReactDOM.findDOMNode(this.refs.email).value,
+      ReactDOM.findDOMNode(this.refs.password).value
     );
   }
 

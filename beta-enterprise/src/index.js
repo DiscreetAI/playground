@@ -7,7 +7,6 @@ import registerServiceWorker from './utils/registerServiceWorker';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
-//import '../node_modules/bootstrap/dist/css/bootstrap-theme.css';
 
 InitializeActions.initApp();
 render((
