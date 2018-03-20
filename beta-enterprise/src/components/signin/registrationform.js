@@ -58,37 +58,37 @@ class RegistationForm extends Reflux.Component {
         <div className="form-group form-row">
           <div className="col">
             <label htmlFor="inputFname">First name</label>
-            <input type="text" ref="fname" className="form-control" id="inputFname" placeholder="First name" value="Georgy" readOnly />
+            <input type="text" ref="fname" className="form-control" id="inputFname" placeholder="First name" />
           </div>
           <div className="col">
             <label htmlFor="inputLname">Last name</label>
-            <input type="text" ref="lname" className="form-control" id="inputLname" placeholder="Last Name" value="Marrero" readOnly />
+            <input type="text" ref="lname" className="form-control" id="inputLname" placeholder="Last Name" />
           </div>
         </div>
 
         <div className="form-group">
           <label htmlFor="inputOrganization">Organization</label>
-          <input type="text" ref="organization" className="form-control" id="inputOrganization" placeholder="Current organization" value="DataAgora" readOnly />
+          <input type="text" ref="organization" className="form-control" id="inputOrganization" placeholder="Current organization" />
         </div>
 
         <div className="form-group">
           <label htmlFor="inputPosition">Position</label>
-          <input type="text" ref="position" className="form-control" id="inputPosition" placeholder="Current position" value="ML Engineer" readOnly />
+          <input type="text" ref="position" className="form-control" id="inputPosition" placeholder="Current position" />
         </div>
 
         <div className="form-group">
           <label htmlFor="inputEmail">Email address</label>
-          <input type="email" ref="email" className="form-control" id="inputEmail" placeholder="Email address" value="geoxx@gmail.com" readOnly />
+          <input type="email" ref="email" className="form-control" id="inputEmail" placeholder="Email address" />
         </div>
 
         <div className="form-group">
           <label htmlFor="inputPassword1">Password</label>
-          <input type="password" ref="password1" className="form-control" id="inputPassword1" placeholder="Enter password" value="SomePass123" readOnly />
+          <input type="password" ref="password1" className="form-control" id="inputPassword1" placeholder="Enter password" />
         </div>
 
         <div className="form-group">
           <label htmlFor="inputPassword2">Repeat password</label>
-          <input type="password" ref="password2" className="form-control" id="inputPassword2" placeholder="Repeat password" value="SomePass123" readOnly />
+          <input type="password" ref="password2" className="form-control" id="inputPassword2" placeholder="Repeat password" />
         </div>
 
         <div className="form-group text-center">

@@ -4,7 +4,7 @@ class Secret extends Component {
   render() {
     return (
       <div className="jumbotron text-center bg-dark">
-        <h1 style={{color: "white"}}>This page is secret.</h1>
+        <h2 style={{color: "white"}}>This page is currently under construction.</h2>
       </div>
     );
   }
