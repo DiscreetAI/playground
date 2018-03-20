@@ -62,7 +62,7 @@ class RegistationForm extends Reflux.Component {
           </div>
           <div className="col">
             <label htmlFor="inputLname">Last name</label>
-            <input type="text" ref="lname" className="form-control" id="inputLname" placeholder="Last Name" />
+            <input type="text" ref="lname" className="form-control" id="inputLname" placeholder="Last name" />
           </div>
         </div>
 
