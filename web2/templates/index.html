@@ -1,228 +1,114 @@
-<!DOCTYPE HTML>
-<!--
-	Landed by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+<!DOCTYPE html>
 <html>
-	<head>
-		<title>DataAgora</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
-		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-	</head>
-	<body>
-		<div id="popup" class="shopCart">
-		
-			<div class="ordero tb2">SHOPPING CART</div>
-			<div class="fitbit2 tb2">
-					<img class="icon3 align" src="{{ url_for('static', filename='images/fitbit.png') }}" alt=""> F I T B I T
-				<br>
-				<br>
-				<div class="desc outer">150 users, 12 months</div>
-				<div class="outer">
-					<div class="lefto white">Remove | Edit</div>
-					<div class="righto white">$200</div>
-				</div>
-		
-			</div>
-		
-			<div class="fitbit2 tb2">
-				<img class="icon3 align" src="{{ url_for('static', filename='images/instagram.png') }}" alt=""> I N S T A G R A M
-				<br>
-				<br>
-				<div class="desc outer">200 users, 6 months</div>
-				<div class="outer">
-					<div class="lefto white">Remove | Edit</div>
-					<div class="righto white">$200</div>
-				</div>
-				
-			</div>
-		
-		</div>
-		<div class="overlay">
-			<form action="/checkout" method="post">
-			<div class="d-a-t-a-a-g-o-r-a">
-				
-				<img id="shark2" src="{{ url_for('static', filename='images/shark.png') }}" alt="">
-				D A T A A G O R A
-				<img id = "shark" src="{{ url_for('static', filename='images/shark.png') }}" alt="">
-				
-					<input type="image" id="cart" src="{{ url_for('static', filename='images/cart.png') }}" alt="">
-				
-			</div>
-			</form>
-			<br> <br> <br> <br> <br>
-			<form id="myForm" action="/results" method="post">
-			<div class = "insta rectangle">
-				<div class = "testo">
-					<input class="icon" name = "categ" id="inst" type="image" value = "Fitbit" src="{{ url_for('static', filename='images/fitbit.png') }}">
-					<div class = "vertical">Fitbit</div>
-				</div>
-				<div class = "testo">
-					<input class="icon" name = "categ"id="inst" type="image" value = "Fitbit"src="{{ url_for('static', filename='images/instagram.png') }}">
-					<div class="vertical">Instagram</div>
-				</div>
-				<div class="testo">
-					<input class="icon" name = "test"id="inst" type="image" value = "Uber"src="{{ url_for('static', filename='images/fb.png') }}">
-					<div class="vertical">Facebook</div>
-				</div>
-				<div class="testo">
-					<input class="icon" name = "test"id="inst" type="image" value = "Twitter"src="{{ url_for('static', filename='images/twitter.png') }}">
-					<div class="vertical">Twitter</div>
-				</div>
-				<div class="testo">
-					<input class="icon" name="categ" id="inst" type="image" value = "Fitbit"src="{{ url_for('static', filename='images/snap.png') }}">
-					<div class="vertical">Snapchat</div>
-				</div>
-			</div>
-			<br> <br>
-			<div class="insta rectangle"> 
-				<div class="testo">
-					<input class="icon" name = "categ"id="inst" type="image" value = "Fitbit"src="{{ url_for('static', filename='images/ln.png') }}">
-					<div class="vertical">LinkedIn</div>
-				</div>
-				<div class="testo">
-					<input class="icon" name = "test"id="inst" type="image" value = "Lyft"src="{{ url_for('static', filename='images/Pint.gif') }}">
-					<div class="vertical">Pinterest</div>
-				</div>
-				<div class="testo">
-					<input class="icon" name="categ" id="inst" type="image" value = "Fitbit"src="{{ url_for('static', filename='images/yelp.png') }}">
-					<div class="vertical">Yelp</div>
-				</div>
-				<div class="testo">
-					<input class="icon" name="categ" id="inst" type="image" value = "Fitbit"src="{{ url_for('static', filename='images/locations.png') }}">
-					<div class="vertical">Google Maps</div>
-				</div>
-				<div class="testo">
-					<input class="icon" name="categ" id="inst" type="image" value = "Fitbit"src="{{ url_for('static', filename='images/apple.png') }}">
-					<div class="vertical">Apple Health</div>
-				</div>
-			</div>
-			<br>
-			<div class="insta rectangle">
-				<div class="testo">
-					<input class="icon" name="test" id="inst" type="image" value="Fitbit" src="{{ url_for('static', filename='images/amazon.png') }}">
-					<div class="vertical">Amazon</div>
-				</div>
-				<div class="testo">
-					<input class="icon" name="categ" id="inst" type="image" value="Fitbit" src="{{ url_for('static', filename='images/wsup.png') }}">
-					<div class="vertical">WhatsApp</div>
-				</div>
-				<div class="testo">
-					<input class="icon" name="test" id="inst" type="image" value="Spotify" src="{{ url_for('static', filename='images/spotify.png') }}">
-					<div class="vertical">Spotify</div>
-				</div>
-				<div class="testo">
-					<input class="icon" name="categ" id="inst" type="image" value="Fitbit" src="{{ url_for('static', filename='images/reddit.png') }}">
-					<div class="vertical">Reddit</div>
-				</div>
-				<div class="testo">
-					<input class="icon" name="categ" id="inst" type="image" value="Fitbit" src="{{ url_for('static', filename='images/venmo.png') }}">
-					<div class="vertical">Venmo</div>
-				</div>
-			</div>
-			</form>
-		</div>
-		
-<!-- Four
-					<a href="#four" class="goto-next scrolly">Next</a>
-				</section>
 
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>Flask React</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+  <!-- styles -->
+</head>
 
-			 
-				<section id="four" class="wrapper style1 special fade-up">
-
-					<div class="container">
-						<header class="major">
-							<h2>hi dude</h2>
-							<p>Iaculis ac volutpat vis non enim gravida nisi faucibus posuere arcu consequat</p>
-						</header>
-						<div class="box alt">
-							<div class="row uniform">
-								<section class="4u 6u(medium) 12u$(xsmall)">
-									<span class="icon alt major fa-area-chart"></span>
-									<h3>Ipsum sed commodo</h3>
-									<p>Feugiat accumsan lorem eu ac lorem amet accumsan donec. Blandit orci porttitor.</p>
-								</section>
-								<section class="4u 6u$(medium) 12u$(xsmall)">
-									<span class="icon alt major fa-comment"></span>
-									<h3>Eleifend lorem ornare</h3>
-									<p>Feugiat accumsan lorem eu ac lorem amet accumsan donec. Blandit orci porttitor.</p>
-								</section>
-								<section class="4u$ 6u(medium) 12u$(xsmall)">
-									<span class="icon alt major fa-flask"></span>
-									<h3>Cubilia cep lobortis</h3>
-									<p>Feugiat accumsan lorem eu ac lorem amet accumsan donec. Blandit orci porttitor.</p>
-								</section>
-								<section class="4u 6u$(medium) 12u$(xsmall)">
-									<span class="icon alt major fa-paper-plane"></span>
-									<h3>Non semper interdum</h3>
-									<p>Feugiat accumsan lorem eu ac lorem amet accumsan donec. Blandit orci porttitor.</p>
-								</section>
-								<section class="4u 6u(medium) 12u$(xsmall)">
-									<span class="icon alt major fa-file"></span>
-									<h3>Odio laoreet accumsan</h3>
-									<p>Feugiat accumsan lorem eu ac lorem amet accumsan donec. Blandit orci porttitor.</p>
-								</section>
-								<section class="4u$ 6u$(medium) 12u$(xsmall)">
-									<span class="icon alt major fa-lock"></span>
-									<h3>Massa arcu accumsan</h3>
-									<p>Feugiat accumsan lorem eu ac lorem amet accumsan donec. Blandit orci porttitor.</p>
-								</section>
-							</div>
-						</div>
-						<footer class="major">
-							<ul class="actions">
-								<li><a href="#" class="button">Magna sed feugiat</a></li>
-							</ul>
-						</footer>
-					</div>
-				</section>
-
-			-->
-
-
-
-		</div>
-		
-		<!-- Scripts -->
-			
-
-
-	</body>
-
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
-    <script type="text/javascript">
-      $(function() {
-        var moveLeft = 500;
-        var moveDown = 10;
-        
-        $('input#cart').hover(function(e) {
-          $('div#popup').show();
-          //.css('top', e.pageY + moveDown)
-          //.css('left', e.pageX + moveLeft)
-          //.appendTo('body');
-        }, function() {
-          $('div#popup').hide();
-        });
-        
-        $('input#cart').mousemove(function(e) {
-          $("div#popup").css('top', e.pageY + moveDown).css('left', e.pageX - moveLeft);
-        });
-        
+<body>
+    <div id="content"></div>
+  <!-- scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+  <script type="text/jsx">
+      var realPython = React.createClass({
+        render: function() {
+          return (<div className="overlay">
+            <form action="/checkout" method="post">
+            <div className="d-a-t-a-a-g-o-r-a">
+              
+              <img id="shark2" src="{{ url_for('static', filename='images/shark.png') }}" alt="" />
+              D A T A A G O R A
+              <img id = "shark" src="{{ url_for('static', filename='images/shark.png') }}" alt="" />
+              
+                <input type="image" id="cart" src="{{ url_for('static', filename='images/cart.png') }}" alt="" />
+              
+            </div>
+            </form>
+            <br/> <br/> <br/> <br/> <br/>
+            <form id="myForm" action="/results" method="post">
+            <div class = "insta rectangle">
+              <div className="testo">
+                <input className="icon" name = "test"id="inst" type="image" value = "Uber"src="{{ url_for('static', filename='images/fitbit.png') }}" />
+                <div className="vertical">Fitbit</div>
+              </div>
+              <div className="testo">
+                <input className="icon" name = "test"id="inst" type="image" value = "Twitter"src="{{ url_for('static', filename='images/instagram.png') }}" />
+                <div className="vertical">Instagram</div>
+              </div>
+              <div className="testo">
+                <input className="icon" name = "test"id="inst" type="image" value = "Uber"src="{{ url_for('static', filename='images/fb.png') }}" />
+                <div className="vertical">Facebook</div>
+              </div>
+              <div className="testo">
+                <input className="icon" name = "test"id="inst" type="image" value = "Twitter"src="{{ url_for('static', filename='images/twitter.png') }}" />
+                <div className="vertical">Twitter</div>
+              </div>
+              <div className="testo">
+                <input className="icon" name="categ" id="inst" type="image" value = "Fitbit"src="{{ url_for('static', filename='images/snap.png') }}" />
+                <div className="vertical">Snapchat</div>
+              </div>
+            </div>
+            <br/> <br/>
+            <div className="insta rectangle"> 
+              <div className="testo">
+                <input className="icon" name = "categ"id="inst" type="image" value = "Fitbit"src="{{ url_for('static', filename='images/ln.png') }}" />
+                <div className="vertical">LinkedIn</div>
+              </div>
+              <div className="testo">
+                <input className="icon" name = "test"id="inst" type="image" value = "Lyft"src="{{ url_for('static', filename='images/Pint.gif') }}" />
+                <div className="vertical">Pinterest</div>
+              </div>
+              <div className="testo">
+                <input className="icon" name="categ" id="inst" type="image" value = "Fitbit"src="{{ url_for('static', filename='images/yelp.png') }}" />
+                <div className="vertical">Yelp</div>
+              </div>
+              <div className="testo">
+                <input className="icon" name="categ" id="inst" type="image" value = "Fitbit"src="{{ url_for('static', filename='images/locations.png') }}" />
+                <div className="vertical">Google Maps</div>
+              </div>
+              <div className="testo">
+                <input className="icon" name="categ" id="inst" type="image" value = "Fitbit"src="{{ url_for('static', filename='images/apple.png') }}" />
+                <div className="vertical">Apple Health</div>
+              </div>
+            </div>
+            <br/>
+            <div className="insta rectangle">
+              <div className="testo">
+                <input className="icon" name="test" id="inst" type="image" value="Fitbit" src="{{ url_for('static', filename='images/amazon.png') }}" />
+                <div className="vertical">Amazon</div>
+              </div>
+              <div className="testo">
+                <input className="icon" name="categ" id="inst" type="image" value="Fitbit" src="{{ url_for('static', filename='images/wsup.png') }}" />
+                <div className="vertical">WhatsApp</div>
+              </div>
+              <div className="testo">
+                <input className="icon" name="test" id="inst" type="image" value="Spotify" src="{{ url_for('static', filename='images/spotify.png') }}" />
+                <div className="vertical">Spotify</div>
+              </div>
+              <div className="testo">
+                <input className="icon" name="categ" id="inst" type="image" value="Fitbit" src="{{ url_for('static', filename='images/reddit.png') }}" />
+                <div className="vertical">Reddit</div>
+              </div>
+              <div className="testo">
+                <input className="icon" name="categ" id="inst" type="image" value="Fitbit" src="{{ url_for('static', filename='images/venmo.png') }}" />
+                <div className="vertical">Venmo</div>
+              </div>
+            </div>
+            </form>
+          </div>);
+        }
       });
-    </script>
-	<script>
-	function printMonkey() {
-		console.log("You are a monkey");
-	}
-
-	$('#ParentContainer').scroll(function () {
-			$('#sidebar').css('top', $(this).scrollTop());
-		});
-	</script>
-</html>
+      ReactDOM.render(
+        React.createElement(realPython, null),
+        document.getElementById('content')
+      );
+</script>
+    </body>
+    
+    </html>
