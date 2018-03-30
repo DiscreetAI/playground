@@ -4,7 +4,10 @@ contract Greeter{
 	
 	string private greeting;
 
+	event Greeting(address person);
+
 	function Greeter() public {
+		Greeting(msg.sender);
 		greeting = "hello, World!";
 	}
 
