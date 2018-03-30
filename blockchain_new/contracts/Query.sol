@@ -1,4 +1,4 @@
-pragma solidity 0.4.19;
+pragma solidity 0.4.20;
 
 
 contract Query is Master {
@@ -14,22 +14,36 @@ contract Query is Master {
     mapping(address => uint8) public contributionLevel;
     Model public model;
 
+    // Structs
+
+    struct IPFS {
+        string addr;
+    }
+
     struct Model {
         bytes data;
-        uint32 evolutions;
-        uint32 currentAverage;
-        function(bytes memory) loss;
+        mapping(string => int[]) weights;
     }
+
+    // Modifiers
 
     modifier mustBe(address caller) {
         require(caller == msg.sender);
         _;
     }
 
-    modifier targetAchieved() {
-        require(model.currentAverage >= targetAverage);
-        _;
-    }
+    // modifier targetAchieved() {
+    //     require(model.currentAverage >= targetAverage);
+    //     _;
+    // }
+
+    //////////////
+    //  Events  //
+    //////////////
+
+    event ClientSelected(address client);
+
+    // Functions
 
     function Query(
         address _originator,
@@ -45,10 +59,8 @@ contract Query is Master {
         id = _id;
         active = true;
         model = new Model(
-            data = "...",
-            evolutions = 0,
-            currentAverage = 0
-            loss = //          ??????????
+            data = "abc",
+            weights = [1, 2, 3]
         );
         for (int i = 0; i < outreach.length; i++) {
             apiCall(outreach[i]);   // needs to be implemented
@@ -58,6 +70,63 @@ contract Query is Master {
     function () {
         this.value.transfer(parent);        // necessary?
     }
+
+// ===================
+
+    function pingClients(address[] clientList) internal {
+        uint clientLen = clientList.length;
+        for (uint i = 0; i < clientLen; i++) {
+            ClientSelected(clientList[i]);
+        }
+    }
+
+    function getModel() external pure { // needs permissioning
+        return model;
+    }
+
+    // mapping(string => int[])[] public respArray;
+    // bytes[] metagraphArray;
+    // uint[] numDataArray;
+    uint totalNumData;
+    uint numberOfResponses = 0;
+
+    function sendResponse(
+        mapping(uint => int[]) update,
+        uint[] keys,
+        bytes metagraph,
+        uint numData)
+        external
+        returns(mapping(uint => int[]))
+    {  // needs permissioning
+        // scaling
+        uint keyLen = keys.length;
+        mapping(string => int[]) memory newUpdates = update;
+        mapping(string => int[]) memory weights = model.weights;
+        for (uint i = 0; i < keyLen; i++) {
+            newUpdates[keys[i]] = update[keys[i]] * numData;
+        }
+        for (uint i = 0; i < keyLen; i++) {
+            weights[keys[i]] = weights[keys[i]] + newUpdates[keys[i]];
+        }
+        totalNumData = totalNumData + numData;
+        numberOfResponses++;
+        return weights;
+    }
+
+    function inverseScale(mapping(uint => int[]) update,
+        uint[] keys)
+        external
+        returns(mapping(string => int[]))
+    { // check against threshold
+        uint keyLen = keys.length;
+        mapping(string => int[]) memory newUpdates = update;
+        for (uint i = 0; i < keyLen; i++) {
+            newUpdates[keys[i]] = update[keys[i]] / totalNumData;
+        }
+        return newUpdates;
+    }
+
+// ===================
 
     function cancel() public mustBe(parent) {
         active = false;
