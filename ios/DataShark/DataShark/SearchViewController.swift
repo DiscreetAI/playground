@@ -42,7 +42,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         definesPresentationContext = true
 
         // Preloading scopes
-        var request = URLRequest(url: URL(string:"http://datashark7.jn6tkty4uh.us-west-1.elasticbeanstalk.com/allServices")!)
+        var request = URLRequest(url: URL(string:"https://dataagora.com/allServices")!)
         request.httpMethod = "GET"
         URLSession.shared.dataTask(with: request) { data, response, error in
             if error == nil {

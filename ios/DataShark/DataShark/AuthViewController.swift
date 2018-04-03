@@ -94,7 +94,7 @@ class AuthViewController: UIViewController, UITableViewDataSource, UITableViewDe
         oauthswift.authorizeURLHandler = SafariURLHandler(viewController: self, oauthSwift: oauthswift)
         // Usually, callback URL of the form URL(string: "datashark://oauth-callback/" + sn)!
         oauthswift.authorize(
-            withCallbackURL: URL(string: "https://datasharkofficial.github.io/")!,
+            withCallbackURL: URL(string: "https://dataagora.com")!,
             scope: selectedScopes.joined(separator: "+"), state: sn.uppercased(),
             success: { credential, response, parameters in
                 let token = credential.oauthToken
@@ -102,7 +102,7 @@ class AuthViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let body = ["authToken": token, "refreshToken": refreshToken]
                 do{
                     let json = try (JSONSerialization.data(withJSONObject: body, options: JSONSerialization.WritingOptions.prettyPrinted))
-                    var request = URLRequest(url: URL(string:"http://datashark7.jn6tkty4uh.us-west-1.elasticbeanstalk.com/insert/" + self.serviceName)!)
+                    var request = URLRequest(url: URL(string:"https://dataagora.com/insert/" + self.serviceName)!)
                     request.httpMethod = "POST"
                     request.httpBody = json
                     URLSession.shared.dataTask(with: request) { data, response, error in
