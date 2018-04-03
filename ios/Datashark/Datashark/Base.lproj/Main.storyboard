@@ -127,7 +127,7 @@
                                     <color key="textColor" red="0.99999600648880005" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </textAttributes>
                                 <items>
-                                    <navigationItem title="D A T A S H A R K" id="qMf-0Q-mFA">
+                                    <navigationItem title="D A T A A G O R A" id="qMf-0Q-mFA">
                                         <barButtonItem key="leftBarButtonItem" systemItem="action" id="37K-Vd-zBZ">
                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <connections>
@@ -359,7 +359,7 @@
                                     <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </textAttributes>
                                 <items>
-                                    <navigationItem title="D A T A S H A R K" id="hMS-wS-rBx">
+                                    <navigationItem title="D A T A A G O R A" id="hMS-wS-rBx">
                                         <barButtonItem key="leftBarButtonItem" systemItem="done" id="UBA-Nv-5Fu">
                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <connections>

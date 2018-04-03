@@ -731,10 +731,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = DataShark/DataShark.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = ZVC58YN32D;
+				DEVELOPMENT_TEAM = V8MJQ33FN9;
 				INFOPLIST_FILE = DataShark/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = me.gokulswamy.DataShark;
+				PRODUCT_BUNDLE_IDENTIFIER = com.DataAgora.dataagora;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -748,10 +748,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = DataShark/DataShark.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = ZVC58YN32D;
+				DEVELOPMENT_TEAM = V8MJQ33FN9;
 				INFOPLIST_FILE = DataShark/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = me.gokulswamy.DataShark;
+				PRODUCT_BUNDLE_IDENTIFIER = com.DataAgora.dataagora;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;

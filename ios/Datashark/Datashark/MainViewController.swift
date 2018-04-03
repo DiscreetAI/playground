@@ -40,7 +40,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func refreshData() {
-        var request = URLRequest(url: URL(string:"http://datashark7.jn6tkty4uh.us-west-1.elasticbeanstalk.com/transactionHistory")!)
+        var request = URLRequest(url: URL(string:"https://dataagora.com/transactionHistory")!)
         request.httpMethod = "GET"
         request.addValue(address, forHTTPHeaderField: "address")
         URLSession.shared.dataTask(with: request) { data, response, error in
@@ -120,7 +120,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        var request = URLRequest(url: URL(string:"http://datashark7.jn6tkty4uh.us-west-1.elasticbeanstalk.com/userServices")!)
+        var request = URLRequest(url: URL(string:"https://dataagora.com/userServices")!)
         request.httpMethod = "GET"
         request.addValue(address, forHTTPHeaderField: "address") // Check this for auth
         URLSession.shared.dataTask(with: request) { data, response, error in
