@@ -1,7 +1,6 @@
 pragma solidity 0.4.20;
 
-contract Greeter{
-	
+contract Greeter {
 	string private greeting;
 
 	event Greeting(address person);
