@@ -81,7 +81,7 @@ contract Query {
     function pingClients(address[] clientList) internal {
         uint clientLen = clientList.length;
         for (uint i = 0; i < clientLen; i++) {
-            ClientSelected(clientList[i]);
+            emit ClientSelected(clientList[i]);
         }
     }
 
@@ -137,7 +137,7 @@ contract Query {
         }
         totalNumData = totalNumData + numData;
         numberOfResponses++;
-        ResponseReceived(numberOfResponses);
+        emit ResponseReceived(numberOfResponses);
     }
 
     function inverseScale()
