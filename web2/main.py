@@ -30,17 +30,98 @@ def home():
 
 @application.route('/results', methods=['POST'])
 def results():
-    #categ = request.form['categ']
+    if 'test' in request.form:
+        categ = request.form['test']
+    else:
+        categ = 'lol'
+    #return execute()
+    #insert_fitbit()
+    if categ == 'Fitbit':
+        return fitbit_oauth()
+    elif categ == 'Uber':
+        return uber_oauth()
+    elif categ == 'Lyft':
+        return lyft_oauth()
+    elif categ == 'Twitter':
+        return twitter_oauth()
+    elif categ == 'Spotify':
+        return spotify_oauth()
     table_name = "fitbit_daily_activity_summary"
     col_names = get_columns(table_name)
     temp = str(col_names)
-    print(temp)
+    #print(temp)
     temp = temp.replace("'", '"')
-    print(temp)
+    # print(temp)
     import ast
     col_names = ast.literal_eval(temp)
-    print(col_names)
-    return render_template('left-sidebar.html', table = table_name, cols=json.dumps(col_names))
+    maxUsers = -1
+    if 'categ' in request.form:
+        if request.form['categ'] == 'Fitbit':
+            maxUsers = get_user_count('user_id', 'fb_activities')
+            print(maxUsers)
+
+    # print(col_names)
+    return render_template('left-sidebar.html', table=table_name, cols=json.dumps(col_names), users=maxUsers)
+
+def get_table(tableName):
+    query = "select * from {};".format(tableName)
+    df = pd.read_sql_query(query, db.engine)
+    return df 
+
+def get_user_count(colName, tableName):
+    query = "select count(distinct {col_name}) as count from {table_name};".format(col_name=colName, table_name=tableName)
+    df = pd.read_sql_query(query, db.engine)
+    return df['count'][0] 
+
+#userDF is dataframe of userids with corresponding metadata.
+#dfArr is array of tuples (dataframe, api) to be filtered
+def fake_filter(userInfo, dfArr, minAge=0, maxAge=200, city=None, gender=None):
+    filtereDFs = []
+    for df, api in dfArr:
+        if not hasAge[api]:
+            tempUser = userInfo[userInfo['age'] != None]
+            merged = pd.merge(df, userInfo, left_on=idNames[api], right_on='userid', how='inner')
+            merged = merged[df.columns + ['age']]
+            df = merged
+        df = df[df['age'] > minAge]
+        df = df[df['age'] < maxAge]
+        if not hasCity[api]:
+            tempUser = userInfo[userInfo['city'] != None]
+            merged = pd.merge(df, userInfo, left_on=idNames[api], right_on='userid', how='inner')
+            merged = merged[df.columns + ['city']]
+            df = merged
+        if city != None:
+            df = df[df['city'] == city]
+        if not hasGender[api]:
+            tempUser = userInfo[userInfo['gender'] != None]
+            merged = pd.merge(df, userInfo, left_on=idNames[api], right_on='userid', how='inner')
+            merged = merged[df.columns + ['gender']]
+            df = merged
+            if gender != None:
+                df = df[df['gender'] == gender]
+        filtereDFs.append(df)
+    return filteredDFs
+
+#Assume given a dataframe where for each user, there is 1 for each API if user has data from API (0 otherwise), and demographic information.
+def count(userInfo, api):
+    return userInfo[userInfo['age'] != None & userInfo['city'] != None & userInfo['gender'] != None & userInfo['city'] != None & userInfo[api] == 1]        
+        
+    
+@application.route('/checkout', methods=['POST'])
+def checkout():
+    return render_template('checkout.html')
+
+
+@application.route('/account', methods=['POST'])
+def account():
+    return render_template('account.html')
+
+
+@application.route('/payment', methods=['POST'])
+def payment():
+    return render_template('payment.html')
+
+
 
 
 @application.route('/execute', methods=['POST'])
@@ -57,138 +138,6 @@ def execute():
         headers={"Content-disposition": "attachment; filename=data.csv"}
         )
 
-def fitbit_data(access_token):
-	header = {'Authorization': 'Bearer ' + access_token}
-
-
-	## FOR FITBIT DAILY ACTIVITY SUMMARY
-
-	fitbit_daily_activity_summary_values = ['lightlyActiveMinutes', 'caloriesBMR', 'caloriesOut', 'marginalCalories', 'fairlyActiveMinutes', 'veryActiveMinutes', 'sedentaryMinutes', 'restingHeartRate', 'elevation', 'activityCalories', 'activeScore', 'floors', 'steps']
-	fitbit_daily_activity_summary_endpoint = 'https://api.fitbit.com/1/user/-/activities/date/2017-9-{0}.json'
-
-	dict = defaultdict(lambda: [])
-
-	for date in range(1, 30):
-		endpoint = fitbit_daily_activity_summary_endpoint.format(str(date).zfill(2))
-		# print(endpoint)
-		response = requests.get(endpoint, headers=header)
-		parsed = json.loads(response.text)
-
-		# print(date)
-		for value in fitbit_daily_activity_summary_values:
-			if value in parsed['summary']:
-				dict[value].append(parsed['summary'][value])
-			else:
-				dict[value].append(None)
-		if 'distances' in parsed['summary']:
-			distances = parsed['summary']['distances']
-			if len(distances) > 0:
-				if 'distance' in distances[0]:
-					dict['distance'].append(distances[0]['distance'])
-	fitbit_daily_activity_summary_df = pd.DataFrame(dict)
-	return fitbit_daily_activity_summary_df
-
-@application.route('/insertFitbit', methods=['POST', 'GET'])
-def insert():
-    ## FOR DATASHARK
-    print("HERE v3")
-    print(request.form)
-    access_token = request.form['accessToken']
-    refresh_token = request.form['refreshToken']
-    # client_id = '228MWF'
-    # client_secret = 'ed16cd1e79a28f00c990e304b87f3bb6'
-
-    ## FOR SPECIFIC USER - ROHAN - CONFIDENTIAL
-    #access_token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1U1pMN0YiLCJhdWQiOiIyMjhNV0YiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJhY3QgcnNldCBybG9jIHJ3ZWkgcmhyIHJwcm8gcm51dCByc2xlIiwiZXhwIjoxNTA3NDM5OTc3LCJpYXQiOjE1MDc0MTExNzd9.RGXvH1fUoAJjhqGEwP_wsjL7MYkP2xvzQgs36BtxlvA'
-    # refresh_token = 'bbb44b3a0e05a4235b9bd837481d4796372ee3d51d5a1f4b2b82af4c85216534'
-    # print("Access: " + access_token)
-    # header = {'Authorization': 'Bearer ' + access_token}
-    data = fitbit_data(access_token)
-    data.to_sql('fitbit_daily_activity_summary', db.engine, if_exists='append', index=False)
-
-    # ## FOR FITBIT DAILY ACTIVITY SUMMARY
-    #
-    # fitbit_daily_activity_summary_values = ['lightlyActiveMinutes', 'caloriesBMR', 'caloriesOut', 'marginalCalories', 'fairlyActiveMinutes', 'veryActiveMinutes', 'sedentaryMinutes', 'restingHeartRate', 'elevation', 'activityCalories', 'activeScore', 'floors', 'steps']
-    # fitbit_daily_activity_summary_endpoint = 'https://api.fitbit.com/1/user/-/activities/date/2017-9-{0}.json'
-    #
-    # dict = defaultdict(lambda: [])
-    #
-    # for date in range(1, 30):
-    #     endpoint = fitbit_daily_activity_summary_endpoint.format(str(date).zfill(2))
-    #     response = requests.get(endpoint, headers=header)
-    #     parsed = json.loads(response.text)
-    #
-    #     for value in fitbit_daily_activity_summary_values:
-    #         if value in parsed['summary']:
-    #             dict[value.lower()].append(parsed['summary'][value])
-    #         else:
-    #             dict[value.lower()].append(None)
-    #     if 'distances' in parsed['summary']:
-    #         distances = parsed['summary']['distances']
-    #         if len(distances) > 0:
-    #             if 'distance' in distances[0]:
-    #                 dict['distance'].append(distances[0]['distance'])
-    #
-    # fitbit_daily_activity_summary_df = pd.DataFrame(dict)
-    #
-    # fitbit_daily_activity_summary_df.to_sql('fitbit_daily_activity_summary', db.engine, if_exists='append', index=False)
-
-    print("finished you monkeys")
-    return "I inserted Fitbit data!"
-def spotify_data(token):
-    sp = spotipy.Spotify(auth=token)
-    playlists = sp.user_playlists(username)
-    dict = defaultdict(lambda: [])
-    for playlist in playlists['items']:
-        if playlist['owner']['id'] == username:
-            dict[playlist['name']]
-            print(playlist['name'])
-            print('  total tracks', playlist['tracks']['total'])
-            results = sp.user_playlist(username, playlist['id'],
-                fields="tracks,next")
-            tracks = results['tracks']
-            show_tracks(tracks)
-            while tracks['next']:
-                tracks = sp.next(tracks)
-                show_tracks(tracks)
-    results = sp.current_user_saved_tracks()
-    for item in results['items']:
-        track = item['track']
-        print(track['name'] + ' - ' + track['artists'][0]['name'])
-    sp.trace = False
-    ranges = ['short_term', 'medium_term', 'long_term']
-    for range in ranges:
-        print("range:", range)
-        results = sp.current_user_top_artists(time_range=range, limit=50)
-        for i, item in enumerate(results['items']):
-            print(i, item['name'])
-        results = sp.current_user_top_tracks(time_range=range, limit=50)
-        for i, item in enumerate(results['items']):
-            print(i, item['name'], '//', item['artists'][0]['name'])
-@application.route('/insertSpotify', methods=['POST', 'GET'])
-def insertSpotify():
-    print(request.form)
-    access_token = request.form['accessToken']
-    refresh_token = request.form['refreshToken']
-    data = spotify_data(access_token)
-    data.to_sql('spotify_data', db.engine, if_exists='append', index=False)
-    return "I inserted Spotify data!"
-
-@application.route('/insertInstagram', methods=['POST', 'GET'])
-def insertInsta():
-    ## FOR DATASHARK
-    print("HERE v3")
-    print(request.form)
-    #access_token = request.form['accessToken']
-    client_id = '82d738adc7b7424ea472ce523bea8966'
-    client_secret = 'ed16cd1e79a28f00c990e304b87f3bb6'
-
-    access_token = '3267610983.1677ed0.2240d1a1d85f49a48a5a58a90cb40703'
-    #access_token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1U1pMN0YiLCJhdWQiOiIyMjhNV0YiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJhY3QgcnNldCBybG9jIHJ3ZWkgcmhyIHJwcm8gcm51dCByc2xlIiwiZXhwIjoxNTA3NDM5OTc3LCJpYXQiOjE1MDc0MTExNzd9.RGXvH1fUoAJjhqGEwP_wsjL7MYkP2xvzQgs36BtxlvA'
-    refresh_token = 'bbb44b3a0e05a4235b9bd837481d4796372ee3d51d5a1f4b2b82af4c85216534'
-    print("Access: " + access_token)
-    header = {'Authorization': 'Bearer ' + access_token}
-    endpoint = 'https://api.instagram.com/v1/users/self/follows?access_token=' + access_token
 
 
 

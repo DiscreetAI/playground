@@ -1,24 +1,4 @@
-<!DOCTYPE html>
-<html>
-
-<head lang="en">
-  <meta charset="UTF-8">
-  <title>Flask React</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
-  <!-- styles -->
-</head>
-
-<body>
-  <div class="container">
-    <div id="content"></div>
-  </div>
-  <!-- scripts -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.js"></script>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
-  <script type="text/jsx">
-  var col = JSON.parse('{{cols|safe}}');
+var col = JSON.parse('{{cols|safe}}');
 var maxUsers = '{{users}}';
 console.log("hi there");
 //var place = this.refs.current;
@@ -53,49 +33,30 @@ function tick() {
 
 var realPython = React.createClass({
     maxUsers: '{{users}}',
-    updateMaxUsers: function (evt) {
+    setUsers: function (val) {
         this.refs.stuff.innerText = this.maxUsers;
     },
-    updateUsers: function(evt) {
-      this.setState({
-        inputUsers: evt.target.value
-      });
-      var currentUsers = 0;
-      console.log(maxUsers);
-      if (maxUsers < this.state.inputUsers) {
-        currentUsers = maxUsers;
-      } else {
-        currentUsers = this.state.inputUsers;
-      }
-      this.setState({
-        curUsers: currentUsers
-      });
-      
+    updateUsers: function (evt) {
+        this.setState({
+            inputUsers: evt.target.value
+        });
     },
-    updateTime: function(evt) {
-      this.setState({
-        inputTime: evt.target.value
-      });
+    updateTime: function (evt) {
+        this.setState({
+            inputTime: evt.target.value
+        });
     },
-    updateAge: function(evt) {
-      this.setState({
-        inputAge: evt.target.value
-      });
+    updateAge: function (evt) {
+        this.setState({
+            inputAge: evt.target.value
+        });
     },
-    getInitialState: function() {
-      currentUsers = 0;
-      if (maxUsers < 50) {
-        currentUsers = maxUsers;
-      } else {
-        currentUsers = 50;
-      }
-      return {
-        inputUsers: 50,
-        inputTime: 6,
-        inputAge: 5,
-        maxUsers: '{{users}}',
-        curUsers: currentUsers
-      };
+    getInitialState: function () {
+        return {
+            inputUsers: 50,
+            inputTime: 6,
+            inputAge: 20,
+        };
     },
     handleChange: function (event) {
         this.setState({ value: event.target.value });
@@ -124,7 +85,7 @@ var realPython = React.createClass({
                         <div className="bel">
                             <div className="budget">
                                 USERS
-                  </div>
+                        </div>
                             <div className="slido">
                                 <span className="lab">10</span>
                                 <input id="us" type="range" min="10" max="200" value={this.state.inputUsers} onChange={this.updateUsers} />
@@ -135,10 +96,10 @@ var realPython = React.createClass({
                         <div className="bel">
                             <div className="budget">
                                 DURATION
-                  </div>
+                        </div>
                             <div className="slido">
                                 <span className="lab">1 mon</span>
-                                <input id="dur" type="range" min="1" max="12" value={this.state.inputTime} onChange={this.updateTime}/>
+                                <input id="dur" type="range" min="1" max="12" value={this.state.inputTime} onChange={this.updateTime} />
                                 <span className="lab">12 mon</span>
                             </div>
                             <div className="verticalo bel" id="dura">{this.state.inputTime}</div>
@@ -146,13 +107,13 @@ var realPython = React.createClass({
                         <div className="bel">
                             <div className="budget">
                                 AGES
-                  </div>
+                            </div>
                             <div className="slido">
-                                <span className="lab">20</span>
-                                <input id="ages" type="range" min="4" max="7" value={this.state.inputAge}  onChange={this.updateAge}/>
+                                <span className="lab">18</span>
+                                <input id="ages" type="range" min="18" max="35" value={this.state.inputAge} onChange={this.updateAge} />
                                 <span className="lab">35</span>
                             </div>
-                            <div className="verticalo bel" id="agos">{this.state.inputAge*5}</div>
+                            <div className="verticalo bel" id="agos">{this.state.inputAge}</div>
                         </div>
                     </div>
                     <br />
@@ -178,7 +139,7 @@ var realPython = React.createClass({
                     <br />
                     <div className="geo">
                         <span id="usero"></span>
-                        <span id="budge">{this.state.curUsers} users</span>
+                        <span id="budge">users</span>
                         <br />
                         <img className="mapo" src="{{ url_for('static', filename='images/map.png') }}" alt="" />
                         <br />
@@ -215,63 +176,3 @@ ReactDOM.render(
     React.createElement(realPython, null),
     document.getElementById('content')
 );
-  </script>
-<script type="text/javascript">
-  var table = '{{table}}';
-  var col = JSON.parse('{{cols|safe}}');
-  var maxUsers = '{{users}}';
-  console.log()
-  console.log(col[0]);
-  console.log(this);
-  //var place = this.myRef.current;
-  
-  var baros = [
-    [62, 126, 89, 79, 32],
-    [83, 22, 49, 130, 126],
-    [39, 90, 73, 126, 67],
-    [126, 48, 96, 18, 33]
-  ]
-  for (var i = 0; i < col.length; i++) {
-    var col_name = col[i][0];
-    var ido = "switch" + i;
-    //place.innerHTML += "<button class = 'coloo' id = '" + ido + "'onclick='changeClass(" + ido + ")'> " + col_name + "</button>";
-  }
-
-  function changeClass(ido) {
-    console.log(ido);
-    if (ido.className === "coloo") {
-      ido.className = "coloo2";
-    } else {
-      ido.className = "coloo";
-    }
-
-  }
-  function update() {
-    document.getElementById('budgo').innerHTML = "$" + document.getElementById('bud').value;
-    var us = document.getElementById('us').value;
-    if (maxUsers && us > maxUsers) {
-      us = maxUsers;
-    }
-    document.getElementById('use').innerHTML = document.getElementById('us').value;
-    document.getElementById('dura').innerHTML = document.getElementById('dur').value;
-    document.getElementById('usero').innerHTML = us;
-    document.getElementById('agos').innerHTML = 5 * document.getElementById('ages').value;
-    var small = 5 * document.getElementById('ages').value - 2;
-    var big = 5 * document.getElementById('ages').value + 2;
-    document.getElementById('rangos').innerHTML = small + "-" + big;
-    document.getElementById('moneys').innerHTML = "$" + (document.getElementById('bud').value - 5);
-    var index = document.getElementById('ages').value - 4;
-    var bars = baros[index];
-    document.getElementById('b1').style.height = bars[0] + "px";
-    document.getElementById('b2').style.height = bars[1] + "px";
-    document.getElementById('b3').style.height = bars[2] + "px";
-    document.getElementById('b4').style.height = bars[3] + "px";
-    document.getElementById('b5').style.height = bars[4] + "px";
-  }
-  //window.setInterval(function () {
-  //  update()
-  //}, 10);
-</script>
-</body>
-
-</html>
