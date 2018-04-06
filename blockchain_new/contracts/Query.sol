@@ -1,5 +1,5 @@
 pragma solidity 0.4.21;
-pragma experimental ABIEncoderV2;
+//pragma experimental ABIEncoderV2;
 
 
 contract Query {
@@ -107,7 +107,8 @@ contract Query {
     // }
 
     function sendResponse(
-        int[][] update,
+        //int[][] update,
+        int[] update,
         uint[] keys,
         bytes metagraph,
         int numData)
@@ -118,12 +119,15 @@ contract Query {
         uint j;
         uint keyLen = keys.length;
         int[][] memory newUpdates;
+        // int[] memory newUpdates;
         int[] memory vector;
         uint vectorLength;
         for (i = 0; i < keyLen; i++) {
-            vectorLength = update[i].length;
+            //vectorLength = update[i].length;
+            vectorLength = update.length / keyLen;
             for (j = 0; j < vectorLength; j++) {
-                vector[j] = update[i][j] * numData;
+                // vector[j] = update[i][j] * numData;
+                vector[j] = update[i * j] * numData;
             }
             newUpdates[i] = vector;
             delete(vector);
@@ -131,8 +135,10 @@ contract Query {
         // summation
         for (i = 0; i < keyLen; i++) {
             vectorLength = newUpdates[i].length;
+            // vectorLength = newUpdates[i] / keyLen;
             for (j = 0; j < vectorLength; j++) {
-                weights[i][j] = weights[i][j] + newUpdates[i][j];
+                //weights[i][j] = weights[i][j] + newUpdates[i][j];
+                weights[keys[i]][j] = weights[keys[i]][j]  + newUpdates[i][j];
             }
         }
         totalNumData = totalNumData + numData;
