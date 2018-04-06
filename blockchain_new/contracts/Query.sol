@@ -110,7 +110,7 @@ contract Query {
         //int[][] update,
         int[] update,
         uint[] keys,
-        bytes metagraph,
+        //bytes metagraph,
         int numData)
         external
     {  // needs permissioning
@@ -146,8 +146,8 @@ contract Query {
         emit ResponseReceived(numberOfResponses);
     }
 
-    function inverseScale()
-        external
+    function inverseScale(int[] a)
+        external returns (int[])
     { // check against threshold
         uint keyLen = keyList.length;
         for (uint i = 0; i < keyLen; i++) {
@@ -156,6 +156,7 @@ contract Query {
                 weights[keyList[i]][j] = weights[keyList[i]][j] / totalNumData;
             }
         }
+        return a;
     }
 
 // ===================
