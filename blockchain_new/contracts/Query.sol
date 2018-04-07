@@ -109,7 +109,7 @@ contract Query {
     function sendResponse(
         //int[][] update,
         int[] update,
-        uint[] keys,
+        int[] keys,
         //bytes metagraph,
         int numData)
         external
@@ -138,7 +138,7 @@ contract Query {
             // vectorLength = newUpdates[i] / keyLen;
             for (j = 0; j < vectorLength; j++) {
                 //weights[i][j] = weights[i][j] + newUpdates[i][j];
-                weights[keys[i]][j] = weights[keys[i]][j]  + newUpdates[i][j];
+                weights[uint(keys[i])][j] = weights[uint(keys[i])][j]  + newUpdates[i][j];
             }
         }
         totalNumData = totalNumData + numData;
@@ -146,7 +146,7 @@ contract Query {
         emit ResponseReceived(numberOfResponses);
     }
 
-    function inverseScale(int[] a)
+    function inverseScale(int[] a, int b)
         external returns (int[])
     { // check against threshold
         uint keyLen = keyList.length;
