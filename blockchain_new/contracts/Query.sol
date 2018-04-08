@@ -3,13 +3,13 @@ pragma solidity 0.4.21;
 
 contract Query {
 
-    int totalNumData = 0;
-    int numberOfResponses = 0;
-    uint vectorLength = 0;
-    bool moreThanOne = false;
+    uint public vectorLength;
+    int public totalNumData = 0;
+    int public numberOfResponses = 0;
+    bool public moreThanOne = false;
 
-    int[] keyList;
-    mapping(int => int[]) weights;
+    int[] public keyList;
+    mapping(int => int[]) public weights;
 
     /////////////
     // Structs //
@@ -24,11 +24,21 @@ contract Query {
     //////////////
 
     event ClientSelected(address client);
-    event ResponseReceived(int amount);
+    event ResponseReceived(int n);
+    // event FederatedAveragingComplete();
 
     ///////////////
     // Functions //
     ///////////////
+
+    function Query(uint _vectorLength, int[] _keyList) {
+        vectorLength = _vectorLength;
+        keyList = _keyList;
+        uint keyLength = keyList.length;
+        for (uint i = 0; i < keyLength; i++) {
+            weights[keyList[i]] = new int[](keyLength);
+        }
+    }
 
     function pingClients(address[] clientList) internal {
         uint clientLen = clientList.length;
@@ -48,7 +58,7 @@ contract Query {
         uint i;
         uint keyLen = keyList.length;
         if (moreThanOne) {
-            int[] memory newUpdate;
+            int[] memory newUpdate = new int[](vectorLength);
             
             // scaling
             for (i = 0; i < keyLen; i++) {
@@ -68,6 +78,7 @@ contract Query {
             }
         }
         numberOfResponses++;
+        emit ResponseReceived(numberOfResponses);
         return true;
     }
 
