@@ -1,82 +1,34 @@
 pragma solidity 0.4.21;
-//pragma experimental ABIEncoderV2;
 
 
 contract Query {
-    // address public parent;
-    // address public originator;
-    // uint256 public bounty;
-    // bytes public searchFields;
-    // uint256 public id;
-    // uint32 public numberOfDataPoints;
-    // // uint32 public targetAverage;           // needs to be talked about
-    // bool public active;
-    // address[] public contributors;
-    // mapping(address => uint8) public contributionLevel;
-    // Model public model;
 
-    // // Structs
+    int totalNumData = 0;
+    int numberOfResponses = 0;
+    uint vectorLength = 0;
+    bool moreThanOne = false;
 
-    // struct IPFS {
-    //     string addr;
-    // }
+    int[] keyList;
+    mapping(int => int[]) weights;
 
-    // struct Model {
-    //     bytes data;
-    //     mapping(uint => int[]) weights;
-    // }
+    /////////////
+    // Structs //
+    /////////////
 
-    // Modifiers
-
-    // modifier mustBe(address caller) {
-    //     require(caller == msg.sender);
-    //     _;
-    // }
-    
-    // modifier targetAchieved() {
-    //     _;
-    // }
-
-    // modifier targetAchieved() {
-    //     require(model.currentAverage >= targetAverage);
-    //     _;
-    // }
+    ///////////////
+    // Modifiers //
+    ///////////////
 
     //////////////
     //  Events  //
     //////////////
 
     event ClientSelected(address client);
-    event ResponseReceived(uint amount);
+    event ResponseReceived(int amount);
 
-    // Functions
-
-    // function Query(
-    //     address _originator,
-    //     uint256 _bounty,
-    //     bytes _searchFields,
-    //     uint256 _id,
-    //     address[] outreach) internal
-    // {
-    //     parent = msg.sender;
-    //     originator = _originator;
-    //     bounty = _bounty;
-    //     searchFields = _searchFields;
-    //     id = _id;
-    //     active = true;
-    //     model = Model(
-    //         "abc"
-    //     );
-    //     for (uint i = 0; i < outreach.length; i++) {
-    //         // apiCall(outreach[i]);   // needs to be implemented
-    //     }
-    // }
-
-    // function () public payable {
-    //     msg.sender.transfer(msg.value);        // necessary?
-    // }
-
-// ===================
+    ///////////////
+    // Functions //
+    ///////////////
 
     function pingClients(address[] clientList) internal {
         uint clientLen = clientList.length;
@@ -85,98 +37,52 @@ contract Query {
         }
     }
 
-    // function getModel() external view returns(bytes) { // needs permissioning
-    //     return model.data;
-    // }
-
-    // mapping(string => int[])[] public respArray;
-    // bytes[] metagraphArray;
-    // uint[] numDataArray;
-    int totalNumData;
-    uint numberOfResponses = 0;
-    mapping(uint => int[]) weights;
-    uint[] keyList;
-
-    // function copy(uint[] arr) private returns(uint[]) {
-    //     uint len = arr.length;
-    //     uint[len] cp;
-    //     for (uint i = 0; i < len; i++) {
-    //         cp[i] = arr[i];
-    //     }
-    //     return cp;
-    // }
-
     function sendResponse(
-        //int[][] update,
         int[] update,
-        int[] keys,
-        //bytes metagraph,
+        int key,
         int numData)
         external
-    {  // needs permissioning
-        // scaling
+        returns (bool)
+        // needs permissioning
+    {
         uint i;
-        uint j;
-        uint keyLen = keys.length;
-        int[][] memory newUpdates;
-        // int[] memory newUpdates;
-        int[] memory vector;
-        uint vectorLength;
-        for (i = 0; i < keyLen; i++) {
-            //vectorLength = update[i].length;
-            vectorLength = update.length / keyLen;
-            for (j = 0; j < vectorLength; j++) {
-                // vector[j] = update[i][j] * numData;
-                vector[j] = update[i * j] * numData;
+        uint keyLen = keyList.length;
+        if (moreThanOne) {
+            int[] memory newUpdate;
+            
+            // scaling
+            for (i = 0; i < keyLen; i++) {
+                newUpdate[i] = update[i] * numData;
             }
-            newUpdates[i] = vector;
-            delete(vector);
-        }
-        // summation
-        for (i = 0; i < keyLen; i++) {
-            vectorLength = newUpdates[i].length;
-            // vectorLength = newUpdates[i] / keyLen;
-            for (j = 0; j < vectorLength; j++) {
-                //weights[i][j] = weights[i][j] + newUpdates[i][j];
-                weights[uint(keys[i])][j] = weights[uint(keys[i])][j]  + newUpdates[i][j];
+            
+            // summation
+            for (i = 0; i < keyLen; i++) {
+                weights[key][i] = weights[key][i] + newUpdate[i];
+            }
+        } else {
+            for (i = 0; i < keyLen; i++) {
+                weights[key][i] = update[i];
+            }
+            if (weights[key].length == vectorLength) {
+                moreThanOne = true;
             }
         }
-        totalNumData = totalNumData + numData;
         numberOfResponses++;
-        emit ResponseReceived(numberOfResponses);
+        return true;
     }
 
-    function inverseScale(int[] a, int b)
-        external returns (int[])
-    { // check against threshold
+    function inverseScale()
+        external returns (bool)
+        // check against threshold
+    {
+        uint i;
+        uint j;
         uint keyLen = keyList.length;
-        for (uint i = 0; i < keyLen; i++) {
-            uint vectorLength = weights[keyList[i]].length;
-            for (uint j = 0; j < vectorLength; j++) {
+        for (i = 0; i < keyLen; i++) {
+            for (j = 0; j < vectorLength; j++) {
                 weights[keyList[i]][j] = weights[keyList[i]][j] / totalNumData;
             }
         }
-        return a;
+        return true;
     }
-
-// ===================
-
-    // function cancel() public mustBe(parent) {
-    //     active = false;
-    //     selfdestruct(parent);
-    // }
-
-    // function retrieve() internal targetAchieved() {            // finer-grain distribution required
-    //     uint256 smallAmount = bounty / numberOfDataPoints;       // remember to account for leftover
-    //     // Master master = Master(parent);
-    //     address contributor;
-    //     uint256 amount;
-    //     for (uint i = 0; i < contributors.length; i++) {
-    //         contributor = contributors[i];
-    //         amount = smallAmount * contributionLevel[contributor];
-    //         // master.allocate(contributor, amount);
-    //     }
-    // }
-
-    // function verify() internal returns (bool) {} // truebit
 }
