@@ -4,9 +4,77 @@ body {
 	background-color: #222839;
 }
 
+.mainop {
+	text-align: center;
+	margin-top: 200px;
+}
+
+.hom_buttons {
+	text-align: center;
+	width: 100%;
+	margin-top: 150px;
+}
+
+.buy_data {
+	background-color: #1d2230;
+	font-family: 'Nunito Sans';
+	color: #ffffff;
+	text-align: center;
+	font-weight: bold;
+	padding: 15px;
+	margin: 50px;
+	font-size: 20px;
+	width: 225px;
+	border: 1px solid black;
+	letter-spacing: 1.3px;
+}
+
+.sell_data {
+	background-color: #ffffff;
+	font-family: 'Nunito Sans';
+	color: #000000;
+	text-align: center;
+	font-weight: bold;
+	padding: 15px;
+	margin: 50px;
+	font-size: 20px;
+	width: 225px;
+	letter-spacing: 1.3px;
+}
+
+.d-a-t-a-a-g-o-r-a-2 {
+	margin: 20px;
+	font-size: 75px;
+	font-family: 'Nunito Sans';
+	color: #ffffff;
+	text-align: center;
+	font-weight: bold;
+	letter-spacing: 7.5px;
+	opacity: 1
+}
+.hom_caption {
+	margin: 40px;
+	font-size: 35px;
+	font-family: 'Nunito Sans';
+	color: #ffffff;
+	text-align: center;
+}
+
 .overlay {
 	text-align: center;
 	width: auto;
+}
+
+
+.hp_overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+	background-image: url("/static/images/image.png");
+	background-size: 100%;
+	z-index: 10;
 }
 
 #cart {

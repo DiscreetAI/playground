@@ -21,12 +21,79 @@ from adapters import  *
 
 @application.route("/", methods=['GET', 'POST'])
 def main():
-    return render_template('index.html')
+    return render_template('homepage.html')
 
+@application.route("/decide", methods=['GET', 'POST'])
+def decide():
+    print(request.form['decide'])
+    if request.form['decide'] == 'buy':
+        return redirect('/buy')
+    else:
+        return redirect('/sell')
 
+@application.route("/sell", methods=['GET', 'POST'])
+def sell():
+    return render_template('sellapi.html')
+@application.route("/buy", methods=['GET', 'POST'])
+def buy():
+    return render_template('buyapi.html')
 @application.route("/home", methods=['POST'])
 def home():
     return redirect('/')
+
+@application.route("/sellwhat", methods=['POST'])
+def redirectOAuth():
+    if 'sell' in request.form:
+        categ = request.form['sell']
+    else:
+        categ = 'lol'
+    #return execute()
+    #insert_fitbit()
+    if categ == 'Fitbit':
+        return fitbit_oauth()
+    elif categ == 'Uber':
+        return uber_oauth()
+    elif categ == 'Lyft':
+        return lyft_oauth()
+    elif categ == 'Twitter':
+        return twitter_oauth()
+    elif categ == 'Spotify':
+        return spotify_oauth()
+    else:
+        return render_template('sellapi.html')
+
+@application.route("/buyapi", methods=['POST'])
+def redirectAPI():
+    if 'buy' in request.form:
+        categ = request.form['buy']
+    else:
+        categ = 'lol'
+    
+    table_name = "fitbit_daily_activity_summary"
+    col_names = get_columns(table_name)
+    temp = str(col_names)
+    #print(temp)
+    temp = temp.replace("'", '"')
+    # print(temp)
+    import ast
+    col_names = ast.literal_eval(temp)
+    maxUsers = -1
+    api = ''
+    logo = ''
+    template = ''
+    def capAndSpace(string):
+        return ' '.join(list(string.upper()))
+    if 'buy' in request.form:
+        print("yes")
+        if request.form['buy'] == 'Fitbit':
+            maxUsers = get_user_count('user_id', 'fb_activities')
+            print(maxUsers)
+        api = capAndSpace(request.form['buy'])
+        template = url_for('static',filename='images/' + request.form['buy'].lower() + '.png')
+
+    print(template, "sup")
+    return render_template('left-sidebar.html', table=table_name, cols=json.dumps(col_names), users=maxUsers, api=api, logo=template)
+
 
 @application.route('/results', methods=['POST'])
 def results():
@@ -55,13 +122,21 @@ def results():
     import ast
     col_names = ast.literal_eval(temp)
     maxUsers = -1
+    api = ''
+    logo = ''
+    template = ''
+    def capAndSpace(string):
+        return ' '.join(list(string.upper()))
     if 'categ' in request.form:
+        print("yes")
         if request.form['categ'] == 'Fitbit':
             maxUsers = get_user_count('user_id', 'fb_activities')
             print(maxUsers)
+        api = capAndSpace(request.form['categ'])
+        template = url_for('static',filename='images/' + request.form['categ'].lower() + '.png')
 
     # print(col_names)
-    return render_template('left-sidebar.html', table=table_name, cols=json.dumps(col_names), users=maxUsers)
+    return render_template('left-sidebar.html', table=table_name, cols=json.dumps(col_names), users=maxUsers, api=api, logo=template)
 
 def get_table(tableName):
     query = "select * from {};".format(tableName)
@@ -127,15 +202,15 @@ def payment():
 @application.route('/execute', methods=['POST'])
 def execute():
     print("execute called")
-    query = request.form['query']
-    print(query)
-    df = pd.read_sql_query(query, db.engine)
-    #df = pd.read_sql_query("select * from fitbit_daily_activity_summary", db.engine)
+    #query = request.form['query']
+    #print(query)
+    #df = pd.read_sql_query(query, db.engine)
+    df = pd.read_sql_query("select * from fitbit_daily_activity_summary", db.engine)
     csv = df.to_csv(index=False)
     return Response(
         csv,
         mimetype="text/csv",
-        headers={"Content-disposition": "attachment; filename=data.csv"}
+        headers={"Content-disposition": "attachment; filename=fitbit.csv"}
         )
 
 

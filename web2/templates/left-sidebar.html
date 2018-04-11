@@ -60,16 +60,9 @@ var realPython = React.createClass({
       this.setState({
         inputUsers: evt.target.value
       });
-      var currentUsers = 0;
-      console.log(maxUsers);
-      if (maxUsers < this.state.inputUsers) {
-        currentUsers = maxUsers;
-      } else {
-        currentUsers = this.state.inputUsers;
-      }
-      this.setState({
-        curUsers: currentUsers
-      });
+      console.log("max users" + maxUsers);
+      console.log("users" + this.state.inputUsers);
+      console.log(this.state.inputUsers < maxUsers)
       
     },
     updateTime: function(evt) {
@@ -84,6 +77,7 @@ var realPython = React.createClass({
     },
     getInitialState: function() {
       currentUsers = 0;
+      console.log('{{logo}}');
       if (maxUsers < 50) {
         currentUsers = maxUsers;
       } else {
@@ -94,8 +88,28 @@ var realPython = React.createClass({
         inputTime: 6,
         inputAge: 5,
         maxUsers: '{{users}}',
-        curUsers: currentUsers
+        curUsers: currentUsers,
+        logogo: '{{logo}}'
       };
+    },
+    tick: function() {
+        var currentUsers = 0;
+        if (maxUsers < this.state.inputUsers) {
+            currentUsers = maxUsers;
+        } else if (this.state.inputUsers >= 100) {
+            currentUsers = maxUsers;
+        } else {
+            currentUsers = this.state.inputUsers;
+        }
+        this.setState({
+            curUsers: currentUsers
+        });
+    },
+    componentDidMount: function() {
+        this.interval = setInterval(this.tick, 10);
+    },
+    componentWillUnmount: function() {
+        clearInterval(this.interval);
     },
     handleChange: function (event) {
         this.setState({ value: event.target.value });
@@ -109,7 +123,7 @@ var realPython = React.createClass({
             <br />
 
             <div className="fitbit">
-                <img className="icon2 align" src="{{ url_for('static', filename='images/fitbit.png') }}" alt="" /> F I T B I T
+                <img className="icon2 align" src='{{logo}}' alt="" /> {{api}}
           </div>
             <div className="overall">
                 <div className="rectangle7">
