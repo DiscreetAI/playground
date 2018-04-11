@@ -42,6 +42,11 @@ contract Query {
         int _goalAccuracy, int _modelType, int _maxRounds,
         int[] _initialWeights, int _numClients
         ) public {
+        // goalAccuracy = _goalAccuracy;
+        // modelType = _modelType;
+        // maxRounds = _maxRounds;
+        // vectorLength = _vectorLength;
+        // numClients = _numClients;
         goalAccuracy = uint(_goalAccuracy);
         modelType = uint(_modelType);
         maxRounds = uint(_maxRounds);
@@ -66,31 +71,42 @@ contract Query {
     function receiveResponse(
         int[] _clientUpdate,
         // address _clientAddress,
-        int _numData) 
+        uint _numData) 
         public 
         {
             //TODO: make sure that only a client who is SUPPOSED to be training can call this!
-            //received client update has already been multiplied by _numData
-            //so we just need to divide it by our total data
-            //scaling client update by n_k/n
-            uint numData = uint(_numData);
-            totalNumData = totalNumData + numData;
+            //received client update has already been multiplied by _numData=n_k
+            //when we send it back we expect the client to divide it by /Sigma(_numData)=n
+            // uint numData = uint(_numData);
+            totalNumData = totalNumData + _numData;
             uint i;
-            int[] memory newUpdate = new int[](vectorLength);
-            for (i = 0; i < vectorLength; i ++) {
-                newUpdate[i] =  divide(_clientUpdate[i], _numData);
-            }
+            // int[] memory newUpdate = new int[](vectorLength);
+            //below is commented out because we don't need to divide yet
+            // for (i = 0; i < vectorLength; i ++) {
+            //     newUpdate[i] =  divide(_clientUpdate[i], totalNumData);
+            // }
             //adding the new client update to the current ones 
-            //TODO: is this parallelism?
             for (i = 0; i < vectorLength; i ++) {
-                currentWeights[i] = currentWeights[i] + newUpdate[i];
+                currentWeights[i] = currentWeights[i] + _clientUpdate[i];
             }
             numberOfResponses ++;
             //if this was the last client we needed to hear from, go ahead and 
             //start another round of training if we haven't exceeded our max rounds
             if (numberOfResponses > numClients) {
+                //scale our weights down
+                for (i = 0; i < vectorLength; i ++) {
+                currentWeights[i] = divide(currentWeights[i], totalNumData);
+            }
+                //calculate the accuracy
+                uint accuracy = calculateAccuracy();
+                if (accuracy > goalAccuracy) {
+                    //we're done!
+                    terminate();
+                }
                 if (currentRound < maxRounds) {
                     pingClients(keyList);
+                } else {
+                    //we're done!
                 }
                 currentRound ++;
             }
@@ -100,9 +116,15 @@ contract Query {
             // _clientAddress.transfer(numData);
         }
     
-    function divide(int i, int j) returns (int k) {
+    function divide(int i, uint j) internal pure returns (int) {
         //TODO: Implement real division lmao
-        return i / k;
+        return i / int (j);
+    }
+    function calculateAccuracy() internal pure returns (uint) {
+
+    }
+    function terminate() internal {
+        
     }
     
     function sendResponse(
