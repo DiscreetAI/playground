@@ -10,6 +10,9 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import datetime
+
+from corsheaders.defaults import default_headers
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -37,7 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
 
     'rest_framework',
-    'rest_framework.authtoken',
+    # 'rest_framework.authtoken',
     'rest_auth',
 
     'users',
@@ -48,12 +51,14 @@ INSTALLED_APPS = (
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
     'rest_framework_swagger',
+    'corsheaders',
 )
 
 MIDDLEWARE = (
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -132,16 +137,29 @@ TEMPLATES = [
     },
 ]
 
-REST_SESSION_LOGIN = True
+REST_SESSION_LOGIN = False
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = 'username'
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
+AUTHENTICATION_BACKENDS = (
+ # Needed to login by username in Django admin, regardless of `allauth`
+ "django.contrib.auth.backends.ModelBackend",
+
+ # `allauth` specific authentication methods, such as login by e-mail
+ "allauth.account.auth_backends.AuthenticationBackend",
+)
+
 REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
     ),
     'COERCE_DECIMAL_TO_STRING': False
 }
@@ -175,3 +193,28 @@ SWAGGER_SETTINGS = {
 }
 
 SITE_ID = 2
+
+REST_USE_JWT = True
+JWT_AUTH = {
+    "JWT_PAYLOAD_HANDLER": 'custom.jwt.jwt_payload_handler',
+    "JWT_RESPONSE_PAYLOAD_HANDLER": 'custom.jwt.jwt_response_payload_handler',
+    "JWT_ALLOW_REFRESH": True,
+    "JWT_ISSUER": "sell",
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(weeks=1),
+}
+
+SESSION_COOKIE_DOMAIN = ".dataagora.com"
+CSRF_COOKIE_DOMAIN = ".dataagora.com"
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_HEADERS = default_headers + (
+    'cache',
+)
+
+CORS_ORIGIN_WHITELIST = (
+    'sell.dataagora.com',
+    'localhost:3000'
+)
+
+CORS_ORIGIN_REGEX_WHITELIST = (r'^(https?://)?(\w+\.)?dataagora\.com$', )

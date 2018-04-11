@@ -8,7 +8,7 @@ from calendar import timegm
 from datetime import datetime
 
 from rest_framework_jwt.settings import api_settings
-from enterprise_users.serializers import UserSerializer
+from users.serializers import UserSerializer
 
 def jwt_response_payload_handler(token, user=None, request=None):
     """ Custom response payload handler.
@@ -46,12 +46,12 @@ def jwt_payload_handler(user):
         payload['first_name'] = user.first_name
     if hasattr(user, 'last_name'):
         payload['last_name'] = user.last_name
-    if hasattr(user, 'enterpriseuserprofile'):
-        profile = user.enterpriseuserprofile
-        if hasattr(profile, 'company'):
-            payload['company'] = profile.company
-        if hasattr(profile, 'occupation'):
-            payload['occupation'] = profile.occupation
+    if hasattr(user, 'userprofile'):
+        profile = user.userprofile
+        if hasattr(profile, 'balance'):
+            payload['balance'] = profile.balance
+        if hasattr(profile, 'datasets'):
+            payload['datasets'] = profile.datasets
 
     # Include original issued at time for a brand new token,
     # to allow token refresh

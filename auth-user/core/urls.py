@@ -21,6 +21,6 @@ urlpatterns = [
     url(r'^auth/token/refresh', refresh_jwt_token),
     url(r'^auth/token/verify', verify_jwt_token),
 
-    # Disable normal registration for now.
-    # url(r'^auth/registration/', include('rest_auth.registration.urls')),
+    # Enable normal registration for now.
+    url(r'^auth/registration/', include('rest_auth.registration.urls')),
 ]

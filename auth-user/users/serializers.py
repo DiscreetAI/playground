@@ -2,11 +2,14 @@ from rest_framework import serializers
 from rest_auth.serializers import UserDetailsSerializer
 
 class UserSerializer(UserDetailsSerializer):
-    balance = serializers.DecimalField(source="userprofile.balance", max_digits=None, decimal_places=2)
+    # balance = serializers.JSONField(source="userprofile.balance")
     datasets = serializers.JSONField(source="userprofile.datasets")
 
     class Meta(UserDetailsSerializer.Meta):
-        fields = UserDetailsSerializer.Meta.fields + ('balance', 'datasets', )
+        fields = UserDetailsSerializer.Meta.fields + (
+            # 'balance',
+            'datasets',
+        )
 
     def update(self, instance, validated_data):
         profile_data = validated_data.pop('userprofile', {})
@@ -37,7 +40,7 @@ from allauth.account.utils import setup_user_email
 class CustomRegisterSerializer(RegisterSerializer):
     first_name = serializers.CharField(required=False, write_only=True)
     last_name = serializers.CharField(required=False, write_only=True)
-    balance = serializers.DecimalField(source="userprofile.balance", required=False, write_only=True, max_digits=None, decimal_places=2)
+    # balance = serializers.JSONField(source="userprofile.balance", required=False, write_only=True)
     datasets = serializers.JSONField(source="userprofile.datasets", required=False, write_only=True)
 
     def get_cleaned_data(self):
@@ -47,7 +50,7 @@ class CustomRegisterSerializer(RegisterSerializer):
             'last_name': self.validated_data.get('last_name', ''),
             'password1': self.validated_data.get('password1', ''),
             'email': self.validated_data.get('email', ''),
-            'balance': profile_data.get('balance', 0.0),
+            # 'balance': profile_data.get('balance', {}),
             'datasets': profile_data.get('datasets', {})
         }
 
@@ -59,7 +62,6 @@ class CustomRegisterSerializer(RegisterSerializer):
         setup_user_email(request, user, [])
         user.save()
 
-        print(self.cleaned_data)
         profile = user.userprofile
 
         # Do not let users set their own balance on registration.
