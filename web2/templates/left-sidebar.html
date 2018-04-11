@@ -1,186 +1,291 @@
-<!DOCTYPE HTML>
-<!--
-	Landed by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+<!DOCTYPE html>
 <html>
-	<head>
-		<title>DataShark</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
-		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-	</head>
-	<body>
-		<div class="overlay">
-			<div class="d-a-t-a-s-h-a-r-k">
-				<img id="shark2" src="{{ url_for('static', filename='images/shark.png') }}" alt=""> D A T A S H A R K
-				<img id="shark" src="{{ url_for('static', filename='images/shark.png') }}" alt="">
-			</div>
-			<br>
 
-			<div class = "fitbit">
-				<img class="icon2 align" src="{{ url_for('static', filename='images/fitbit.png') }}" alt=""> F I T B I T
-			</div>
-			<div class= "overall">
-				<div class="rectangle7" >
-					
-						<div class="customize-search">
-						<span class="undo">
-							CUSTOMIZE SEARCH
-						</span>
-					</div> 
-					<br>
-					<div style="overflow-y:scroll; overflow-x:hidden; height:300px;">
-					<div class="bel">
-						<div class="budget">
-							BUDGET
-						</div>
-						<div class="slido">
-							<span class="lab">$50</span> <input id="bud" type="range" min=50 max=500 value=300> <span class="lab">$500</span>
-						</div>
-						<div class="verticalo bel" id="budgo"></div>
-					</div>
-					<div class="bel">
-						<div class="budget">
-							USERS
-						</div>
-						<div class="slido">
-							<span class="lab">10</span> <input id="us" type="range" min=10 max=200 value=50> <span class="lab">200</span>
-						</div>
-						<div class="verticalo bel" id="use"></div>
-					</div>
-					<div class="bel">
-						<div class="budget">
-							DURATION
-						</div>
-						<div class="slido">
-							<span class="lab">1 mon</span> <input id="dur" type="range" min=1 max=12 value=6> <span class="lab">12 mon</span>
-						</div>
-						<div class="verticalo bel" id="dura"></div>
-					</div>
-					<div class="bel">
-						<div class="budget">
-							AGES
-						</div>
-						<div class="slido">
-							<span class="lab">20</span> <input id="ages" type="range" min=4 max=7 value=5> <span class="lab">35</span>
-						</div>
-						<div class="verticalo bel" id="agos"></div>
-					</div>
-					</div>
-					<br>
-					
-						<div class="customize-search">
-							<span class="undo">
-								VARIABLES
-							</span>
-						</div>
-						<br>
-					<div class="hullo">
-						<div id="stuff">
-						
-						</div>
-					</div>
-					
-					
-				</div>
-				<div class="rectangle7" >
-					<div class="customize-search">
-						<span class="undo">
-							YOUR RESULTS
-						</span>
-					</div>
-					<br>
-					<div class="geo">
-						<span id="usero"></span>
-						<span id="budge">users</span>
-						<br>
-						<img class="mapo" src="{{ url_for('static', filename='images/map.png') }}" alt="">
-						<br>
-					</div>
-					
-					<div class = "age-range">Age Range</div>
-					<div id = "rangos" class="ranges"></div>
-					<div id="bars">
-						<div id = "b1" class="bar1 bar"></div>
-						<div  id = "b2"class="bar2 bar"></div>
-						<div  id = "b3"class="bar3 bar"></div>
-						<div  id = "b4"class="bar4 bar"></div>
-						<div  id = "b5"class="bar5 bar"></div>
-					</div> <br>
-					<div class="udumb">
-						<span class="total">TOTAL: </span>
-						<span id="moneys"></span>
-						<br>
-					</div>
-					<div class="udumb">
-						<form action="/home" method="post">
-							<button class="add-to-bag" type="submit">ADD TO BAG</button>
-						</form>
-					</div>
-					
-				</div>
-			</div>
-			
-		</div>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>Flask React</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+  <!-- styles -->
+</head>
 
-		<!-- Scripts -->
-		<script>
-			var table = '{{table}}';
-			var col = JSON.parse('{{cols|safe}}');
-			var maxUsers = '{{users}}';
-			console.log(col[0]);
-			var place = document.getElementById('stuff');
-			var baros = [
-				[62, 126, 89, 79, 32], 
-				[83, 22, 49, 130, 126], 
-				[39, 90, 73, 126, 67], 
-				[126, 48, 96, 18, 33]
-			]
-			for (var i = 0; i < col.length; i++) {
-				var col_name = col[i][0];
-				var ido = "switch" + i;
-				place.innerHTML += "<button class = 'coloo' id = '" + ido + "'onclick='changeClass(" + ido + ")'> " + col_name + "</button>";
-			}
+<body>
+  <div class="container">
+    <div id="content"></div>
+  </div>
+  <!-- scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+  <script type="text/jsx">
+  var col = JSON.parse('{{cols|safe}}');
+var maxUsers = '{{users}}';
+console.log("hi there");
+//var place = this.refs.current;
+var us = 50;
+var baros = [
+    [62, 126, 89, 79, 32],
+    [83, 22, 49, 130, 126],
+    [39, 90, 73, 126, 67],
+    [126, 48, 96, 18, 33]
+]
 
-		function changeClass(ido) {
-			console.log(ido);
-			if (ido.className === "coloo") {
-				ido.className = "coloo2";
-			} else {
-				ido.className = "coloo";
-			}
-			
-		}
-		function update() {
-			document.getElementById('budgo').innerHTML = "$" + document.getElementById('bud').value;
-			var us = document.getElementById('us').value;
-			if (maxUsers && us > maxUsers) {
-				us = maxUsers;
-			}
-			document.getElementById('use').innerHTML = document.getElementById('us').value;
-			document.getElementById('dura').innerHTML = document.getElementById('dur').value;
-			document.getElementById('usero').innerHTML = us;
-			document.getElementById('agos').innerHTML = 5 * document.getElementById('ages').value;
-			var small = 5 * document.getElementById('ages').value - 2;
-			var big = 5 * document.getElementById('ages').value + 2;
-			document.getElementById('rangos').innerHTML = small + "-" + big;
-			document.getElementById('moneys').innerHTML = "$" + (document.getElementById('bud').value - 5);
-			var index = document.getElementById('ages').value - 4;
-			var bars = baros[index];
-			document.getElementById('b1').style.height = bars[0] + "px";
-			document.getElementById('b2').style.height = bars[1] + "px";
-			document.getElementById('b3').style.height = bars[2] + "px";
-			document.getElementById('b4').style.height = bars[3] + "px";
-			document.getElementById('b5').style.height = bars[4] + "px";
-		}
-		window.setInterval(function () {
-				update()
-			}, 10);
-		</script>
-	</body>
+function changeClass(ido) {
+    console.log(ido);
+    if (ido.className === "coloo") {
+        ido.className = "coloo2";
+    } else {
+        ido.className = "coloo";
+    }
+
+}
+function tick() {
+    var test = document.getElementById('us');
+    if (test) {
+        us = document.getElementById('us').value;
+    }
+    if (us > maxUsers) {
+        us = maxUsers;
+    }
+    ReactDOM.render(React.createClass({ render: function () { return (<div>{us}</div>) } }), this.refs.stuff);
+}
+//setInterval(tick, 10000);
+
+var realPython = React.createClass({
+    maxUsers: '{{users}}',
+    updateMaxUsers: function (evt) {
+        this.refs.stuff.innerText = this.maxUsers;
+    },
+    updateUsers: function(evt) {
+      this.setState({
+        inputUsers: evt.target.value
+      });
+      console.log("max users" + maxUsers);
+      console.log("users" + this.state.inputUsers);
+      console.log(this.state.inputUsers < maxUsers)
+      
+    },
+    updateTime: function(evt) {
+      this.setState({
+        inputTime: evt.target.value
+      });
+    },
+    updateAge: function(evt) {
+      this.setState({
+        inputAge: evt.target.value
+      });
+    },
+    getInitialState: function() {
+      currentUsers = 0;
+      console.log('{{logo}}');
+      if (maxUsers < 50) {
+        currentUsers = maxUsers;
+      } else {
+        currentUsers = 50;
+      }
+      return {
+        inputUsers: 50,
+        inputTime: 6,
+        inputAge: 5,
+        maxUsers: '{{users}}',
+        curUsers: currentUsers,
+        logogo: '{{logo}}'
+      };
+    },
+    tick: function() {
+        var currentUsers = 0;
+        if (maxUsers < this.state.inputUsers) {
+            currentUsers = maxUsers;
+        } else if (this.state.inputUsers >= 100) {
+            currentUsers = maxUsers;
+        } else {
+            currentUsers = this.state.inputUsers;
+        }
+        this.setState({
+            curUsers: currentUsers
+        });
+    },
+    componentDidMount: function() {
+        this.interval = setInterval(this.tick, 10);
+    },
+    componentWillUnmount: function() {
+        clearInterval(this.interval);
+    },
+    handleChange: function (event) {
+        this.setState({ value: event.target.value });
+    },
+    render: function () {
+        return (<div className="overlay">
+            <div className="d-a-t-a-a-g-o-r-a">
+                <img id="shark2" src="{{ url_for('static', filename='images/shark.png') }}" alt="" /> D A T A A G O R A
+            <img id="shark" src="{{ url_for('static', filename='images/shark.png') }}" alt="" />
+            </div>
+            <br />
+
+            <div className="fitbit">
+                <img className="icon2 align" src='{{logo}}' alt="" /> {{api}}
+          </div>
+            <div className="overall">
+                <div className="rectangle7">
+
+                    <div className="customize-search">
+                        <span className="undo">
+                            CUSTOMIZE SEARCH
+                </span>
+                    </div>
+                    <br />
+                    <div className="ovflow">
+                        <div className="bel">
+                            <div className="budget">
+                                USERS
+                  </div>
+                            <div className="slido">
+                                <span className="lab">10</span>
+                                <input id="us" type="range" min="10" max="200" value={this.state.inputUsers} onChange={this.updateUsers} />
+                                <span className="lab">200</span>
+                            </div>
+                            <div className="verticalo bel" id="use">{this.state.inputUsers}</div>
+                        </div>
+                        <div className="bel">
+                            <div className="budget">
+                                DURATION
+                  </div>
+                            <div className="slido">
+                                <span className="lab">1 mon</span>
+                                <input id="dur" type="range" min="1" max="12" value={this.state.inputTime} onChange={this.updateTime}/>
+                                <span className="lab">12 mon</span>
+                            </div>
+                            <div className="verticalo bel" id="dura">{this.state.inputTime}</div>
+                        </div>
+                        <div className="bel">
+                            <div className="budget">
+                                AGES
+                  </div>
+                            <div className="slido">
+                                <span className="lab">20</span>
+                                <input id="ages" type="range" min="4" max="7" value={this.state.inputAge}  onChange={this.updateAge}/>
+                                <span className="lab">35</span>
+                            </div>
+                            <div className="verticalo bel" id="agos">{this.state.inputAge*5}</div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div className="customize-search">
+                        <span className="undo">
+                            VARIABLES
+                </span>
+                    </div>
+                    <br />
+                    <div className="hullo">
+                        <div id="stuff" ref='stuff' />
+                    </div>
+
+
+                </div>
+                <div className="rectangle7">
+                    <div className="customize-search">
+                        <span className="undo">
+                            YOUR RESULTS
+                </span>
+                    </div>
+                    <br />
+                    <div className="geo">
+                        <span id="usero"></span>
+                        <span id="budge">{this.state.curUsers} users</span>
+                        <br />
+                        <img className="mapo" src="{{ url_for('static', filename='images/map.png') }}" alt="" />
+                        <br />
+                    </div>
+
+                    <div className="age-range">Age Range</div>
+                    <div id="rangos" className="ranges"></div>
+                    <div id="bars">
+                        <div id="b1" className="bar1 bar"></div>
+                        <div id="b2" className="bar2 bar"></div>
+                        <div id="b3" className="bar3 bar"></div>
+                        <div id="b4" className="bar4 bar"></div>
+                        <div id="b5" className="bar5 bar"></div>
+                    </div>
+                    <br />
+                    <div className="udumb">
+                        <span className="total">TOTAL: </span>
+                        <span id="moneys"></span>
+                        <br />
+                    </div>
+                    <div className="udumb">
+                        <form action="/execute" method="post">
+                            <button className="add-to-bag" type="submit" name='download' value='fitbit'>DOWNLOAD</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>);
+    }
+});
+ReactDOM.render(
+    React.createElement(realPython, null),
+    document.getElementById('content')
+);
+  </script>
+<script type="text/javascript">
+  var table = '{{table}}';
+  var col = JSON.parse('{{cols|safe}}');
+  var maxUsers = '{{users}}';
+  console.log()
+  console.log(col[0]);
+  console.log(this);
+  //var place = this.myRef.current;
+  
+  var baros = [
+    [62, 126, 89, 79, 32],
+    [83, 22, 49, 130, 126],
+    [39, 90, 73, 126, 67],
+    [126, 48, 96, 18, 33]
+  ]
+  for (var i = 0; i < col.length; i++) {
+    var col_name = col[i][0];
+    var ido = "switch" + i;
+    //place.innerHTML += "<button class = 'coloo' id = '" + ido + "'onclick='changeClass(" + ido + ")'> " + col_name + "</button>";
+  }
+
+  function changeClass(ido) {
+    console.log(ido);
+    if (ido.className === "coloo") {
+      ido.className = "coloo2";
+    } else {
+      ido.className = "coloo";
+    }
+
+  }
+  function update() {
+    document.getElementById('budgo').innerHTML = "$" + document.getElementById('bud').value;
+    var us = document.getElementById('us').value;
+    if (maxUsers && us > maxUsers) {
+      us = maxUsers;
+    }
+    document.getElementById('use').innerHTML = document.getElementById('us').value;
+    document.getElementById('dura').innerHTML = document.getElementById('dur').value;
+    document.getElementById('usero').innerHTML = us;
+    document.getElementById('agos').innerHTML = 5 * document.getElementById('ages').value;
+    var small = 5 * document.getElementById('ages').value - 2;
+    var big = 5 * document.getElementById('ages').value + 2;
+    document.getElementById('rangos').innerHTML = small + "-" + big;
+    document.getElementById('moneys').innerHTML = "$" + (document.getElementById('bud').value - 5);
+    var index = document.getElementById('ages').value - 4;
+    var bars = baros[index];
+    document.getElementById('b1').style.height = bars[0] + "px";
+    document.getElementById('b2').style.height = bars[1] + "px";
+    document.getElementById('b3').style.height = bars[2] + "px";
+    document.getElementById('b4').style.height = bars[3] + "px";
+    document.getElementById('b5').style.height = bars[4] + "px";
+  }
+  //window.setInterval(function () {
+  //  update()
+  //}, 10);
+</script>
+</body>
+
 </html>

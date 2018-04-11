@@ -90,13 +90,13 @@ class LoginViewController: UIViewController {
         let body = ["email": email ?? "", "password": password ?? "", "datasets": ""]
         do{
             let json = try (JSONSerialization.data(withJSONObject: body, options: JSONSerialization.WritingOptions.prettyPrinted))
-            var request = URLRequest(url: URL(string:"http://datashark7.jn6tkty4uh.us-west-1.elasticbeanstalk.com/createUser")!)
+            var request = URLRequest(url: URL(string:"https://dataagora.com/createUser")!)
             request.httpMethod = "POST"
             request.httpBody = json
             URLSession.shared.dataTask(with: request) { data, response, error in
                 if error != nil {
                     //Error Handling
-                    let alertController = UIAlertController(title: "Could Not Sign Up", message: "Sorry, but we were unable to sign you up for DataShark. Please try again a little bit later.", preferredStyle: .alert)
+                    let alertController = UIAlertController(title: "Could Not Sign Up", message: "Sorry, but we were unable to sign you up for DataAgora. Please try again a little bit later.", preferredStyle: .alert)
                     alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                     self.present(alertController, animated: true, completion: nil)
                 } else {
@@ -119,13 +119,13 @@ class LoginViewController: UIViewController {
         let body = ["email": email ?? "", "password": password ?? ""]
         do{
             let json = try (JSONSerialization.data(withJSONObject: body, options: JSONSerialization.WritingOptions.prettyPrinted))
-            var request = URLRequest(url: URL(string:"http://datashark7.jn6tkty4uh.us-west-1.elasticbeanstalk.com/loginUser")!)
+            var request = URLRequest(url: URL(string:"https://dataagora.com/loginUser")!)
             request.httpMethod = "POST"
             request.httpBody = json
             URLSession.shared.dataTask(with: request) { data, response, error in
                 if error != nil {
                     //Your HTTP request failed.
-                    let alertController = UIAlertController(title: "Could Not Log In", message: "Sorry, but we were unable to log you into DataShark. Please try again a little bit later.", preferredStyle: .alert)
+                    let alertController = UIAlertController(title: "Could Not Log In", message: "Sorry, but we were unable to log you into DataAgora. Please try again a little bit later.", preferredStyle: .alert)
                     alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                     self.present(alertController, animated: true, completion: nil)
                 } else {
