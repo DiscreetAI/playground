@@ -2,10 +2,11 @@
 <html>
 
 <head lang="en">
-  <meta charset="UTF-8">
-  <title>DataAgora</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+    <meta charset="UTF-8">
+    <title>DataAgora</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/other.css') }}" />
   <!-- styles -->
 </head>
 
@@ -16,7 +17,7 @@
   <!-- scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.js"></script>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
   <script type="text/jsx">
   var col = JSON.parse('{{cols|safe}}');
 var maxUsers = '{{users}}';

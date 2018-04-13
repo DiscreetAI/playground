@@ -5,11 +5,13 @@
     <title>DataAgora</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/homepage.css') }}" />
     <!-- styles -->
 </head>
 
 <body>
     <div id="content"></div>
+    
     <!-- scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.js"></script>
@@ -26,9 +28,11 @@
                     A platform where companies can buy data from people like you.
                 </div>
                 <div className="hom_buttons">
-                    <form id="myForm" action="/decide" method="post">
+                    <form id="myFormBuy" action="/buy" method="post">
                     <button className="buy_data" type="submit" name='decide' value='buy'>BUY DATA</button>
-                    <button className="sell_data" type="submit" name="decide" value="sell">SELL DATA</button>
+                    </form>
+                    <form id="myFormSell" action="/sell" method="post">
+                        <button className="sell_data" type="submit" name="decide" value="sell">SELL DATA</button>
                     </form>
                 </div>
             </div>

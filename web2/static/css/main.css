@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito+Sans');
 
-body {
-	background-color: #222839;
-}
+
 
 .mainop {
 	text-align: center;
@@ -13,6 +11,14 @@ body {
 	text-align: center;
 	width: 100%;
 	margin-top: 150px;
+}
+
+#myFormBuy {
+	display: inline;
+}
+
+#myFormSell {
+	display: inline;
 }
 
 .buy_data {
@@ -27,6 +33,7 @@ body {
 	width: 225px;
 	border: 1px solid black;
 	letter-spacing: 1.3px;
+	cursor: pointer;
 }
 
 .sell_data {
@@ -40,6 +47,7 @@ body {
 	font-size: 20px;
 	width: 225px;
 	letter-spacing: 1.3px;
+	cursor: pointer;
 }
 
 .d-a-t-a-a-g-o-r-a-2 {

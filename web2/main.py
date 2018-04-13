@@ -33,9 +33,11 @@ def decide():
 
 @application.route("/sell", methods=['GET', 'POST'])
 def sell():
+    print('sell_success')
     return render_template('sellapi.html')
 @application.route("/buy", methods=['GET', 'POST'])
 def buy():
+    print('buy_success')
     return render_template('buyapi.html')
 @application.route("/home", methods=['POST'])
 def home():
