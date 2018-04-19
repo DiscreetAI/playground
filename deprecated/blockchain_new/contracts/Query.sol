@@ -31,29 +31,34 @@ contract Query {
     //////////////
 
     event ClientSelected(address client, int[] initialWeights);
-    event ResponseReceived(uint n);
+    event ResponseReceived(uint256);
     // event FederatedAveragingComplete();
 
     ///////////////
     // Functions //
     ///////////////
 
-    function Query(int _vectorLength, address[] _keyList,
-        int _goalAccuracy, int _modelType, int _maxRounds,
-        int[] _initialWeights, int _numClients
+    function Query(int _vectorLength, 
+        int[] _initialWeights
+        // address[] _keyList,
+        // int _goalAccuracy, 
+        // int _modelType, 
+        // int _maxRounds,
+        // int[] _initialWeights, 
+        // int _numClients
         ) public {
         // goalAccuracy = _goalAccuracy;
         // modelType = _modelType;
         // maxRounds = _maxRounds;
         // vectorLength = _vectorLength;
         // numClients = _numClients;
-        goalAccuracy = uint(_goalAccuracy);
-        modelType = uint(_modelType);
-        maxRounds = uint(_maxRounds);
+        // goalAccuracy = uint(_goalAccuracy);
+        // modelType = uint(_modelType);
+        // maxRounds = uint(_maxRounds);
         vectorLength = uint(_vectorLength);
-        numClients = uint(_numClients);
-        keyList = _keyList;
-        uint keyLength = keyList.length;
+        // numClients = uint(_numClients);
+        // keyList = _keyList;
+        // uint keyLength = keyList.length;
         currentWeights = _initialWeights;
         // for (uint i = 0; i < keyLength; i++) {
         //     weights[keyList[i]] = new int[](keyLength);
