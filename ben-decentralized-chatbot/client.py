@@ -46,7 +46,7 @@ class Client(object):
         self.Delegator_address = delegatorAddress
 
     def get_money(self):
-        get_testnet_eth(self.clientAddress, self.web3)
+        get_testnet_eth(self, self.clientAddress, self.web3)
         print(self.web3.eth.getBalance(self.clientAddress))
 
         Query_id, self.Query_interface = self.compiled_sol.popitem()
@@ -65,6 +65,9 @@ class Client(object):
            abi=self.Delegator_interface['abi'])
         tx_hash = contract_obj.functions.query(target_address).transact(
             {'from': self.clientAddress})
+
+        self.web3.eth.waitForTransactionReceipt(tx_hash)
+
         tx_receipt = self.web3.eth.getTransactionReceipt(tx_hash)
         print(tx_receipt)
         self.Query_address = self.web3.toChecksumAddress('0x' + tx_receipt['logs'][0]['data'].split('000000000000000000000000')[2])
@@ -75,6 +78,9 @@ class Client(object):
            address=self.Query_address,
            abi=self.Query_interface['abi'])
         tx_hash = contract_obj.functions.pingClients().transact({'from': self.clientAddress})
+
+        self.web3.eth.waitForTransactionReceipt(tx_hash)
+        
         tx_receipt = self.web3.eth.getTransactionReceipt(tx_hash)
         return tx_receipt
 
@@ -148,6 +154,9 @@ class Client(object):
 
         tx_hash = contract_obj.functions.receiveResponse(updatedAddress, n_k).transact(
             {'from': self.clientAddress})
+
+        self.web3.eth.waitForTransactionReceipt(tx_hash)
+
         tx_receipt = self.web3.eth.getTransactionReceipt(tx_hash)
         log = contract_obj.events.ResponseReceived().processReceipt(tx_receipt)
         # return log[0]
