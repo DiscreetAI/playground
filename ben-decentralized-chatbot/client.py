@@ -28,7 +28,9 @@ class Client(object):
 
         contract_source_path_A = "blockchain/Delegator.sol"
         contract_source_path_B = "blockchain/Query.sol"
-        self.compiled_sol = compile_files([contract_source_path_A, contract_source_path_B])
+        contract_source_path_C = "blockchain/DAgoraToken.sol"
+        self.compiled_sol = compile_files([contract_source_path_A, contract_source_path_B,
+        contract_source_path_C])
 
         self.iden = iden
 
@@ -44,13 +46,17 @@ class Client(object):
         print("Client Address:", self.clientAddress)
 
         self.Delegator_address = delegatorAddress
+        self.DAgoraToken_address = self.web3.toChecksumAddress('0x1698215a2bea4935ba9e0f5b48347e83450a6774')
 
     def get_money(self):
         get_testnet_eth(self, self.clientAddress, self.web3)
-        print(self.web3.eth.getBalance(self.clientAddress))
+        print("Client balance:", self.web3.eth.getBalance(self.clientAddress))
 
         Query_id, self.Query_interface = self.compiled_sol.popitem()
         Delegator_id, self.Delegator_interface = self.compiled_sol.popitem()
+        self.compiled_sol.popitem()
+        self.compiled_sol.popitem()
+        DAgoraToken_id, self.DAgoraToken_interface = self.compiled_sol.popitem()
 
         if self.Delegator_address:
             assert(is_address(self.Delegator_address))
@@ -223,8 +229,17 @@ class Client(object):
             # retval = self.filter_set("ClientSelected(address,string)", target_contract, self.handle_ClientSelected_event)
             self.filter_set("ClientSelected(address,string)", target_contract, self.handle_ClientSelected_event)
             # return "I got chosen:", retval[0] + retval[1]
-            print("listening for next round to begin...")
-            alldone = self.filter_set("BeginAveraging(string)", target_contract, self.handle_BeginAveraging_event)
+            # print("listening for next round to begin...")
+            print("receiving reward...")
+            contract_obj = self.web3.eth.contract(
+            address=self.DAgoraToken_address,
+            abi=self.DAgoraToken_interface['abi'])
+
+            tx_hash = contract_obj.functions.transfer(self.clientAddress, 50000000).transact({'from': '0xf6419f5c5295a70C702aC21aF0f64Be07B59F3c4'})
+            self.web3.eth.waitForTransactionReceipt(tx_hash)
+            print('sent!')
+            # print('Token Balance:', contract_obj.functions.balanceOf(self.clientAddress))
+            # alldone = self.filter_set("BeginAveraging(string)", target_contract, self.handle_BeginAveraging_event)
         else:
             return "not me"
 

@@ -31,14 +31,16 @@ def get_testnet_eth(w3, to_address, provider=None):
 	# web3.personal.Personal.importRawKey(
 	# w3, private_key='146396092a127e4cf6ff3872be35d49228c7dc297cf34da5a0808f29cf307da1',passphrase='panda')
 	web3.personal.Personal.unlockAccount(w3, TEST_ACCOUNT, 'panda')
-	print(w3.web3.eth.getBalance(TEST_ACCOUNT))
-	if provider:
+	# print(w3.web3.eth.getBalance(TEST_ACCOUNT))
+	if True:
+		# tx = provider.eth.sendTransaction({"from": provider.eth.coinbase, "to": to_address, "value": 8535606699990000})
 		tx = provider.eth.sendTransaction({"from": TEST_ACCOUNT, "to": to_address, "value": 8535606699990000})
 		w3.web3.eth.waitForTransactionReceipt(tx)
-	# else:
-	# 	to_whom = '{"toWhom":"%s"}' % to_address
-	# 	url = 'https://ropsten.faucet.b9lab.com/tap'
-	# 	requests.post(url, data=to_whom)
+	else:
+		to_whom = '{"toWhom":"%s"}' % to_address
+		url = 'https://ropsten.faucet.b9lab.com/tap'
+		requests.post(url, data=to_whom)
+		time.sleep(60)
 
 def send_raw_tx(w3, to_address, from_address, from_key):
 	tx = Transaction(
