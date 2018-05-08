@@ -17,7 +17,7 @@ from blockchain.ipfs_utils import *
 from models.gan import ConversationalNetwork
 
 class Client(object):
-    def __init__(self, iden, provider, delegatorAddress=None, clientAddress=None):
+    def __init__(self, iden, provider, clientAddress=None, delegatorAddress=None):
 
         self.web3 = provider
         self.api = ipfsapi.connect('127.0.0.1', 5001)
@@ -41,15 +41,15 @@ class Client(object):
             #TODO: Initialize client 'container' address if it wasn't assigned one
             self.clientAddress = self.web3.personal.newAccount(self.PASSPHRASE)
             assert(is_address(self.clientAddress))
-            self.web3.personal.unlockAccount(self.clientAddress, self.PASSPHRASE)
-            
+        self.web3.personal.unlockAccount(self.clientAddress, self.PASSPHRASE)
+    
         print("Client Address:", self.clientAddress)
 
         self.Delegator_address = delegatorAddress
         self.DAgoraToken_address = self.web3.toChecksumAddress('0x1698215a2bea4935ba9e0f5b48347e83450a6774')
 
     def get_money(self):
-        get_testnet_eth(self, self.clientAddress, self.web3)
+        # get_testnet_eth(self, self.clientAddress, self.web3)
         print("Client balance:", self.web3.eth.getBalance(self.clientAddress))
 
         Query_id, self.Query_interface = self.compiled_sol.popitem()
@@ -64,6 +64,7 @@ class Client(object):
 
             # self.Query_address = deploy_Query(self.web3, self.Query_interface, self.TEST_ACCOUNT, addr_lst)
             self.Delegator_address = deploy_Master(self.web3, self.Delegator_interface, self.clientAddress)
+            print("Delegator Address", self.Delegator_address)
 
     def launch_query(self, target_address):
         contract_obj = self.web3.eth.contract(
@@ -75,7 +76,7 @@ class Client(object):
         self.web3.eth.waitForTransactionReceipt(tx_hash)
 
         tx_receipt = self.web3.eth.getTransactionReceipt(tx_hash)
-        print(tx_receipt)
+        # print(tx_receipt)
         self.Query_address = self.web3.toChecksumAddress('0x' + tx_receipt['logs'][0]['data'].split('000000000000000000000000')[2])
         # return tx_receipt
 
@@ -201,7 +202,7 @@ class Client(object):
         while True:
             lst = event_to_listen.get_new_entries()
             if lst:
-                print(lst[0])
+                # print(lst[0])
                 return lst[0]
             await asyncio.sleep(poll_interval)
 
@@ -225,7 +226,7 @@ class Client(object):
         check = self.filter_set("QueryCreated(address,address)", self.Delegator_address, self.handle_QueryCreated_event)
         if check[0] + check[1] == self.clientAddress.lower():
             target_contract = check[0] + check[2]
-            print(target_contract)
+            # print(target_contract)
             # retval = self.filter_set("ClientSelected(address,string)", target_contract, self.handle_ClientSelected_event)
             self.filter_set("ClientSelected(address,string)", target_contract, self.handle_ClientSelected_event)
             # return "I got chosen:", retval[0] + retval[1]
