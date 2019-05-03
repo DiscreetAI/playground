@@ -8,7 +8,7 @@ class Home extends Component {
         <h1>DataAgora</h1>
         <h4>The first smart data exchange.</h4>
         <div className="margin-top-sm">
-          <Link to="secret" className="btn btn-lg btn-transparent">Access Beta</Link>
+          <Link to="dashboard" className="btn btn-lg btn-transparent">Access Beta</Link>
         </div>
       </div>
     );

@@ -19,7 +19,7 @@ class LoginForm extends Reflux.Component {
   componentWillUpdate(nextProps, nextState) {
     var isAuthenticated = nextState['isAuthenticated'];
     if (isAuthenticated) {
-      this.props.history.push("secret");
+      this.props.history.push("dashboard");
     }
   }
 

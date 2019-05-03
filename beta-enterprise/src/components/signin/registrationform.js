@@ -18,7 +18,7 @@ class RegistationForm extends Reflux.Component {
   componentWillUpdate(nextProps, nextState) {
     var isAuthenticated = nextState['isAuthenticated'];
     if (isAuthenticated) {
-      this.props.history.push("secret");
+      this.props.history.push("dashboard");
     }
   }
 
@@ -43,7 +43,7 @@ class RegistationForm extends Reflux.Component {
     if (this.state.error) {
       errorMessage = (
         <div className='alert alert-danger padding-bottom alert-dismissible fade show' role="alert">
-          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <a href="#close-error" class="close" data-dismiss="alert" aria-label="close">&times;</a>
           { this.state.error }
         </div>
       );
