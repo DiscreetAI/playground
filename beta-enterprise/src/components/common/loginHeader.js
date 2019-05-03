@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import { Link } from 'react-router-dom';
 import AuthStore from './../../stores/AuthStore';
-import logo from './logo.png';
+import logo from './white-logo.png';
 
 import './loginHeader.css';
 
