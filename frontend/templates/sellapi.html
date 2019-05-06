@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>DataAgora</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/other.css') }}" />
+  <!-- styles -->
+</head>
+
+<body>
+    <div id="content"></div>
+  <!-- scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+  <script type="text/jsx">
+      var realPython = React.createClass({
+        render: function() {
+          return (<div className="overlay">
+            <form action="/checkout" method="post">
+            <div className="d-a-t-a-a-g-o-r-a">
+              
+              <img id="shark2" src="{{ url_for('static', filename='images/shark.png') }}" alt="" />
+              D A T A A G O R A
+              <img id = "shark" src="{{ url_for('static', filename='images/shark.png') }}" alt="" />
+              
+                <input type="image" id="cart" src="{{ url_for('static', filename='images/cart.png') }}" alt="" />
+              
+            </div>
+            </form>
+            <br/> <br/> <br/> <br/> <br/>
+            <form id="myForm" action="/sellwhat" method="post">
+            <div class = "insta rectangle">
+              <div className="testo">
+                <input className="icon" name = "sell" id="inst" type="image" value = "Fitbit"src="{{ url_for('static', filename='images/fitbit.png') }}" />
+                <div className="vertical">Fitbit</div>
+              </div>
+              <div className="testo">
+                <input className="icon" name = "sell"id="inst" type="image" value = "Instagram"src="{{ url_for('static', filename='images/instagram.png') }}" />
+                <div className="vertical">Instagram</div>
+              </div>
+              <div className="testo">
+                <input className="icon" name = "sell"id="inst" type="image" value = "Facebook"src="{{ url_for('static', filename='images/facebook.png') }}" />
+                <div className="vertical">Facebook</div>
+              </div>
+              <div className="testo">
+                <input className="icon" name = "sell"id="inst" type="image" value = "Twitter"src="{{ url_for('static', filename='images/twitter.png') }}" />
+                <div className="vertical">Twitter</div>
+              </div>
+              <div className="testo">
+                <input className="icon" name="sell" id="inst" type="image" value = "Uber"src="{{ url_for('static', filename='images/uber.png') }}" />
+                <div className="vertical">Uber</div>
+              </div>
+            </div>
+            <br/> <br/>
+            <div className="insta rectangle"> 
+              <div className="testo">
+                <input className="icon" name = "sell"id="inst" type="image" value = "Linkedin"src="{{ url_for('static', filename='images/linkedin.png') }}" />
+                <div className="vertical">LinkedIn</div>
+              </div>
+              <div className="testo">
+                <input className="icon" name = "sell"id="inst" type="image" value = "Lyft"src="{{ url_for('static', filename='images/lyft.png') }}" />
+                <div className="vertical">Lyft</div>
+              </div>
+              <div className="testo">
+                <input className="icon" name="sell" id="inst" type="image" value = "Yelp"src="{{ url_for('static', filename='images/yelp.png') }}" />
+                <div className="vertical">Yelp</div>
+              </div>
+              <div className="testo">
+                <input className="icon" name="sell" id="inst" type="image" value = "GMaps"src="{{ url_for('static', filename='images/locations.png') }}" />
+                <div className="vertical">Google Maps</div>
+              </div>
+              <div className="testo">
+                <input className="icon" name="sell" id="inst" type="image" value = "AHealth"src="{{ url_for('static', filename='images/apple.png') }}" />
+                <div className="vertical">Apple Health</div>
+              </div>
+            </div>
+            <br/>
+            <div className="insta rectangle">
+              <div className="testo">
+                <input className="icon" name="sell" id="inst" type="image" value="Amazon" src="{{ url_for('static', filename='images/amazon.png') }}" />
+                <div className="vertical">Amazon</div>
+              </div>
+              <div className="testo">
+                <input className="icon" name="sell" id="inst" type="image" value="WhatsApp" src="{{ url_for('static', filename='images/whatsapp.png') }}" />
+                <div className="vertical">WhatsApp</div>
+              </div>
+              <div className="testo">
+                <input className="icon" name="sell" id="inst" type="image" value="Spotify" src="{{ url_for('static', filename='images/spotify.png') }}" />
+                <div className="vertical">Spotify</div>
+              </div>
+              <div className="testo">
+                <input className="icon" name="sell" id="inst" type="image" value="Reddit" src="{{ url_for('static', filename='images/reddit.png') }}" />
+                <div className="vertical">Reddit</div>
+              </div>
+              <div className="testo">
+                <input className="icon" name="sell" id="inst" type="image" value="Venmo" src="{{ url_for('static', filename='images/venmo.png') }}" />
+                <div className="vertical">Venmo</div>
+              </div>
+            </div>
+            </form>
+          </div>);
+        }
+      });
+      ReactDOM.render(
+        React.createElement(realPython, null),
+        document.getElementById('content')
+      );
+</script>
+    </body>
+    
+    </html>
