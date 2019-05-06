@@ -9,6 +9,7 @@ import SignIn from './components/signin';
 import SignUp from './components/signup';
 import SignOut from './components/signout';
 import Dashboard from './components/dashboard';
+import Repo from './components/repo'
 import NotFoundPage from './components/notFoundPage';
 
 
@@ -19,6 +20,7 @@ var Routes = () => (
     <AuthRoute path="/signup" name="signup" component={SignUp} />
     <Route path="/signout" name="signout" component={SignOut} />
     <PrivateRoute name="dashboard" path="/dashboard" component={Dashboard} />
+    <PrivateRoute name="repo" path="/repo/:repoId" component={Repo} />
     <Route component={NotFoundPage} />
   </Switch>
 );
