@@ -8,6 +8,11 @@ import registerServiceWorker from './utils/registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faSignOutAlt, faPlus } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faPlus, faSignOutAlt);
+
 InitializeActions.initApp();
 render((
   <BrowserRouter>

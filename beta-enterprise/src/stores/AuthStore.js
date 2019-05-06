@@ -21,6 +21,7 @@ class AuthStore extends Reflux.Store {
         error: false,
         loading: false,
         jwt: this._getJWT(),
+        claims: this._getClaims(),
         isAuthenticated: true
       };
     }

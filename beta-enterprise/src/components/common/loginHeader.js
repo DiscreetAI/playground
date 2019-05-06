@@ -2,8 +2,10 @@ import React from 'react';
 import Reflux from 'reflux';
 import { Link } from 'react-router-dom';
 import AuthStore from './../../stores/AuthStore';
-import logo from './white-logo.png';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
+
+import logo from './white-logo.png';
 import './loginHeader.css';
 
 class Header extends Reflux.Component {
@@ -15,13 +17,18 @@ class Header extends Reflux.Component {
   render() {
     var rightElement;
     if (this.state.isAuthenticated) {
+      let companyName = this.state.claims["company"];
+
       rightElement = (
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
-              <Link to="account" className="nav-link" href="#"><b>Account</b></Link>
+              <Link to="new" className="nav-link" href="#"><b>New repo</b></Link>
           </li>
           <li className="nav-item">
-              <Link to="signout" className="nav-link" href="#">Log out</Link>
+              <Link to="account" className="nav-link" href="#">{"@" + companyName}</Link>
+          </li>
+          <li className="nav-item">
+              <Link to="signout" className="nav-link" href="#"><FontAwesomeIcon icon="sign-out-alt" /></Link>
           </li>
         </ul>
       );

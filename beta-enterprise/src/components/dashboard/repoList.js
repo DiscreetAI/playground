@@ -29,8 +29,8 @@ class RepoList extends Component {
     if (this.state.repos.length === 0) {
       return (
         <div>
-           <h3 class="text-center">You don't own any repos yet.</h3>
-           <p class="lead text-center mt-4">
+           <h3 className="text-center">You don't own any repos yet.</h3>
+           <p className="lead text-center mt-4">
              Start by creating <Link to="new" className="lead">a new repo.</Link>
            </p>
         </div>
@@ -41,12 +41,12 @@ class RepoList extends Component {
       <div>
         {this.state.repos.map(function(repo, index) {
           return (
-            <div class="jumbotron bg-dark" key={index}>
-              <div class="row">
-                <div class="col">
+            <div className="jumbotron bg-dark" key={index}>
+              <div className="row">
+                <div className="col">
                   <h4><Link to={"repo/" + repo.uid} className="display-5 text-light">{repo.repoName}</Link></h4>
                 </div>
-                <div class="col text-right">
+                <div className="col text-right">
                   <Link to={"explora/" + repo.uid} className="lead text-secondary">Open Explora</Link>
                 </div>
               </div>
