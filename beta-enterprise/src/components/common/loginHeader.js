@@ -22,13 +22,13 @@ class Header extends Reflux.Component {
       rightElement = (
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
-              <Link to="new" className="nav-link" href="#"><b>New repo</b></Link>
+              <Link to="/new" className="nav-link" href="#"><b>New repo</b></Link>
           </li>
           <li className="nav-item">
-              <Link to="account" className="nav-link" href="#">{"@" + companyName}</Link>
+              <Link to="/account" className="nav-link" href="#">{"@" + companyName}</Link>
           </li>
           <li className="nav-item">
-              <Link to="signout" className="nav-link" href="#"><FontAwesomeIcon icon="sign-out-alt" /></Link>
+              <Link to="/signout" className="nav-link" href="#"><FontAwesomeIcon icon="sign-out-alt" /></Link>
           </li>
         </ul>
       );
@@ -36,7 +36,7 @@ class Header extends Reflux.Component {
       rightElement = (
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
-              <Link to="signin" className="nav-link" href="#"><b>Sign In</b></Link>
+              <Link to="/signin" className="nav-link" href="#"><b>Sign In</b></Link>
           </li>
         </ul>
       );
