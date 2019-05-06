@@ -67,10 +67,12 @@ class Repo extends Component {
           </div>
           <div className="col-2 text-right">
             {this.state.repoStatus.Busy ? (
-              <span class="badge badge-pill badge-light">Working...</span>
+              <span className="badge badge-pill badge-light">Working...</span>
             ) : (
-              <span class="badge badge-pill badge-dark">Idle</span>
+              <span className="badge badge-pill badge-dark">Idle</span>
             )}
+
+            <p className="mt-3"><Link to="/explora" className="btn btn-xs btn-light"><b>Open Explora</b></Link></p>
           </div>
         </div>
 

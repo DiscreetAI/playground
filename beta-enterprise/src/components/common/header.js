@@ -6,7 +6,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 
 import logo from './white-logo.png';
-import './loginHeader.css';
+import './header.css';
 
 class Header extends Reflux.Component {
   constructor(props) {

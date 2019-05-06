@@ -31,3 +31,10 @@ body {
   background-color: #00000038;
   border-color: #ffffffc2 !important;
 }
+
+.btn-xs {
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.7125rem !important;
+    line-height: 1.25 !important;
+    border-radius: 0.15rem !important;
+}
