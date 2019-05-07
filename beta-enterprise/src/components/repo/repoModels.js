@@ -1,0 +1,70 @@
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
+class RepoModels extends Component {
+
+  render() {
+    let content;
+    if (this.props.logs.length === 0) {
+      content = (
+        <div>
+          <p className="card-text"><b>No model has been trained yet.</b></p>
+          <Link to="/explora" className="btn btn-light mt-2">Train a new model</Link>
+        </div>
+      );
+    } else {
+      content = (
+
+        <table className="table text-left table-striped table-dark">
+          <thead className="thead-dark">
+            <tr>
+              <th scope="col">Time</th>
+              <th scope="col">SessionId</th>
+              <th scope="col">Evaluation Results</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            {this.props.logs.map((log, index) => {
+              return <tr className="bg-dark" key={index}>
+                <th scope="row">{this._formatTime(log.Timestamp)}</th>
+                <td>{log.SessionId}</td>
+                <td>N/A</td>
+                <td>
+                  <a href="#" className="btn btn-xs btn-warning disabled">Evaluate Model</a>
+                  <a href="#" className="btn btn-xs btn-light ml-2">Explore Model</a>
+                  <a href="#" className="btn btn-xs btn-success ml-2">Download Model</a>
+                </td>
+              </tr>
+            })}
+          </tbody>
+        </table>
+      );
+    }
+
+    return (
+      <div className="row mt-5">
+        <div className="col-1"></div>
+        <div className="col-10">
+        <div className="card bg-dark">
+          <div className="card-header">
+            <h5>Model Hub</h5>
+            <p className="mb-0"><small>Download or evaluate your resulting models from here.</small></p>
+          </div>
+          <div className="card-body text-center mt-3">
+            {content}
+          </div>
+        </div>
+        </div>
+      </div>
+    )
+  }
+
+  _formatTime(timestamp) {
+    var t = new Date(timestamp * 1000);
+    return t.toISOString();
+  }
+}
+
+export default RepoModels;

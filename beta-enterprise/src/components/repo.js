@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import NotFoundPage from './notFoundPage';
+import RepoLogs from './repo/repoLogs';
+import RepoModels from './repo/repoModels';
 import { Link } from 'react-router-dom';
 
 class Repo extends Component {
@@ -82,7 +84,7 @@ class Repo extends Component {
             <div className="card bg-dark">
               <div className="card-header">
                 <h5>Exploratory Data (ED)</h5>
-                <p className="mb-0"><small>Example data that each client should be storing locally. The models sent should be able to train on this structure.</small></p>
+                <p className="mb-0"><small>Example data that each client should be storing locally. The deployed models should be able to train on this structure.</small></p>
               </div>
               <div className="card-body text-center mt-3">
                 <p className="card-text"><b>No exploratory data yet.</b></p>
@@ -101,37 +103,10 @@ class Repo extends Component {
           </div>
         </div>
 
-        <div className="row mt-5">
-          <div className="col-1"></div>
-          <div className="col-10">
-          <div className="card bg-dark">
-            <div className="card-header">
-              <h5>Model Hub</h5>
-              <p className="mb-0"><small>Download or evaluate your resulting models from here.</small></p>
-            </div>
-            <div className="card-body text-center mt-3">
-              <p className="card-text"><b>No model has been trained yet.</b></p>
-              <Link to="/explora" className="btn btn-light mt-2">Train a new model</Link>
-            </div>
-          </div>
-          </div>
-        </div>
+        <RepoModels logs={this.state.repoLogs} />
 
-        <div className="row mt-5">
-          <div className="col-1"></div>
-          <div className="col-10">
-          <div className="card bg-dark">
-            <div className="card-header">
-              <h5>Logs</h5>
-              <p className="mb-0"><small>History of training sessions for this repo. You can debug your environment from here.</small></p>
-            </div>
-            <div className="card-body text-center mt-3">
-              <p className="card-text"><b>No model has been trained yet.</b></p>
-              <Link to="/explora" className="btn btn-light mt-2">Train a new model</Link>
-            </div>
-          </div>
-          </div>
-        </div>
+        <RepoLogs logs={this.state.repoLogs} />
+
       </div>
     )
   }
