@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import NotFoundPage from './notFoundPage';
+import RepoStatus from './repo/repoStatus';
 import RepoLogs from './repo/repoLogs';
 import RepoModels from './repo/repoModels';
 import { Link } from 'react-router-dom';
@@ -20,6 +21,7 @@ class Repo extends Component {
     // TODO: Get repo data using the repoId.
 
     this.setState({
+      repoId: repoId,
       repoWasFound: true,
       repoData: {
         'Id': 1,
@@ -68,11 +70,7 @@ class Repo extends Component {
             <p>{this.state.repoData.Description}</p>
           </div>
           <div className="col-2 text-right">
-            {this.state.repoStatus.Busy ? (
-              <span className="badge badge-pill badge-light">Working...</span>
-            ) : (
-              <span className="badge badge-pill badge-dark">Idle</span>
-            )}
+            <RepoStatus isBusy={this.state.repoStatus.Busy} />
             <p className="mt-3"><Link to="/explora" className="btn btn-xs btn-light"><b>Open Explora</b></Link></p>
           </div>
         </div>

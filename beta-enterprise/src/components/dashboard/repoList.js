@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import RepoStatus from './../repo/repoStatus';
 
 class RepoList extends Component {
 
@@ -44,7 +45,8 @@ class RepoList extends Component {
             <div className="jumbotron bg-dark" key={index}>
               <div className="row">
                 <div className="col">
-                  <h4><Link to={"repo/" + repo.uid} className="display-5 text-light">{repo.repoName}</Link></h4>
+                  <h4 className="d-inline mr-3"><Link to={"repo/" + repo.uid} className="display-5 text-light">{repo.repoName}</Link></h4>
+                  <RepoStatus isBusy={false}/>
                 </div>
                 <div className="col text-right">
                   <Link to={"explora/" + repo.uid} className="lead text-secondary">Open Explora</Link>

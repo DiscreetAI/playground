@@ -30,15 +30,15 @@ class NewRepo extends Component {
             <h3>Create a new repo</h3>
             <p className="mt-3">Create a new repository to start doing private federated learning. Only you will be able to see this repository's settings.</p>
             <form className="mt-4">
-              <div class="form-group">
-               <label for="repoNameInput">Repo name</label>
-               <input type="text" class="form-control" id="repoNameInput" aria-describedby="repoName" placeholder="awesome-dml-experiment" />
-               <small id="repoNameHelp" class="form-text text-muted">Use a repo name you haven't used yet. Make it catchy.</small>
+              <div className="form-group">
+               <label htmlFor="repoNameInput">Repo name</label>
+               <input type="text" className="form-control" id="repoNameInput" aria-describedby="repoName" placeholder="awesome-dml-experiment" />
+               <small id="repoNameHelp" className="form-text text-muted">Use a repo name you haven't used yet. Make it catchy.</small>
               </div>
-              <div class="form-group">
-               <label for="repoDescriptionInput">Brief description</label>
-               <input type="text" class="form-control" id="repoDescriptionInput" placeholder="To do magic on users' data without even seeing it." />
-               <small id="repoDescriptionHelp" class="form-text text-muted">Anything will do. Use this to know which repo is which.</small>
+              <div className="form-group">
+               <label htmlFor="repoDescriptionInput">Brief description</label>
+               <input type="text" className="form-control" id="repoDescriptionInput" placeholder="To do magic on users' data without even seeing it." />
+               <small id="repoDescriptionHelp" className="form-text text-muted">Anything will do. Use this to know which repo is which.</small>
               </div>
               <div className="text-center mt-5">
                 <button type="submit" className="btn btn-lg btn-primary">Create Repo</button>
