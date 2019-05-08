@@ -10,6 +10,7 @@ import SignUp from './components/signup';
 import SignOut from './components/signout';
 import Dashboard from './components/dashboard';
 import Repo from './components/repo'
+import NewRepo from './components/newRepo'
 import NotFoundPage from './components/notFoundPage';
 
 
@@ -21,6 +22,7 @@ var Routes = () => (
     <Route path="/signout" name="signout" component={SignOut} />
     <PrivateRoute name="dashboard" path="/dashboard" component={Dashboard} />
     <PrivateRoute name="repo" path="/repo/:repoId" component={Repo} />
+    <PrivateRoute name="new" path="/new" component={NewRepo} />
     <Route component={NotFoundPage} />
   </Switch>
 );

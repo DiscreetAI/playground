@@ -73,7 +73,6 @@ class Repo extends Component {
             ) : (
               <span className="badge badge-pill badge-dark">Idle</span>
             )}
-
             <p className="mt-3"><Link to="/explora" className="btn btn-xs btn-light"><b>Open Explora</b></Link></p>
           </div>
         </div>
