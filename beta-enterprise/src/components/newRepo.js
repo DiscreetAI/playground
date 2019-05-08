@@ -28,7 +28,8 @@ class NewRepo extends Component {
           <div className="col-4"></div>
           <div className="col-4">
             <h3>Create a new repo</h3>
-            <p className="mt-3">Create a new repository to start doing private federated learning. Only you will be able to see this repository's settings.</p>
+            <p className="mt-3">A <b>repo</b> is a link to a network of devices, history of training, and resulting models.</p>
+            <p className="mt-3">Create a new repository to start doing private federated learning. Repos are private by default.</p>
             <form className="mt-4">
               <div className="form-group">
                <label htmlFor="repoNameInput">Repo name</label>
@@ -37,7 +38,7 @@ class NewRepo extends Component {
               </div>
               <div className="form-group">
                <label htmlFor="repoDescriptionInput">Brief description</label>
-               <input type="text" className="form-control" id="repoDescriptionInput" placeholder="To do magic on users' data without even seeing it." />
+               <input type="text" className="form-control" id="repoDescriptionInput" placeholder="To do magic on users' data without even seeing it." maxlength="80"/>
                <small id="repoDescriptionHelp" className="form-text text-muted">Anything will do. Use this to know which repo is which.</small>
               </div>
               <div className="text-center mt-5">
