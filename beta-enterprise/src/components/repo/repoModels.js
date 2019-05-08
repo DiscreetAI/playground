@@ -18,8 +18,9 @@ class RepoModels extends Component {
         <table className="table text-left table-striped table-dark">
           <thead className="thead-dark">
             <tr>
-              <th scope="col">Time</th>
               <th scope="col">SessionId</th>
+              <th scope="col">Round</th>
+              <th scope="col">Time</th>
               <th scope="col">Evaluation Results</th>
               <th scope="col">Actions</th>
             </tr>
@@ -28,9 +29,10 @@ class RepoModels extends Component {
 
             {this.props.logs.map((log, index) => {
               return <tr className="bg-dark" key={index}>
-                <th scope="row">{this._formatTime(log.Timestamp)}</th>
-                <td>{log.SessionId}</td>
-                <td>N/A</td>
+                <th scope="row">{log.SessionId}</th>
+                <td>{JSON.parse(log.Content).round}</td>
+                <td>{this._formatTime(log.Timestamp)}</td>
+                <td>-</td>
                 <td>
                   <a href="#" className="btn btn-xs btn-warning disabled">Evaluate Model</a>
                   <a href="#" className="btn btn-xs btn-light ml-2">Explore Model</a>

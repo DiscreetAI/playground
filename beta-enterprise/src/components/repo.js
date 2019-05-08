@@ -35,6 +35,15 @@ class Repo extends Component {
       },
       repoLogs: [
         {
+          "Content": "{\"session_id\": \"e395a34e-c26a-47de-83c5-441e71f6cd58\", \"round\": 2, \"action\": \"TRAIN\", \"weights\": \"omitted\", \"omega\": 0.7098024736939266}",
+          "ContentType": "ROUND_COMPLETED",
+          "Id": "0b34d1d3-c9e1-42b4-9965-394bd5a8a345",
+          "RepoId": "testing_id",
+          "SessionId": "e395a34e-c26a-47de-83c5-441e71f6cd58",
+          "Timestamp": 1555407612,
+          "WeightsS3Key": "s3://updatestore/test/e395a34e-c26a-47de-83c5-441e71f6cd58/3/model.h5"
+        },
+        {
           "Content": "{\"session_id\": \"e395a34e-c26a-47de-83c5-441e71f6cd58\", \"round\": 1, \"action\": \"TRAIN\", \"weights\": \"omitted\", \"omega\": 0.5130145837179251}",
           "ContentType": "ROUND_COMPLETED",
           "Id": "1ccd263e-c8ca-46ac-b776-3a9f74b3504b",
@@ -43,15 +52,6 @@ class Repo extends Component {
           "Timestamp": 1555407592,
           "WeightsS3Key": "s3://updatestore/test/e395a34e-c26a-47de-83c5-441e71f6cd58/2/model.h5"
         },
-        {
-          "Content": "{\"session_id\": \"e395a34e-c26a-47de-83c5-441e71f6cd58\", \"round\": 2, \"action\": \"TRAIN\", \"weights\": \"omitted\", \"omega\": 0.7098024736939266}",
-          "ContentType": "ROUND_COMPLETED",
-          "Id": "0b34d1d3-c9e1-42b4-9965-394bd5a8a345",
-          "RepoId": "testing_id",
-          "SessionId": "e395a34e-c26a-47de-83c5-441e71f6cd58",
-          "Timestamp": 1555407612,
-          "WeightsS3Key": "s3://updatestore/test/e395a34e-c26a-47de-83c5-441e71f6cd58/3/model.h5"
-        }
       ]
     })
   }
