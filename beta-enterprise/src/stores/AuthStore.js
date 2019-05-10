@@ -50,6 +50,7 @@ class AuthStore extends Reflux.Store {
   onLoginCompleted (jwt) {
     this.state.jwt = jwt;
     localStorage.setItem('jwt', jwt);
+    this.state.claims = this._getClaims();
     this.state.error = false;
     this.state.isAuthenticated = true;
     this.state.loading = false;
@@ -85,6 +86,7 @@ class AuthStore extends Reflux.Store {
   onRegistrationCompleted (jwt) {
     this.state.jwt = jwt;
     localStorage.setItem('jwt', jwt);
+    this.state.claims = this._getClaims();
     this.state.error = false;
     this.state.isAuthenticated = true;
     this.state.loading = false;
@@ -145,7 +147,8 @@ class AuthStore extends Reflux.Store {
       error: false,
       loading: false,
       jwt: null,
-      isAuthenticated: false
+      isAuthenticated: false,
+      claims: {},
     };
 
     localStorage.removeItem('jwt');
