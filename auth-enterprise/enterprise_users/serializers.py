@@ -1,3 +1,5 @@
+import boto3
+
 from rest_framework import serializers
 from rest_auth.serializers import UserDetailsSerializer
 
@@ -60,7 +62,6 @@ class CustomRegisterSerializer(RegisterSerializer):
         user.save()
 
         profile = user.enterpriseuserprofile
-
         occupation = self.cleaned_data.get('occupation')
         if occupation != None:
             profile.occupation = occupation
@@ -68,6 +69,25 @@ class CustomRegisterSerializer(RegisterSerializer):
         company = self.cleaned_data.get('company')
         if company != None:
             profile.company = company
-
         profile.save()
+
+        self._createUserData(user.id)
         return user
+
+    def _createUserData(self, user_id):
+        """Only creates it if doesn't exist already."""
+        dynamodb = boto3.resource('dynamodb', region_name='us-west-1')
+        table = dynamodb.Table("UsersDashboardData")
+        try:
+            item = {
+                'UserId': user_id,
+                'ReposManaged': set(["null"]),
+                'ApiKeys': set(["null"]),
+                'ReposRemaining': 5,
+            }
+            table.put_item(
+                Item=item,
+                ConditionExpression="attribute_not_exists(UserId)"
+            )
+        except:
+            raise Exception("Error while creating the user dashboard data.")
