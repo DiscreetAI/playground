@@ -29,7 +29,7 @@ class AuthStore extends Reflux.Store {
 
   onLogin (email, password) {
     this._resetState();
-    this.loading = true;
+    this.state.loading = true;
     this._changed();
 
     var endpoint = Endpoints["eauthLogin"];
@@ -66,7 +66,7 @@ class AuthStore extends Reflux.Store {
 
   onRegistration (registrationObject) {
     this._resetState();
-    this.loading = true;
+    this.state.loading = true;
     this._changed();
 
     fetch(

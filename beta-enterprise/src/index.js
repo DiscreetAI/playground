@@ -9,9 +9,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faSignOutAlt, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faSignOutAlt, faPlus, faSync } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faPlus, faSignOutAlt);
+library.add(faPlus, faSignOutAlt, faSync);
 
 InitializeActions.initApp();
 render((

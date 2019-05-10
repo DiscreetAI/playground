@@ -89,7 +89,7 @@ class Repo extends Component {
                 <div className="row mt-4">
                   <div className="col-4"></div>
                   <div className="col-2 text-center">
-                    <a href="#" className="btn btn-primary disabled">Upload ED</a>
+                    <a href="#upload-ed" className="btn btn-primary disabled">Upload ED</a>
                   </div>
                   <div className="col-2 text-center">
                     <Link to="/explora" className="btn btn-light">Explore ED</Link>

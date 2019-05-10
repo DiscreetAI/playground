@@ -43,7 +43,7 @@ class RegistationForm extends Reflux.Component {
     if (this.state.error) {
       errorMessage = (
         <div className='alert alert-danger padding-bottom alert-dismissible fade show' role="alert">
-          <a href="#close-error" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <a href="#close-error" className="close" data-dismiss="alert" aria-label="close">&times;</a>
           { this.state.error }
         </div>
       );

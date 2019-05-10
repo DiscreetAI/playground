@@ -18,7 +18,7 @@ class NewRepo extends Component {
       return (
         <div className="text-center">
           <h3>Sorry, but you have no more repos left.</h3>
-          <p className="mt-4">If you want to upgrade your account to support more repos, <a href="#">please click here</a>.</p>
+          <p className="mt-4">If you want to upgrade your account to support more repos, <a href="#upgrade">please click here</a>.</p>
           <p className="mt-3"><Link to="/">Back to dashboard</Link></p>
         </div>
       );
@@ -38,7 +38,7 @@ class NewRepo extends Component {
               </div>
               <div className="form-group">
                <label htmlFor="repoDescriptionInput">Brief description</label>
-               <input type="text" className="form-control" id="repoDescriptionInput" placeholder="To do magic on users' data without even seeing it." maxlength="80"/>
+               <input type="text" className="form-control" id="repoDescriptionInput" placeholder="To do magic on users' data without even seeing it." maxLength="80"/>
                <small id="repoDescriptionHelp" className="form-text text-muted">Anything will do. Use this to know which repo is which.</small>
               </div>
               <div className="text-center mt-5">

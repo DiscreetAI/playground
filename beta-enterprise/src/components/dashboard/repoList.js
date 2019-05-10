@@ -1,32 +1,57 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import Reflux from 'reflux';
+import { Link, withRouter } from "react-router-dom";
+
 import RepoStatus from './../repo/repoStatus';
 
-class RepoList extends Component {
+import DashboardStore from './../../stores/DashboardStore';
+import DashboardActions from './../../actions/DashboardActions';
 
-  state = {
-    repos: []
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+
+
+class RepoList extends Reflux.Component {
+
+  constructor(props) {
+    super(props);
+    // this.state = {
+    //   repos: [],
+    //   error: false,
+    //   loading: true,
+    // };
+    this.store = DashboardStore;
   }
+
 
   componentDidMount() {
-    this.setState({
-      repos: [
-        {
-          'uid': 1,
-          'repoName': 'username/repo1'
-        },
-        {
-          'uid': 2,
-          'repoName': 'username/repo2'
-        },
-        {
-          'uid': 3,
-          'repoName': 'username/repo3'
-        },
-      ]
-    })
+    DashboardActions.fetchAllRepos();
   }
+
+  //
+  // componentWillUnmount() {
+  //   this.unsubscribe();
+  // }
+  //
+  // storeDidChange(newData) {
+  //   this.setState(newData);
+  // }
+
+
   render() {
+    console.log(this.state)
+
+    if (this.state.error !== false) {
+      return <div className="text-center"><p>Error: {this.state.error}</p></div>
+    }
+
+    if (this.state.loading === true) {
+      return (
+        <div className="text-center text-secondary">
+          <FontAwesomeIcon icon="sync" size="lg" spin />
+        </div>
+      );
+    }
+
     if (this.state.repos.length === 0) {
       return (
         <div>
@@ -36,28 +61,28 @@ class RepoList extends Component {
            </p>
         </div>
       )
-    }
-
-    return (
-      <div>
-        {this.state.repos.map(function(repo, index) {
-          return (
-            <div className="jumbotron bg-dark" key={index}>
-              <div className="row">
-                <div className="col">
-                  <h4 className="d-inline mr-3"><Link to={"repo/" + repo.uid} className="display-5 text-light">{repo.repoName}</Link></h4>
-                  <RepoStatus isBusy={false}/>
-                </div>
-                <div className="col text-right">
-                  <Link to={"explora/" + repo.uid} className="lead text-secondary">Open Explora</Link>
+    } else {
+      return (
+        <div>
+          {this.state.repos.map(function(repo, index) {
+            return (
+              <div className="jumbotron bg-dark" key={index}>
+                <div className="row">
+                  <div className="col">
+                    <h4 className="d-inline mr-3"><Link to={"repo/" + repo.Id} className="display-5 text-light">{repo.Name}</Link></h4>
+                    <RepoStatus isBusy={false}/>
+                  </div>
+                  <div className="col text-right">
+                    <Link to={"explora/" + repo.Id} className="lead text-secondary">Open Explora</Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          )
-        })}
-      </div>
-    )
+            )
+          })}
+        </div>
+      )
+    }
   }
 }
 
-export default RepoList;
+export default withRouter(RepoList);
