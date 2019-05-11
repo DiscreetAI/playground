@@ -1,15 +1,15 @@
 import Reflux from 'reflux';
-import RepoActions from './../actions/RepoActions';
+import RepoDataActions from './../actions/RepoDataActions';
 import AuthStore from './AuthStore';
 import Endpoints from './../constants/endpoints.js';
 
 
-class RepoStore extends Reflux.Store {
+class RepoDataStore extends Reflux.Store {
 
   constructor () {
     super();
     this.init();
-    this.listenables = RepoActions;
+    this.listenables = RepoDataActions;
   }
 
   init () {
@@ -23,7 +23,7 @@ class RepoStore extends Reflux.Store {
     };
   }
 
-  onFetchRepoData(repo_id) {
+  onFetchRepoData(repoId) {
     if (AuthStore.state.isAuthenticated) {
       let jwtString = AuthStore.state.jwt;
 
@@ -31,7 +31,7 @@ class RepoStore extends Reflux.Store {
       this._changed();
 
       fetch(
-        Endpoints["dashboardFetchRepoData"] + repo_id, {
+        Endpoints["dashboardFetchRepoData"] + repoId, {
           method: 'GET',
           headers: {
             'Content-Type':'application/json',
@@ -40,7 +40,7 @@ class RepoStore extends Reflux.Store {
           },
         }
       ).then(response => {
-        this._handleResponse(response, RepoActions.fetchRepoData);
+        this._handleResponse(response, RepoDataActions.fetchRepoData);
       });
     }
   }
@@ -71,10 +71,33 @@ class RepoStore extends Reflux.Store {
     this._changed();
   }
 
+
+  onFetchRepoLogs(repoId) {
+    if (AuthStore.state.isAuthenticated) {
+      let jwtString = AuthStore.state.jwt;
+
+      this.state.loading = true;
+      this._changed();
+
+      fetch(
+        Endpoints["dashboardFetchRepoData"] + repoId, {
+          method: 'GET',
+          headers: {
+            'Content-Type':'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + jwtString,
+          },
+        }
+      ).then(response => {
+        // this._handleResponse(response, RepoLogsActions.fetchRepoData);
+      });
+    }
+  }
+
   _changed () {
     this.trigger(this.state);
   }
 
 }
 
-export default RepoStore;
+export default RepoDataStore;

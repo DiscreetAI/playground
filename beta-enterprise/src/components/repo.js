@@ -7,8 +7,11 @@ import RepoLogs from './repo/repoLogs';
 import RepoModels from './repo/repoModels';
 import { Link } from 'react-router-dom';
 
-import RepoStore from './../stores/RepoStore';
-import RepoActions from './../actions/RepoActions';
+import RepoDataStore from './../stores/RepoDataStore';
+import RepoDataActions from './../actions/RepoDataActions';
+
+import RepoLogsStore from './../stores/RepoLogsStore';
+import RepoLogsActions from './../actions/RepoLogsActions';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
@@ -16,13 +19,14 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 class Repo extends Reflux.Component {
   constructor(props) {
     super(props);
-    this.store = RepoStore;
+    this.stores = [RepoDataStore, RepoLogsStore];
   }
 
   componentDidMount() {
     const { match: { params } } = this.props;
     const repoId = params.repoId;
-    RepoActions.fetchRepoData(repoId);
+    RepoDataActions.fetchRepoData(repoId);
+    RepoLogsActions.fetchRepoLogs(repoId);
     // TODO: Get repo data using the repoId.
 
     // this.setState({
