@@ -103,8 +103,10 @@ def get_coordinator_status(repo_id):
     if claims is None: return jsonify(make_unauthorized_error()), 400
 
     # Get data
-    cloud_node_url = _construct_cloud_node_url(repo_id)
+    user_id = claims["pk"]
     try:
+        repo_details = _get_repo_details(user_id, repo_id)
+        cloud_node_url = repo_details['CoordinatorAddress']
         # TODO: Remove the 'http' here and add 'https' to the URL constructor.
         r = requests.get("http://" + cloud_node_url + "/status")
         status_data = r.json()
