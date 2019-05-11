@@ -1,29 +1,26 @@
 import Reflux from 'reflux';
-import RepoDataActions from './../actions/RepoDataActions';
+import CoordinatorActions from './../actions/CoordinatorActions';
 import AuthStore from './AuthStore';
 import Endpoints from './../constants/endpoints.js';
 
 
-class RepoDataStore extends Reflux.Store {
+class CoordinatorStore extends Reflux.Store {
 
   constructor () {
     super();
     this.init();
-    this.listenables = RepoDataActions;
+    this.listenables = CoordinatorActions;
   }
 
   init () {
     this.state = {
-      loading: true,
-      error: false,
-      repoWasFound: false,
-      repoData: {},
-      repoStatus: {},
-      repoLogs: [],
+      loading: true, // not used
+      error: false, // not used
+      coordinatorStatuses: {},
     };
   }
 
-  onFetchRepoData(repoId) {
+  onFetchCoordinatorStatus(repoId) {
     if (AuthStore.state.isAuthenticated) {
       let jwtString = AuthStore.state.jwt;
 
@@ -31,7 +28,7 @@ class RepoDataStore extends Reflux.Store {
       this._changed();
 
       fetch(
-        Endpoints["dashboardFetchRepoData"] + repoId, {
+        Endpoints["dashboardFetchCoordinatorStatus"] + repoId, {
           method: 'GET',
           headers: {
             'Content-Type':'application/json',
@@ -40,58 +37,33 @@ class RepoDataStore extends Reflux.Store {
           },
         }
       ).then(response => {
-        this._handleResponse(response, RepoDataActions.fetchRepoData);
+        this._handleResponse(repoId, response, CoordinatorActions.fetchCoordinatorStatus);
       });
     }
   }
 
-  _handleResponse(response, refluxAction) {
+  _handleResponse(repoId, response, refluxAction) {
     response.json().then(serverResponse => {
       if (response.status === 200) {
-        refluxAction.completed(serverResponse);
+        refluxAction.completed(repoId, serverResponse);
       } else {
         // TODO: Use error returned by server.
-        refluxAction.failed(serverResponse);
+        refluxAction.failed(repoId, serverResponse);
       }
     });
   }
 
-  onFetchRepoDataCompleted (repoData) {
-    this.state.repoWasFound = true;
-    this.state.repoData = repoData;
+  onFetchCoordinatorStatusCompleted (repoId, status) {
+    this.state.coordinatorStatuses[repoId] = status;
     this.state.loading = false;
     this._changed();
   }
 
-  onFetchRepoDataFailed (errorObject) {
-    this.state.repoWasFound = false;
-    this.state.repoData = {};
+  onFetchCoordinatorStatusFailed (repoId, errorObject) {
+    this.state.coordinatorStatuses[repoId] = {};
     this.state.error = errorObject["message"];
     this.state.loading = false;
     this._changed();
-  }
-
-
-  onFetchRepoLogs(repoId) {
-    if (AuthStore.state.isAuthenticated) {
-      let jwtString = AuthStore.state.jwt;
-
-      this.state.loading = true;
-      this._changed();
-
-      fetch(
-        Endpoints["dashboardFetchRepoData"] + repoId, {
-          method: 'GET',
-          headers: {
-            'Content-Type':'application/json',
-            'Accept': 'application/json',
-            'Authorization': 'Bearer ' + jwtString,
-          },
-        }
-      ).then(response => {
-        // this._handleResponse(response, RepoLogsActions.fetchRepoData);
-      });
-    }
   }
 
   _changed () {
@@ -100,4 +72,4 @@ class RepoDataStore extends Reflux.Store {
 
 }
 
-export default RepoDataStore;
+export default CoordinatorStore;

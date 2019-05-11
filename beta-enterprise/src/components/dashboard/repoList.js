@@ -54,7 +54,7 @@ class RepoList extends Reflux.Component {
                 <div className="row">
                   <div className="col">
                     <h4 className="d-inline mr-3"><Link to={"repo/" + repo.Id} className="display-5 text-light">{repo.Name}</Link></h4>
-                    <RepoStatus isBusy={false}/>
+                    <RepoStatus repoId={repo.Id}/>
                   </div>
                   <div className="col text-right">
                     <Link to={"explora/" + repo.Id} className="lead text-secondary">Open Explora</Link>

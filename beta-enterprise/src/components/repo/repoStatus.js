@@ -1,10 +1,34 @@
-import React, { Component } from 'react';
+import React from 'react';
+import Reflux from 'reflux';
 
-class RepoStatus extends Component {
+import CoordinatorStore from './../../stores/CoordinatorStore';
+import CoordinatorActions from './../../actions/CoordinatorActions';
+
+
+class RepoStatus extends Reflux.Component {
+
+  constructor(props) {
+    super(props);
+    this.store = CoordinatorStore;
+  }
+
+  componentDidMount() {
+    CoordinatorActions.fetchCoordinatorStatus(this.props.repoId);
+  }
+
   render() {
-    const isBusy = this.props.isBusy;
-    if (isBusy) {
-      return <span className="badge badge-pill badge-light">Working...</span>
+    const status = this.state.coordinatorStatuses[this.props.repoId];
+
+    if (status === undefined) {
+      return <span className="badge badge-pill badge-dark">...</span>
+    }
+
+    if (!("Busy" in status)) {
+      return <span className="badge badge-pill badge-danger">Unknown</span>
+    }
+
+    if (status["Busy"] === true) {
+      return <span className="badge badge-pill badge-success">Active</span>
     } else {
       return <span className="badge badge-pill badge-secondary">Idle</span>;
     }
