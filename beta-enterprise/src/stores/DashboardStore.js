@@ -44,7 +44,6 @@ class DashboardStore extends Reflux.Store {
 
   _handleFetchAllReposResponse(response) {
     response.json().then(serverResponse => {
-      console.log(response.status)
       if (response.status === 200) {
         DashboardActions.fetchAllRepos.completed(serverResponse);
       } else {

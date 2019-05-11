@@ -14,28 +14,12 @@ class RepoList extends Reflux.Component {
 
   constructor(props) {
     super(props);
-    // this.state = {
-    //   repos: [],
-    //   error: false,
-    //   loading: true,
-    // };
     this.store = DashboardStore;
   }
-
 
   componentDidMount() {
     DashboardActions.fetchAllRepos();
   }
-
-  //
-  // componentWillUnmount() {
-  //   this.unsubscribe();
-  // }
-  //
-  // storeDidChange(newData) {
-  //   this.setState(newData);
-  // }
-
 
   render() {
     console.log(this.state)
