@@ -213,5 +213,6 @@ CORS_ORIGIN_REGEX_WHITELIST = (r'^(https?://)?(\w+\.)?dataagora\.com$', )
 
 CORS_ORIGIN_WHITELIST = (
     'buy.dataagora.com',
+    'beta.dataagora.com',
     'localhost:3000'
 )
