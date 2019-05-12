@@ -16,8 +16,8 @@ APPLICATION_NAME = "cloud-node"
 S3_BUCKET = "cloud-node-deployment"
 
 VERSION_LABEL = strftime("%Y%m%d%H%M%S")
-BUCKET_KEY = APPLICATION_NAME + '/' + VERSION_LABEL + '-cloudnode_builds.zip'
-
+# BUCKET_KEY = APPLICATION_NAME + '/' + VERSION_LABEL + '-cloudnode_builds.zip'
+BUCKET_KEY = APPLICATION_NAME + '/' + 'cloudnode_build.zip'
 
 def upload_to_s3(artifact):
     """
@@ -58,7 +58,7 @@ def create_new_version():
         response = client.create_application_version(
             ApplicationName=APPLICATION_NAME,
             VersionLabel=VERSION_LABEL,
-            Description='New build from Bitbucket',
+            Description='New build',
             SourceBundle={
                 'S3Bucket': S3_BUCKET,
                 'S3Key': BUCKET_KEY
@@ -121,19 +121,19 @@ def zip_server_directory():
     return ZIP_PATH
 
 def deploy_cloud_node(env_name):
-    if not upload_to_s3(ZIP_PATH):
-        sys.exit(1)
+    # if not upload_to_s3(ZIP_PATH):
+    #     sys.exit(1)
     if not create_new_version():
-        sys.exit(1)
+        raise Exception("Error (creating version)")
     # Wait for the new version to be consistent before deploying
     sleep(5)
     if not deploy_new_version(env_name):
-        sys.exit(1)
+        raise Exception("Error (deploying version)")
     return True
 
 
 def run_deploy_routine(repo_id):
-    pre_steps()
-    _ = clone_repo()
-    _ = zip_server_directory()
+    # pre_steps()
+    # _ = clone_repo()
+    # _ = zip_server_directory()
     _ = deploy_cloud_node(repo_id)

@@ -294,7 +294,7 @@ def _get_all_repos(user_id):
 def _create_new_cloud_node(repo_id, api_key):
     try:
         run_deploy_routine(repo_id)
-    except:
+    except Exception as e:
         raise Exception("Error while creating new cloud node.")
 
 
