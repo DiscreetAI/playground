@@ -1,3 +1,4 @@
+import re
 import secrets
 import decimal
 import hashlib
@@ -16,6 +17,20 @@ JWT_ALGO = "HS256"
 app = Flask(__name__)
 CORS(app)
 
+@app.route("/userdata", methods=["GET"])
+def get_user_data():
+    # Check authorization
+    claims = authorize_user(request)
+    if claims is None: return jsonify(make_unauthorized_error()), 400
+
+    # Get data
+    user_id = claims["pk"]
+    try:
+        user_data = _get_user_data(user_id)
+        repos_remaining = user_data['ReposRemaining']
+    except:
+        return jsonify(make_error("Error while getting user's permissions.")), 400
+    return jsonify({"ReposRemaining": True if repos_remaining > 0 else False})
 
 @app.route("/repo/<repo_id>", methods=["GET"])
 def get_repo(repo_id):
@@ -28,7 +43,7 @@ def get_repo(repo_id):
     try:
         repo_details = _get_repo_details(user_id, repo_id)
     except:
-        return jsonify(make_error("Error while getting details for repo."))
+        return jsonify(make_error("Error while getting the details for this repo.")), 400
     return jsonify(repo_details)
 
 @app.route("/repo", methods=["POST"])
@@ -50,7 +65,9 @@ def create_new_repo():
     # TODO: Check repo doesn't already exist.
 
     user_id = claims["pk"]
+    repo_name = re.sub('[^a-zA-Z0-9-]', '-', repo_name)
     try:
+        _assert_user_has_repos_left(user_id)
         repo_id = _create_new_repo_document(user_id, repo_name, repo_description)
         api_key, true_api_key = _create_new_api_key(user_id, repo_id)
         _update_user_data_with_new_repo(user_id, repo_id, api_key)
@@ -60,10 +77,10 @@ def create_new_repo():
         return jsonify(make_error(str(e))), 400
 
     return jsonify({
-        "error": False,
-        "results": {
-            "repo_id": repo_id,
-            "true_api_key": true_api_key
+        "Error": False,
+        "Results": {
+            "RepoId": repo_id,
+            "TrueApiKey": true_api_key
         }
     })
 
@@ -146,21 +163,17 @@ def get_coordinator_status(repo_id):
 #     except:
 #         raise Exception("Error while creating the user data.")
 
+def _assert_user_has_repos_left(user_id):
+    user_data = _get_user_data(user_id)
+    assert int(user_data['ReposRemaining']) > 0, "You don't have any repos left."
+
 def _assert_user_can_read_repo(user_id, repo_id):
-    user_data_table = _get_dynamodb_table("UsersDashboardData")
     try:
-        response = user_data_table.get_item(
-            Key={
-                "UserId": user_id
-            }
-        )
-        user_data = response['Item']
+        user_data = _get_user_data(user_id)
         repos_managed = user_data['ReposManaged']
     except:
         raise Exception("Error while getting user's permissions.")
-    print(repos_managed, repo_id)
-    assert repo_id in repos_managed, \
-        "User doesn't have permissions for this repo."
+    assert repo_id in repos_managed, "You don't have permissions for this repo."
 
 def _get_logs(repo_id):
     logs_table = _get_dynamodb_table("UpdateStore")
@@ -172,6 +185,19 @@ def _get_logs(repo_id):
     except Exception as e:
         raise Exception("Error while getting logs for repo. " + str(e))
     return logs
+
+def _get_user_data(user_id):
+    table = _get_dynamodb_table("UsersDashboardData")
+    try:
+        response = table.get_item(
+            Key={
+                "UserId": user_id,
+            }
+        )
+        data = response["Item"]
+    except:
+        raise Exception("Error while getting user dashboard data.")
+    return data
 
 def _get_repo_details(user_id, repo_id):
     repos_table = _get_dynamodb_table("Repos")
@@ -242,18 +268,11 @@ def _create_new_api_key(user_id, repo_id):
     return api_key, true_api_key
 
 def _get_all_repos(user_id):
-    user_data_table = _get_dynamodb_table("UsersDashboardData")
-    repos_table = _get_dynamodb_table("Repos")
     try:
-        response = user_data_table.get_item(
-            Key={
-                "UserId": user_id
-            }
-        )
-
-        user_data = response['Item']
+        user_data = _get_user_data(user_id)
         repos_managed = user_data['ReposManaged']
 
+        repos_table = _get_dynamodb_table("Repos")
         all_repos = []
         for repo_id in repos_managed:
             if repo_id == "null": continue
@@ -297,7 +316,7 @@ def make_unauthorized_error():
     return make_error('Authorization failed.')
 
 def make_error(msg):
-    return {'error': True, 'message': msg}
+    return {'Error': True, 'Message': msg}
 
 
 if __name__ == "__main__":
