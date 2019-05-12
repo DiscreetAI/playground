@@ -81,7 +81,7 @@ class CustomRegisterSerializer(RegisterSerializer):
         try:
             item = {
                 'UserId': user_id,
-                'ReposManaged': set(["null"]),
+                'ReposManaged': set(["test"]),
                 'ApiKeys': set(["null"]),
                 'ReposRemaining': 5,
             }
