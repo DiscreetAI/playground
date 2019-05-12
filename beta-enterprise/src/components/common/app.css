@@ -20,7 +20,7 @@ body {
 }
 
 .btn-transparent {
-  color: #fff;
+  color: #fff !important;
   background-color: #007bff00;
   border-color: #fff !important;
   border-radius: 0px !important;
