@@ -10,6 +10,8 @@ from flask_cors import CORS
 from boto3.dynamodb.conditions import Key
 from flask import Flask, request, jsonify
 
+from deploy import run_deploy_routine
+
 
 JWT_SECRET = "datajbsnmd5h84rbewvzx6*cax^jgmqw@m3$ds_%z-4*qy0n44fjr5shark"
 JWT_ALGO = "HS256"
@@ -71,7 +73,7 @@ def create_new_repo():
         repo_id = _create_new_repo_document(user_id, repo_name, repo_description)
         api_key, true_api_key = _create_new_api_key(user_id, repo_id)
         _update_user_data_with_new_repo(user_id, repo_id, api_key)
-        _asynchronously_create_new_cloud_node(repo_id, api_key)
+        _create_new_cloud_node(repo_id, api_key)
     except Exception as e:
         # TODO: Revert things.
         return jsonify(make_error(str(e))), 400
@@ -289,9 +291,11 @@ def _get_all_repos(user_id):
         raise Exception("Error while getting all repos.")
     return all_repos
 
-# TO BE IMPLEMENTED.
-def _asynchronously_create_new_cloud_node(repo_id, api_key):
-    print("Creating new cloud node... (fake)")
+def _create_new_cloud_node(repo_id, api_key):
+    try:
+        run_deploy_routine(repo_id)
+    except:
+        raise Exception("Error while creating new cloud node.")
 
 
 def _get_dynamodb_table(table_name):
