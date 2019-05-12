@@ -1,4 +1,5 @@
 import re
+import time
 import secrets
 import decimal
 import hashlib
@@ -245,6 +246,7 @@ def _create_new_repo_document(user_id, repo_name, repo_description):
             'OwnerId': user_id,
             'ContributorsId': [],
             'CoordinatorAddress': _construct_cloud_node_url(repo_id),
+            'CreatedAt': int(time.time()),
             # 'ExploratoryData': None,
         }
         table.put_item(Item=item)
@@ -263,6 +265,7 @@ def _create_new_api_key(user_id, repo_id):
             'Key': api_key,
             'OwnerId': user_id,
             'RepoId': repo_id,
+            'CreatedAt': int(time.time()),
         }
         table.put_item(Item=item)
     except:
