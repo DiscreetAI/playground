@@ -51,6 +51,7 @@ class Repo extends Reflux.Component {
       return <NotFoundPage />
     }
 
+    let createdLessThan10MinutesAgo = Math.floor(Date.now()/1000) < (this.state.repoData.CreatedAt + 60*10);
     return (
       <div>
         <div className="row">
@@ -60,7 +61,7 @@ class Repo extends Reflux.Component {
             <p>{this.state.repoData.Description}</p>
           </div>
           <div className="col-2 text-right">
-            <RepoStatus repoId={this.state.repoData.Id} />
+            <RepoStatus repoId={this.state.repoData.Id} isDeploying={createdLessThan10MinutesAgo} />
             <p className="mt-3"><Link to={"/explora/"+this.state.repoData.Id} className="btn btn-xs btn-light"><b>Open Explora</b></Link></p>
           </div>
         </div>

@@ -19,6 +19,10 @@ class RepoStatus extends Reflux.Component {
   render() {
     const status = this.state.coordinatorStatuses[this.props.repoId];
 
+    if (this.props.isDeploying) {
+      return <span className="badge badge-pill badge-warning">Deploying...</span>
+    }
+
     if (status === undefined) {
       return <span className="badge badge-pill badge-dark">...</span>
     }
