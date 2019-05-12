@@ -14,8 +14,8 @@ class RepoLogsStore extends Reflux.Store {
 
   init () {
     this.state = {
-      loading: true,
-      error: false,
+      loadingLogs: true,
+      errorLogs: false,
       repoLogs: [],
     };
   }
@@ -24,7 +24,7 @@ class RepoLogsStore extends Reflux.Store {
     if (AuthStore.state.isAuthenticated) {
       let jwtString = AuthStore.state.jwt;
 
-      this.state.loading = true;
+      this.state.loadingLogs = true;
       this._changed();
 
       fetch(
@@ -55,14 +55,14 @@ class RepoLogsStore extends Reflux.Store {
 
   onFetchRepoLogsCompleted (repoLogs) {
     this.state.repoLogs = repoLogs;
-    this.state.loading = false;
+    this.state.loadingLogs = false;
     this._changed();
   }
 
   onFetchRepoLogsFailed (errorObject) {
     this.state.repoLogs = {};
-    this.state.error = errorObject["message"];
-    this.state.loading = false;
+    this.state.errorLogs = errorObject["Message"];
+    this.state.loadingLogs = false;
     this._changed();
   }
 

@@ -22,8 +22,6 @@ class RepoList extends Reflux.Component {
   }
 
   render() {
-    console.log(this.state)
-
     if (this.state.error !== false) {
       return <div className="text-center"><p>Error: {this.state.error}</p></div>
     }

@@ -31,9 +31,13 @@ class Repo extends Reflux.Component {
   }
 
   render() {
-    if (this.state.error !== false) {
-      return <div className="text-center"><p>Error: {this.state.error}</p></div>
-    }
+    // if (this.state.error !== false) {
+    //   return (
+    //     <div className="text-center"><p>
+    //       Error: {this.state.error}</p>
+    //     </div>
+    //   );
+    // }
 
     if (this.state.loading === true) {
       return (
@@ -57,7 +61,7 @@ class Repo extends Reflux.Component {
           </div>
           <div className="col-2 text-right">
             <RepoStatus repoId={this.state.repoData.Id} />
-            <p className="mt-3"><Link to="/explora" className="btn btn-xs btn-light"><b>Open Explora</b></Link></p>
+            <p className="mt-3"><Link to={"/explora/"+this.state.repoData.Id} className="btn btn-xs btn-light"><b>Open Explora</b></Link></p>
           </div>
         </div>
 
@@ -78,7 +82,7 @@ class Repo extends Reflux.Component {
                     <a href="#upload-ed" className="btn btn-primary disabled">Upload ED</a>
                   </div>
                   <div className="col-2 text-center">
-                    <Link to="/explora" className="btn btn-light">Explore ED</Link>
+                    <Link to={"/explora/"+this.state.repoData.Id} className="btn btn-light">Explore ED</Link>
                   </div>
                 </div>
               </div>

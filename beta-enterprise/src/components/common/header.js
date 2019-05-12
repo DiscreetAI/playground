@@ -25,7 +25,7 @@ class Header extends Reflux.Component {
               <Link to="/new" className="nav-link" href="#"><b>New repo</b></Link>
           </li>
           <li className="nav-item">
-              <Link to="/account" className="nav-link" href="#">{"@" + companyName}</Link>
+              <div className="nav-link">{"@" + companyName}</div>
           </li>
           <li className="nav-item">
               <Link to="/signout" className="nav-link" href="#"><FontAwesomeIcon icon="sign-out-alt" /></Link>

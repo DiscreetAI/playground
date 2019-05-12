@@ -1,24 +1,79 @@
-import React, { Component } from 'react';
+import React from 'react';
+import Reflux from 'reflux';
+import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
-import AuthStore from './../stores/AuthStore';
 
-class NewRepo extends Component {
+import RepoDataStore from './../stores/RepoDataStore';
+import RepoDataActions from './../actions/RepoDataActions';
+
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+
+
+class NewRepo extends Reflux.Component {
 
   constructor(props) {
     super(props);
-    this.store = AuthStore;
+    this.store = RepoDataStore;
+  }
+
+  componentDidMount() {
+    RepoDataActions.fetchReposRemaining();
+  }
+
+  _handleSubmit(event) {
+    event.preventDefault();
+    let repoName = ReactDOM.findDOMNode(this.refs.repoName).value.replace(/[^a-zA-Z0-9-]/g,'-');
+    RepoDataActions.createNewRepo(
+      repoName,
+      ReactDOM.findDOMNode(this.refs.repoDescription).value
+    );
+  }
+
+  _handleContinue(event) {
+    event.preventDefault();
+    RepoDataActions.resetState();
+    this.props.history.push("/repo/" + this.state.creationState.repoId);
   }
 
   render() {
     // Get number of repos left.
-    // let reposLeft = this.state.claims["reposLeft"];
-    let reposLeft = 1;
+    if (this.state.creationState.loading === true) {
+      return (
+        <div className="text-center text-secondary">
+          <FontAwesomeIcon icon="sync" size="lg" spin />
+        </div>
+      );
+    }
 
-    if (reposLeft <= 0) {
+    if (this.state.creationState.created) {
+      return (
+        <div>
+          <div className="row text-center">
+            <div className="col-2"></div>
+            <div className="col-8">
+              <h3>Important!</h3>
+              <h5 className="mt-4">The new repo was created and your <b>API Key</b> is shown below.</h5>
+              <h5>Please save it!</h5>
+              <h5>You won't be able to access it again and you will need it to hook up clients to this repo.</h5>
+              <br /><br />
+              <h6 className="text-success">{this.state.creationState.apiKey}</h6>
+              <br /><br />
+              <div>
+                <button type="submit" className="btn btn-lg btn-info" onClick={this._handleContinue.bind(this)}>Continue (I have saved the key)</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      )
+    }
+
+    let reposLeft = this.state.creationState.reposRemaining;
+    if (!reposLeft) {
       return (
         <div className="text-center">
           <h3>Sorry, but you have no more repos left.</h3>
-          <p className="mt-4">If you want to upgrade your account to support more repos, <a href="#upgrade">please click here</a>.</p>
+          <p className="mt-4">If you want to upgrade your account to support more repos, <a href="mailto:panda@dataagora.com?subject=Upgrade Account&body=I would like to upgrade my account!">please email us</a>.</p>
           <p className="mt-3"><Link to="/">Back to dashboard</Link></p>
         </div>
       );
@@ -33,16 +88,16 @@ class NewRepo extends Component {
             <form className="mt-4">
               <div className="form-group">
                <label htmlFor="repoNameInput">Repo name</label>
-               <input type="text" className="form-control" id="repoNameInput" aria-describedby="repoName" placeholder="awesome-dml-experiment" />
+               <input type="text" className="form-control" id="repoNameInput" ref="repoName" aria-describedby="repoName" placeholder="awesome-dml-experiment" />
                <small id="repoNameHelp" className="form-text text-muted">Use a repo name you haven't used yet. Make it catchy.</small>
               </div>
               <div className="form-group">
                <label htmlFor="repoDescriptionInput">Brief description</label>
-               <input type="text" className="form-control" id="repoDescriptionInput" placeholder="To do magic on users' data without even seeing it." maxLength="80"/>
-               <small id="repoDescriptionHelp" className="form-text text-muted">Anything will do. Use this to know which repo is which.</small>
+               <input type="text" className="form-control" id="repoDescriptionInput" ref="repoDescription" placeholder="To do magic on users' data without even seeing it." maxLength="80"/>
+               <small id="repoDescriptionHelp" className="form-text text-muted">Anything will do. Use this to remember what a repo is about.</small>
               </div>
               <div className="text-center mt-5">
-                <button type="submit" className="btn btn-lg btn-primary">Create Repo</button>
+                <button type="submit" className={"btn btn-lg btn-primary " + (this.state.creationState.creating ? "disabled" : "")} onClick={this._handleSubmit.bind(this)}>Create Repo</button>
               </div>
             </form>
           </div>
