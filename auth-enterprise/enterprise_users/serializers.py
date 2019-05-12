@@ -72,6 +72,7 @@ class CustomRegisterSerializer(RegisterSerializer):
         profile.save()
 
         self._createUserData(user.id)
+        self._createTestRepo(user.id)
         return user
 
     def _createUserData(self, user_id):
@@ -91,3 +92,20 @@ class CustomRegisterSerializer(RegisterSerializer):
             )
         except:
             raise Exception("Error while creating the user dashboard data.")
+
+    def _createTestRepo(self, user_id):
+        dynamodb = boto3.resource('dynamodb', region_name='us-west-1')
+        table = dynamodb.Table("Repos")
+        try:
+            item = {
+                'Id': "test",
+                'Name': "hello-i-am-a-test-repo",
+                'Description': "This is just a test repo. There's nothing here and will never be. Well, maybe.",
+                'OwnerId': user_id,
+                'ContributorsId': [],
+                'CoordinatorAddress': "cloud-node-env99.au4c4pd2ch.us-west-1.elasticbeanstalk.com",
+                # 'ExploratoryData': None,
+            }
+            table.put_item(Item=item)
+        except:
+            raise Exception("Error while creating the new repo document.")
