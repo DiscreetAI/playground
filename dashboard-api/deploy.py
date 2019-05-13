@@ -16,8 +16,10 @@ APPLICATION_NAME = "cloud-node"
 S3_BUCKET = "cloud-node-deployment"
 
 VERSION_LABEL = strftime("%Y%m%d%H%M%S")
-# BUCKET_KEY = APPLICATION_NAME + '/' + VERSION_LABEL + '-cloudnode_builds.zip'
 BUCKET_KEY = APPLICATION_NAME + '/' + 'cloudnode_build.zip'
+
+PIPELINE_NAME = 'cloud-node-deploy'
+
 
 def upload_to_s3(artifact):
     """
@@ -132,8 +134,56 @@ def deploy_cloud_node(env_name):
     return True
 
 
+def make_codepipeline_elb_deploy_action(env_name):
+    return {
+      'name':'deploy-elb-' + env_name,
+      'actionTypeId':{
+         'category':'Deploy',
+         'owner':'AWS',
+         'provider':'ElasticBeanstalk',
+         'version':'1'
+      },
+      'runOrder':1,
+      'configuration':{
+         'ApplicationName':'cloud-node',
+         'EnvironmentName':env_name
+      },
+      'outputArtifacts':[
+
+      ],
+      'inputArtifacts':[
+         {
+            'name':'SourceArtifact'
+         }
+      ],
+      'region':'us-west-1'
+   }
+
+def add_codepipeline_deploy_step(env_name):
+    try:
+        client = boto3.client('codepipeline')
+        pipeline_response = client.get_pipeline(
+            name=PIPELINE_NAME,
+        )
+
+        pipeline_data = pipeline_response['pipeline']
+        for stage in pipeline_data['stages']:
+            if stage['name'] == 'Deploy':
+                new_action = make_codepipeline_elb_deploy_action(env_name)
+                stage['actions'].append(new_action)
+                _ = client.update_pipeline(
+                    pipeline=pipeline_data
+                )
+                print("Updated CodeDeploy pipeline.")
+    except Exception as e:
+        # Does not raise an exception since this is not crucial.
+        # TODO: Log an error and alert developers because this could break things.
+        print("Error: " + str(e))
+
+
 def run_deploy_routine(repo_id):
     # pre_steps()
     # _ = clone_repo()
     # _ = zip_server_directory()
     _ = deploy_cloud_node(repo_id)
+    add_codepipeline_deploy_step(repo_id)
