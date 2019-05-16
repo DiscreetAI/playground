@@ -1,3 +1,9 @@
 .header-logo {
   height: 80px;
 }
+
+.navbar {
+  background: #1cc4c4;
+  background: linear-gradient(90deg,#1cc4c4 0%,#520ab4 100%);
+  opacity: 0.95;
+}

@@ -59,11 +59,11 @@ class LoginForm extends Reflux.Component {
           </div>
 
           <div className="form-group text-center">
-            <button type="submit" onClick={this._handleSubmit.bind(this)} className="btn btn-transparent">Sign In</button>
+            <button type="submit" onClick={this._handleSubmit.bind(this)} className="btn btn-dark-alt">Sign In</button>
           </div>
 
-          <div className="form-group text-center">
-            New here? <Link to="signup" className="form-link" href="#">Sign up!</Link>
+          <div className="form-group text-center text-dark">
+            New here? <Link to="signup" href="# text-primary">Sign up!</Link>
           </div>
 
         </form>

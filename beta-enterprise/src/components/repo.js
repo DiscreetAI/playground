@@ -53,7 +53,7 @@ class Repo extends Reflux.Component {
 
     let createdLessThan10MinutesAgo = Math.floor(Date.now()/1000) < (this.state.repoData.CreatedAt + 60*10);
     return (
-      <div>
+      <div className="pb-5">
         <div className="row">
           <div className="col-1"></div>
           <div className="col-8">
@@ -62,14 +62,14 @@ class Repo extends Reflux.Component {
           </div>
           <div className="col-2 text-right">
             <RepoStatus repoId={this.state.repoData.Id} isDeploying={createdLessThan10MinutesAgo} />
-            <p className="mt-3"><Link to={"/explora/"+this.state.repoData.Id} className="btn btn-xs btn-light"><b>Open Explora</b></Link></p>
+            <p className="mt-3"><Link to={"/explora/"+this.state.repoData.Id} className="btn btn-xs btn-dark"><b>Open Explora</b></Link></p>
           </div>
         </div>
 
-        <div className="row mt-5">
+        <div className="row mt-4">
           <div className="col-1"></div>
           <div className="col-10">
-            <div className="card bg-dark">
+            <div className="card">
               <div className="card-header">
                 <h5>Exploratory Data (ED)</h5>
                 <p className="mb-0"><small>Example data that each client should be storing locally. The deployed models should be able to train on this structure.</small></p>
@@ -83,7 +83,7 @@ class Repo extends Reflux.Component {
                     <a href="#upload-ed" className="btn btn-primary disabled">Upload ED</a>
                   </div>
                   <div className="col-2 text-center">
-                    <Link to={"/explora/"+this.state.repoData.Id} className="btn btn-light">Explore ED</Link>
+                    <Link to={"/explora/"+this.state.repoData.Id} className="btn btn-dark">Explore ED</Link>
                   </div>
                 </div>
               </div>

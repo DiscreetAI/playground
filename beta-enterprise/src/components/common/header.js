@@ -43,7 +43,7 @@ class Header extends Reflux.Component {
     }
 
     return (
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark margin-bottom">
+      <nav className="navbar navbar-expand-lg navbar-dark margin-bottom">
         <div className="container-fluid">
           <Link to="/" className="navbar-brand">
             <img src={logo} className="header-logo" alt="logo" />

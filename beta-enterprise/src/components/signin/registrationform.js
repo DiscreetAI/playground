@@ -92,11 +92,11 @@ class RegistationForm extends Reflux.Component {
         </div>
 
         <div className="form-group text-center">
-          <button type="submit" onClick={this._handleSubmit.bind(this)} className="btn btn-transparent">Register</button>
+          <button type="submit" onClick={this._handleSubmit.bind(this)} className="btn btn-dark-alt">Register</button>
         </div>
 
-        <div className="form-group text-center">
-          Already a user? <Link to="signin" className="form-link" href="#">Sign in!</Link>
+        <div className="form-group text-center text-dark">
+          Already a user? <Link to="signin" className="text-primary" href="#">Sign in!</Link>
         </div>
       </form>
 

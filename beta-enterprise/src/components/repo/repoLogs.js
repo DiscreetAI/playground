@@ -9,14 +9,14 @@ class RepoLogs extends Component {
       content = (
         <div>
           <p className="card-text"><b>No model has been trained yet.</b></p>
-          <Link to="/explora" className="btn btn-light mt-2">Train a new model</Link>
+          <Link to="/explora" className="btn btn-dark mt-2">Train a new model</Link>
         </div>
       );
     } else {
       content = (
 
-        <table className="table text-left table-striped table-dark">
-          <thead className="thead-dark">
+        <table className="table text-left table-striped">
+          <thead>
             <tr>
               <th scope="col">Time</th>
               <th scope="col">SessionId</th>
@@ -27,7 +27,7 @@ class RepoLogs extends Component {
           <tbody>
 
             {this.props.logs.map((log, index) => {
-              return <tr className="bg-dark" key={index}>
+              return <tr key={index}>
                 <th scope="row">{this._formatTime(log.Timestamp)}</th>
                 <td>{log.SessionId}</td>
                 <td>{log.ContentType}</td>
@@ -43,7 +43,7 @@ class RepoLogs extends Component {
       <div className="row mt-5">
         <div className="col-1"></div>
         <div className="col-10">
-        <div className="card bg-dark">
+        <div className="card">
           <div className="card-header">
             <h5>Logs</h5>
             <p className="mb-0"><small>History of training sessions for this repo. You can debug your environment from here.</small></p>

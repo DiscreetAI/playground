@@ -45,23 +45,25 @@ class RepoList extends Reflux.Component {
       )
     } else {
       return (
-        <div>
-          {this.state.repos.map(function(repo, index) {
-            let createdLessThan10MinutesAgo = Math.floor(Date.now()/1000) < (repo.CreatedAt + 60*10);
-            return (
-              <div className="jumbotron bg-dark" key={index}>
-                <div className="row">
-                  <div className="col">
-                    <h4 className="d-inline mr-3"><Link to={"repo/" + repo.Id} className="display-5 text-light">{repo.Name}</Link></h4>
-                    <RepoStatus repoId={repo.Id} isDeploying={createdLessThan10MinutesAgo} />
-                  </div>
-                  <div className="col text-right">
-                    <Link to={"explora/" + repo.Id} className="lead text-secondary">Open Explora</Link>
+        <div class="row">
+          <div class="col">
+            {this.state.repos.map(function(repo, index) {
+              let createdLessThan10MinutesAgo = Math.floor(Date.now()/1000) < (repo.CreatedAt + 60*10);
+              return (
+                <div className="jumbotron" key={index}>
+                  <div className="row">
+                    <div className="col">
+                      <h4 className="d-inline mr-3"><Link to={"repo/" + repo.Id} className="display-5 text-black">{repo.Name}</Link></h4>
+                      <RepoStatus repoId={repo.Id} isDeploying={createdLessThan10MinutesAgo} />
+                    </div>
+                    <div className="col text-right">
+                      <Link to={"explora/" + repo.Id} className="lead text-dark">Open Explora</Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )
-          })}
+              )
+            })}
+          </div>
         </div>
       )
     }
