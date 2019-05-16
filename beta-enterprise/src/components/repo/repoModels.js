@@ -34,9 +34,9 @@ class RepoModels extends Component {
                 <td>{this._formatTime(log.Timestamp)}</td>
                 <td>-</td>
                 <td>
-                  <a href="#evaluate-model" className="btn btn-xs btn-warning disabled">Evaluate Model</a>
-                  <a href="#explore-model" className="btn btn-xs btn-dark ml-2">Explore Model</a>
-                  <a href="#download-model" className="btn btn-xs btn-primary ml-2">Download Model</a>
+                  <a href="#evaluate-model" className="btn btn-xs btn-warning disabled">Evaluate</a>
+                  <a href="#explore-model" className="btn btn-xs btn-dark ml-2">Explore</a>
+                  <a href="#download-model" className="btn btn-xs btn-primary ml-2">Download</a>
                 </td>
               </tr>
             })}
