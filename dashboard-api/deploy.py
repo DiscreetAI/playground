@@ -21,30 +21,47 @@ BUCKET_KEY = APPLICATION_NAME + '/' + 'cloudnode_build.zip'
 PIPELINE_NAME = 'cloud-node-deploy'
 
 
-def upload_to_s3(artifact):
-    """
-    Uploads an artifact to Amazon S3
-    """
-    try:
-        client = boto3.client('s3')
-    except ClientError as err:
-        print("Failed to create boto3 client.\n" + str(err))
-        return False
+# def upload_to_s3(artifact):
+#     """
+#     Uploads an artifact to Amazon S3
+#     """
+#     try:
+#         client = boto3.client('s3')
+#     except ClientError as err:
+#         print("Failed to create boto3 client.\n" + str(err))
+#         return False
+#
+#     try:
+#         client.put_object(
+#             Body=open(artifact, 'rb'),
+#             Bucket=S3_BUCKET,
+#             Key=BUCKET_KEY
+#         )
+#     except ClientError as err:
+#         print("Failed to upload artifact to S3.\n" + str(err))
+#         return False
+#     except IOError as err:
+#         print("Failed to access artifact.zip in this directory.\n" + str(err))
+#         return False
+#
+#     return True
 
-    try:
-        client.put_object(
-            Body=open(artifact, 'rb'),
-            Bucket=S3_BUCKET,
-            Key=BUCKET_KEY
-        )
-    except ClientError as err:
-        print("Failed to upload artifact to S3.\n" + str(err))
-        return False
-    except IOError as err:
-        print("Failed to access artifact.zip in this directory.\n" + str(err))
-        return False
 
-    return True
+# def pre_steps():
+#     try:
+#         shutil.rmtree(REPO_PATH)
+#         shutil.rmtree(ZIP_PATH)
+#     except:
+#         pass
+
+# def clone_repo():
+#     git.exec_command('clone', REPO_URL)
+#     return REPO_PATH
+
+# def zip_server_directory():
+#     shutil.make_archive(ZIP_PATH.split('.zip')[0], 'zip', REPO_PATH + "/server")
+#     return ZIP_PATH
+
 
 def create_new_version():
     """
@@ -97,6 +114,26 @@ def deploy_new_version(env_name):
             EnvironmentName=env_name,
             VersionLabel=VERSION_LABEL,
             SolutionStackName="64bit Amazon Linux 2018.03 v2.12.11 running Docker 18.06.1-ce",
+            OptionSettings=[
+                {
+                   'ResourceName':'AWSEBLoadBalancer',
+                   'Namespace':'aws:elb:listener:80',
+                   'OptionName':'InstanceProtocol',
+                   'Value':'TCP'
+                },
+                {
+                   'ResourceName':'AWSEBAutoScalingLaunchConfiguration',
+                   'Namespace':'aws:autoscaling:launchconfiguration',
+                   'OptionName':'SecurityGroups',
+                   'Value':'ebs-websocket'
+                },
+                {
+                    'ResourceName': 'AWSEBLoadBalancer',
+                    'Namespace': 'aws:elb:listener:80',
+                    'OptionName': 'ListenerProtocol' ,
+                    'Value': 'TCP'
+                },
+            ],
         )
     except ClientError as err:
         print("Failed to update environment.\n" + str(err))
@@ -104,23 +141,6 @@ def deploy_new_version(env_name):
 
     print(response)
     return True
-
-
-def pre_steps():
-    try:
-        shutil.rmtree(REPO_PATH)
-        shutil.rmtree(ZIP_PATH)
-    except:
-        pass
-
-def clone_repo():
-    git.exec_command('clone', REPO_URL)
-    return REPO_PATH
-
-def zip_server_directory():
-
-    shutil.make_archive(ZIP_PATH.split('.zip')[0], 'zip', REPO_PATH + "/server")
-    return ZIP_PATH
 
 def deploy_cloud_node(env_name):
     # if not upload_to_s3(ZIP_PATH):
