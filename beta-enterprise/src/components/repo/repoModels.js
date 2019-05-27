@@ -1,7 +1,45 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import AuthStore from './../../stores/AuthStore';
+import Endpoints from './../../constants/endpoints.js';
+
 
 class RepoModels extends Component {
+
+  _downloadModel(log) {
+    let round = JSON.parse(log.Content)["round"];
+    let session_id = JSON.parse(log.Content)["session_id"];
+    let repo_id = log.RepoId;
+
+    let jwtString = AuthStore.state.jwt;
+    fetch(
+      Endpoints["dashboardGetDownloadModelURL"],
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type':'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + jwtString,
+        },
+        body: JSON.stringify({
+          "RepoId": repo_id,
+          "SessionId": session_id,
+          "Round": round,
+        })
+      }
+    ).then(response => {
+      response.json().then(res => {
+        let url = res['DownloadUrl'];
+        console.log(res, url);
+        this._openInNewTab(url);
+      })
+    });
+  }
+
+  _openInNewTab(url) {
+    var win = window.open(url);
+    win.focus();
+  }
 
   render() {
     let content;
@@ -36,7 +74,7 @@ class RepoModels extends Component {
                 <td>
                   <a href="#evaluate-model" className="btn btn-xs btn-warning disabled">Evaluate</a>
                   <a href="#explore-model" className="btn btn-xs btn-dark ml-2">Explore</a>
-                  <a href="#download-model" className="btn btn-xs btn-primary ml-2">Download</a>
+                  <a href="#download-model" className="btn btn-xs btn-primary ml-2" onClick={this._downloadModel.bind(this, log)}>Download</a>
                 </td>
               </tr>
             })}
