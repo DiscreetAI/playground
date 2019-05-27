@@ -30,7 +30,6 @@ class RepoModels extends Component {
     ).then(response => {
       response.json().then(res => {
         let url = res['DownloadUrl'];
-        console.log(res, url);
         this._openInNewTab(url);
       })
     });
