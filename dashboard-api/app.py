@@ -135,18 +135,23 @@ def get_coordinator_status(repo_id):
         return jsonify(make_error("Error while checking coordinator's status.")), 400
     return jsonify(status_data)
 
-@app.route("/model/", methods=["GET"])
+@app.route("/model", methods=["POST"])
 def download_model():
     # Check authorization
     claims = authorize_user(request)
     if claims is None: return jsonify(make_unauthorized_error()), 400
 
     # Get parameters
-    repo_id  = request.args.get('repo_id', None)
-    session_id  = request.args.get('session_id', None)
-    round  = request.args.get('round', None)
-    if repo_id == None or session_id == None or round == None:
-        return jsonify(make_error("Some parameters are missing.")), 400
+    params = request.get_json()
+    if "RepoId" not in params:
+        return jsonify(make_error("Missing repo id from request.")), 400
+    if "SessionId" not in params:
+        return jsonify(make_error("Missing session id from request.")), 400
+    if "Round" not in params:
+        return jsonify(make_error("Missing round from request.")), 400
+    repo_id  = params.get('RepoId', None)
+    session_id  = params.get('SessionId', None)
+    round  = params.get('Round', None)
     bucket_name = "updatestore"
     object_name = "{0}/{1}/{2}/model.h5".format(repo_id, session_id, round)
 
@@ -157,7 +162,7 @@ def download_model():
         return jsonify(make_error(str(e))), 400
 
     # Return url
-    return jsonify({'download_url': url})
+    return jsonify({'DownloadUrl': url})
 
 
 # NOTE: This function was added in the auth-enterprise app instead.
