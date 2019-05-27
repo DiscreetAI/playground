@@ -156,7 +156,9 @@ def download_model():
     object_name = "{0}/{1}/{2}/model.h5".format(repo_id, session_id, round)
 
     # Get presigned URL
+    user_id = claims["pk"]
     try:
+        _assert_user_can_read_repo(user_id, repo_id)
         url = _create_presigned_url(bucket_name, object_name)
     except Exception as e:
         return jsonify(make_error(str(e))), 400
