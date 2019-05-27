@@ -135,6 +135,32 @@ def get_coordinator_status(repo_id):
         return jsonify(make_error("Error while checking coordinator's status.")), 400
     return jsonify(status_data)
 
+@app.route("/model/", methods=["GET"])
+def download_model():
+    # Check authorization
+    claims = authorize_user(request)
+    if claims is None: return jsonify(make_unauthorized_error()), 400
+
+    # Get parameters
+    repo_id  = request.args.get('repo_id', None)
+    session_id  = request.args.get('session_id', None)
+    round  = request.args.get('round', None)
+    if repo_id == None or session_id == None or round == None:
+        return jsonify(make_error("Some parameters are missing.")), 400
+    bucket_name = "updatestore"
+    object_name = "{0}/{1}/{2}/model.h5".format(repo_id, session_id, round)
+
+    # Get presigned URL
+    try:
+        url = _create_presigned_url(bucket_name, object_name)
+    except Exception as e:
+        return jsonify(make_error(str(e))), 400
+
+    # Return url
+    return jsonify({'download_url': url})
+
+
+# NOTE: This function was added in the auth-enterprise app instead.
 # @app.route("/userdata", methods=["POST"])
 # def create_user_data():
 #     # Check authorization
@@ -300,6 +326,31 @@ def _create_new_cloud_node(repo_id, api_key):
     except Exception as e:
         raise Exception("Error while creating new cloud node.")
 
+def _create_presigned_url(bucket_name, object_name, expiration=3600):
+    """Generate a presigned URL to share an S3 object
+
+    :param bucket_name: string
+    :param object_name: string
+    :param expiration: Time in seconds for the presigned URL to remain valid
+    :return: Presigned URL as string. If error, returns None.
+    """
+
+    # Generate a presigned URL for the S3 object
+    s3_client = boto3.client('s3')
+    try:
+        response = s3_client.generate_presigned_url(
+            'get_object',
+            Params={
+                'Bucket': bucket_name,
+                'Key': object_name
+            },
+            ExpiresIn=expiration
+        )
+    except ClientError as e:
+        raise Exception("Error while creating S3 presigned url.")
+
+    # The response contains the presigned URL
+    return response
 
 def _get_dynamodb_table(table_name):
     dynamodb = boto3.resource('dynamodb', region_name='us-west-1')

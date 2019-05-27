@@ -1,7 +1,7 @@
 from __future__ import print_function
 import os
 import sys
-import git
+# import git
 import shutil
 from time import strftime, sleep
 import boto3
