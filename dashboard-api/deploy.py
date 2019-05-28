@@ -113,7 +113,7 @@ def deploy_new_version(env_name):
             ApplicationName=APPLICATION_NAME,
             EnvironmentName=env_name,
             VersionLabel=VERSION_LABEL,
-            SolutionStackName="64bit Amazon Linux 2018.03 v2.12.11 running Docker 18.06.1-ce",
+            SolutionStackName="64bit Amazon Linux 2018.03 v2.12.10 running Docker 18.06.1-ce",
             OptionSettings=[
                 {
                    'ResourceName':'AWSEBLoadBalancer',
